@@ -19,4 +19,3 @@ The Collector can store data on the local filesystem (referred to as "embedded m
 It is a fully distributed collection and aggregation system starting from 2.7.0
 
 Please refer to the wiki for more detailed info: https://cwiki.apache.org/confluence/display/AMBARI/Metrics
-
