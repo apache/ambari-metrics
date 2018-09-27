@@ -85,7 +85,6 @@ def main():
   sys.path.append(project_folder + "/src/main/resources/scripts")
   sys.path.append(project_folder + "/src/main/resources/custom_actions")
   sys.path.append(project_folder + "/target/psutil_build")
-  sys.stderr.write(str(sys.path))
 
   has_failures = False
   test_runs = 0
