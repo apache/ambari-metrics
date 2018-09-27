@@ -78,17 +78,14 @@ def main():
   pwd = os.path.abspath(os.path.dirname(__file__))
 
   project_folder = get_parent_path(pwd,'ambari-metrics-host-monitoring')
-  ambari_common_folder = os.path.join(project_folder,"../../ambari-common")
-  sys.path.append(ambari_common_folder + "/src/main/python")
-  sys.path.append(ambari_common_folder + "/src/main/python/ambari_jinja2")
-  sys.path.append(ambari_common_folder + "/src/main/python")
-  sys.path.append(ambari_common_folder + "/src/test/python")
-  sys.path.append(project_folder + "/src/test/python")
+  sys.path.append(project_folder + "/target/ambari-python/site-packages")
+  sys.path.append(project_folder + "/target/ambari-python/site-packages/ambari_jinja2")
   sys.path.append(project_folder + "/src/main/python")
   sys.path.append(project_folder + "/src/main/python/core")
   sys.path.append(project_folder + "/src/main/resources/scripts")
   sys.path.append(project_folder + "/src/main/resources/custom_actions")
   sys.path.append(project_folder + "/target/psutil_build")
+  sys.stderr.write(str(sys.path))
 
   has_failures = False
   test_runs = 0

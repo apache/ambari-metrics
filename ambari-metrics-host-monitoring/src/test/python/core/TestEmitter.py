@@ -23,16 +23,12 @@ import logging
 import time
 
 from unittest import TestCase
-from only_for_platform import get_platform, PLATFORM_WINDOWS
 from mock.mock import patch, MagicMock
 from security import CachedHTTPConnection
 from blacklisted_set import BlacklistedSet
 from spnego_kerberos_auth import SPNEGOKerberosAuth
 
-if get_platform() != PLATFORM_WINDOWS:
-  os_distro_value = ('Suse','11','Final')
-else:
-  os_distro_value = ('win2012serverr2','6.3','WindowsServer')
+os_distro_value = ('Suse','11','Final')
 
 with patch("platform.linux_distribution", return_value = os_distro_value):
   from ambari_commons import OSCheck
