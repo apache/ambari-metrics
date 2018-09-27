@@ -39,24 +39,6 @@ class ConfigDefaults(object):
   def get_ca_certs_file_path(self):
     pass
 
-@OsFamilyImpl(os_family=OSConst.WINSRV_FAMILY)
-class ConfigDefaultsWindows(ConfigDefaults):
-  def __init__(self):
-    self._CONFIG_DIR = "conf"
-    self._CONFIG_FILE_PATH = "conf\\metric_monitor.ini"
-    self._METRIC_FILE_PATH = "conf\\metric_groups.conf"
-    self._METRIC_FILE_PATH = "conf\\ca.pem"
-    pass
-
-  def get_config_dir(self):
-    return self._CONFIG_DIR
-  def get_config_file_path(self):
-    return self._CONFIG_FILE_PATH
-  def get_metric_file_path(self):
-    return self._METRIC_FILE_PATH
-  def get_ca_certs_file_path(self):
-    return self._CA_CERTS_FILE_PATH
-
 @OsFamilyImpl(os_family=OsFamilyImpl.DEFAULT)
 class ConfigDefaultsLinux(ConfigDefaults):
   def __init__(self):

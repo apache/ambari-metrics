@@ -43,46 +43,6 @@ class StopHandler(object):
 
 
 #
-# Windows implementation
-#
-@OsFamilyImpl(os_family=OSConst.WINSRV_FAMILY)
-class StopHandlerWindows(StopHandler):
-  def __init__(self, stopEvent=None):
-    import win32event
-    # Event used to gracefully stop the process
-    if stopEvent is None:
-      # Allow standalone testing
-      self._heventStop = win32event.CreateEvent(None, 0, 0, None)
-    else:
-      # Allow one unique event per process
-      self._heventStop = stopEvent
-
-  def set_stop(self):
-    import win32event
-    win32event.SetEvent(self._heventStop)
-
-  def wait(self, timeout=None):
-    '''
-    :param timeout: Time to wait, in seconds.
-    :return: 0 == stop event signaled, -1 = timeout
-    '''
-    import win32event
-
-    if timeout is None:
-      timeout = win32event.INFINITE
-    else:
-      timeout = timeout * 1000
-
-    result = win32event.WaitForSingleObject(self._heventStop, timeout)
-    if(win32event.WAIT_OBJECT_0 != result and win32event.WAIT_TIMEOUT != result):
-      raise FatalException(-1, "Error waiting for stop event: " + str(result))
-    if (win32event.WAIT_TIMEOUT == result):
-      return -1
-      logger.debug("Stop event received")
-    return result # 0 -> stop
-
-
-#
 # Linux implementation
 #
 def signal_handler(signum, frame):

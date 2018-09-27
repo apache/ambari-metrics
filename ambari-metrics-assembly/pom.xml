@@ -54,6 +54,7 @@
     <storm.sink.jar>ambari-metrics-storm-sink-with-common-${project.version}.jar</storm.sink.jar>
     <flume.sink.jar>ambari-metrics-flume-sink-with-common-${project.version}.jar</flume.sink.jar>
     <kafka.sink.jar>ambari-metrics-kafka-sink-with-common-${project.version}.jar</kafka.sink.jar>
+    <ambari.commons.location>${monitor.dir}/target/ambari-python/site-packages/ambari_commons</ambari.commons.location>
   </properties>
 
   <build>
@@ -589,9 +590,7 @@
                       <directory>${resmonitor.install.dir}/ambari_commons</directory>
                       <sources>
                         <source>
-                          <location>
-                            ${project.basedir}/../../ambari-common/src/main/python/ambari_commons
-                          </location>
+                          <location>${ambari.commons.location}</location>
                         </source>
                       </sources>
                     </mapping>
@@ -736,7 +735,7 @@
                 </data>
                 <data>
                   <type>directory</type>
-                  <src>${project.basedir}/../../ambari-common/src/main/python/ambari_commons</src>
+                  <src>${ambari.commons.location}</src>
                   <mapper>
                     <type>perm</type>
                     <prefix>${resmonitor.install.dir}/ambari_commons</prefix>
@@ -1049,7 +1048,7 @@
         <envClassifier>linux</envClassifier>
         <dirsep>/</dirsep>
         <pathsep>:</pathsep>
-        <executable.python>${project.basedir}/../ambari-common/src/main/unix/ambari-python-wrap</executable.python>
+        <executable.python>${monitor.dir}/src/main/unix/ambari-python-wrap</executable.python>
         <executable.shell>sh</executable.shell>
         <fileextension.shell>sh</fileextension.shell>
         <fileextension.dot.shell-default></fileextension.dot.shell-default>
@@ -1101,184 +1100,6 @@
                       />
                     <delete file="${project.build.directory}/embedded/${hadoop.folder}/lib/native/libsnappy.so"/>
                   </target>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>windows</id>
-      <activation>
-        <os>
-          <family>win</family>
-        </os>
-      </activation>
-      <properties>
-        <envClassifier>win</envClassifier>
-        <dirsep>\</dirsep>
-        <pathsep>;</pathsep>
-        <executable.python>python</executable.python>
-        <executable.shell>cmd</executable.shell>
-        <fileextension.shell>cmd</fileextension.shell>
-        <fileextension.dot.shell-default>.cmd</fileextension.dot.shell-default>
-        <assemblydescriptor.collector>src/main/assembly/collector-windows.xml</assemblydescriptor.collector>
-        <assemblydescriptor.monitor>src/main/assembly/monitor-windows.xml</assemblydescriptor.monitor>
-        <assemblydescriptor.sink>src/main/assembly/sink-windows.xml</assemblydescriptor.sink>
-        <assemblydescriptor.collector.choco>src/main/assembly/collector-windows-choco.xml</assemblydescriptor.collector.choco>
-        <assemblydescriptor.monitor.choco>src/main/assembly/monitor-windows-choco.xml</assemblydescriptor.monitor.choco>
-        <assemblydescriptor.sink.choco>src/main/assembly/sink-windows-choco.xml</assemblydescriptor.sink.choco>
-        <packagingFormat>jar</packagingFormat>
-        <python.build.version>2.7</python.build.version>
-      </properties>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <version>1.7</version>
-            <executions>
-              <execution>
-                <id>download-hadoop</id>
-                <phase>generate-resources</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                  <target name="Downloading Hadoop">
-                    <mkdir dir="${project.build.directory}/embedded" />
-                    <get
-                      src="${hadoop.winpkg.zip}"
-                      dest="${project.build.directory}/embedded/hadoop.zip"
-                      usetimestamp="true"
-                      />
-                    <unzip
-                      src="${project.build.directory}/embedded/hadoop.zip"
-                      dest="${project.build.directory}/embedded/hadoop.temp"
-                      />
-                  </target>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>choco</id>
-      <activation>
-        <os>
-          <family>Windows</family>
-        </os>
-      </activation>
-      <build>
-        <plugins>
-          <!-- choco package creation -->
-          <plugin>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>collector-choco-dir</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>single</goal>
-                </goals>
-                <configuration>
-                  <attach>false</attach>
-                  <finalName>ambari-metrics-collector-${project.version}-choco</finalName>
-                  <appendAssemblyId>false</appendAssemblyId>
-                  <descriptors>
-                    <descriptor>${assemblydescriptor.collector.choco}</descriptor>
-                  </descriptors>
-                  <tarLongFileMode>gnu</tarLongFileMode>
-                </configuration>
-              </execution>
-              <execution>
-                <id>monitor-choco-dir</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>single</goal>
-                </goals>
-                <configuration>
-                  <attach>false</attach>
-                  <finalName>ambari-metrics-monitor-${project.version}-choco</finalName>
-                  <appendAssemblyId>false</appendAssemblyId>
-                  <descriptors>
-                    <descriptor>${assemblydescriptor.monitor.choco}</descriptor>
-                  </descriptors>
-                  <tarLongFileMode>gnu</tarLongFileMode>
-                </configuration>
-              </execution>
-              <execution>
-                <id>hadoop-sink-choco-dir</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>single</goal>
-                </goals>
-                <configuration>
-                  <attach>false</attach>
-                  <finalName>ambari-metrics-hadoop-sink-${project.version}-choco</finalName>
-                  <appendAssemblyId>false</appendAssemblyId>
-                  <descriptors>
-                    <descriptor>${assemblydescriptor.sink.choco}</descriptor>
-                  </descriptors>
-                  <tarLongFileMode>gnu</tarLongFileMode>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <version>1.2.1</version>
-            <executions>
-              <execution>
-                <id>collector-choco-package</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>exec</goal>
-                </goals>
-                <configuration>
-                  <executable>choco.exe</executable>
-                  <arguments>
-                    <argument>pack</argument>
-                    <argument>--version=${project.version}</argument>
-                    <argument>${basedir}/target/ambari-metrics-collector-${project.version}-choco/ambari-metrics-collector.nuspec</argument>
-                  </arguments>
-                  <workingDirectory>target/ambari-metrics-collector-${project.version}-choco</workingDirectory>
-                </configuration>
-              </execution>
-              <execution>
-                <id>monitor-choco-package</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>exec</goal>
-                </goals>
-                <configuration>
-                  <executable>choco.exe</executable>
-                  <arguments>
-                    <argument>pack</argument>
-                    <argument>--version=${project.version}</argument>
-                    <argument>${basedir}/target/ambari-metrics-monitor-${project.version}-choco/ambari-metrics-monitor.nuspec</argument>
-                  </arguments>
-                  <workingDirectory>target/ambari-metrics-monitor-${project.version}-choco</workingDirectory>
-                </configuration>
-              </execution>
-              <execution>
-                <id>hadoop-sink-choco-package</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>exec</goal>
-                </goals>
-                <configuration>
-                  <executable>choco.exe</executable>
-                  <arguments>
-                    <argument>pack</argument>
-                    <argument>--version=${project.version}</argument>
-                    <argument>${basedir}/target/ambari-metrics-hadoop-sink-${project.version}-choco/ambari-metrics-hadoop-sink.nuspec</argument>
-                  </arguments>
-                  <workingDirectory>target/ambari-metrics-hadoop-sink-${project.version}-choco</workingDirectory>
                 </configuration>
               </execution>
             </executions>

@@ -259,8 +259,6 @@
           <excludes>
             <exclude>conf/unix/metrics_whitelist</exclude>
             <exclude>conf/unix/amshbase_metrics_whitelist</exclude>
-            <exclude>conf/windows/metrics_whitelist</exclude>
-            <exclude>conf/windows/amshbase_metrics_whitelist</exclude>
           </excludes>
         </configuration>
         <executions>
@@ -801,12 +799,6 @@
 
     <!-- Dependency in order to annotate unit tests with a category. -->
     <dependency>
-      <groupId>org.apache.ambari</groupId>
-      <artifactId>ambari-utility</artifactId>
-      <version>1.0.0.0-SNAPSHOT</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.apache.ignite</groupId>
       <artifactId>ignite-core</artifactId>
       <version>2.1.0</version>
@@ -899,54 +891,6 @@
                     <move
                         file="${project.build.directory}/embedded/${phoenix.folder}/phoenix-${phoenix.version}-server.jar"
                         tofile="${project.build.directory}/embedded/${hbase.folder}/lib/phoenix-${phoenix.version}-server.jar"
-                    />
-                  </target>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>windows</id>
-      <activation>
-        <os>
-          <family>win</family>
-        </os>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <version>1.7</version>
-            <executions>
-              <execution>
-                <id>hbase_download</id>
-                <phase>generate-resources</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                  <target name="Download HBase">
-                    <mkdir dir="${project.build.directory}/embedded"/>
-                    <get
-                        src="${hbase.winpkg.zip}"
-                        dest="${project.build.directory}/embedded/hbase.zip"
-                        usetimestamp="true"
-                    />
-                    <unzip
-                        src="${project.build.directory}/embedded/hbase.zip"
-                        dest="${project.build.directory}/embedded/hbase.temp"
-                    />
-                    <unzip
-                        src="${project.build.directory}/embedded/hbase.temp/resources/${hbase.winpkg.folder}.zip"
-                        dest="${project.build.directory}/embedded"
-                    />
-                    <copy
-                        file="${project.build.directory}/embedded/hbase.temp/resources/servicehost.exe"
-                        tofile="${project.build.directory}/embedded/${hbase.winpkg.folder}/bin/ams_hbase_master.exe"
                     />
                   </target>
                 </configuration>
