@@ -1,6 +1,9 @@
 # ambari-metrics
 Apache Ambari subproject - Ambari Metrics
 
+[![Build Status](https://builds.apache.org/buildStatus/icon?job=Ambari-Metrics-master-Commit)](https://builds.apache.org/view/A/view/Ambari/job/Ambari-Metrics-master-Commit/)
+![license](http://img.shields.io/badge/license-Apache%20v2-blue.svg)
+
 **Ambari Metrics System** ("AMS") is a system for collecting, aggregating, serving and visualizing daemon and system metrics in Ambari-managed clusters.
 
 The original JIRA Epic for Ambari Metrics System can be found here: https://issues.apache.org/jira/browse/AMBARI-5707 
