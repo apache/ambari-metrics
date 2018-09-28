@@ -1,5 +1,5 @@
-# ambari-metrics
-Apache Ambari subproject - Ambari Metrics
+# Apache Ambari Metrics
+Apache Ambari subproject
 
 [![Build Status](https://builds.apache.org/buildStatus/icon?job=Ambari-Metrics-master-Commit)](https://builds.apache.org/view/A/view/Ambari/job/Ambari-Metrics-master-Commit/)
 ![license](http://img.shields.io/badge/license-Apache%20v2-blue.svg)
