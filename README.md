@@ -7,7 +7,7 @@ Apache Ambari subproject
 **Ambari Metrics System** ("AMS") is a system for collecting, aggregating, serving and visualizing daemon and system metrics in Ambari-managed clusters.
 
 The original JIRA Epic for Ambari Metrics System can be found here: https://issues.apache.org/jira/browse/AMBARI-5707 
-First official release of AMS was with Ambari 2.0.0. With metrics repro split, the aim is to be able to release the sub-project with separate cadence than Amabri.
+First official release of AMS was with Ambari 2.0.0. With metrics repro split, the aim is to be able to release the sub-project with separate cadence than Ambari.
 
 
 | Term | Definition |
