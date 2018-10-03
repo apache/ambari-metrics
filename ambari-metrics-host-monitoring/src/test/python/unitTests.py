@@ -80,8 +80,6 @@ def main():
   pwd = os.path.abspath(os.path.dirname(__file__))
 
   project_folder = get_parent_path(pwd, 'ambari-metrics-host-monitoring')
-  sys.path.append(project_folder + "/target/ambari-python/site-packages")
-  sys.path.append(project_folder + "/target/ambari-python/site-packages/ambari_jinja2")
   sys.path.append(project_folder + "/src/main/python")
   sys.path.append(project_folder + "/src/main/python/core")
   sys.path.append(project_folder + "/src/main/resources/scripts")
