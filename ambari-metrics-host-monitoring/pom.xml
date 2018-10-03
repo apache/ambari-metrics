@@ -124,7 +124,9 @@
             <exclude>conf/unix/metric_groups.conf</exclude>
             <exclude>conf/windows/metric_groups.conf</exclude>
             <exclude>src/main/python/psutil/**</exclude>
-            <exclude>.pydevproject</exclude>
+	    <exclude>.pydevproject</exclude>
+	    <!--Python Mock library (BSD license)-->
+	    <exclude>src/test/python/mock/**</exclude>
           </excludes>
         </configuration>
         <executions>

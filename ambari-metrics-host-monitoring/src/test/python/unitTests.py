@@ -31,6 +31,7 @@ SERVICE_EXCLUDE = ["configs"]
 
 TEST_MASK = '[Tt]est*.py'
 CUSTOM_TEST_MASK = '_[Tt]est*.py'
+
 def get_parent_path(base, directory_name):
   """
   Returns absolute path for directory_name, if directory_name present in base.
@@ -75,9 +76,10 @@ def main():
   if len(sys.argv) > 1:
     if sys.argv[1] == "true":
       custom_tests = True
+
   pwd = os.path.abspath(os.path.dirname(__file__))
 
-  project_folder = get_parent_path(pwd,'ambari-metrics-host-monitoring')
+  project_folder = get_parent_path(pwd, 'ambari-metrics-host-monitoring')
   sys.path.append(project_folder + "/target/ambari-python/site-packages")
   sys.path.append(project_folder + "/target/ambari-python/site-packages/ambari_jinja2")
   sys.path.append(project_folder + "/src/main/python")
@@ -85,12 +87,14 @@ def main():
   sys.path.append(project_folder + "/src/main/resources/scripts")
   sys.path.append(project_folder + "/src/main/resources/custom_actions")
   sys.path.append(project_folder + "/target/psutil_build")
+  sys.path.append(project_folder + "/src/test/python")
 
   has_failures = False
   test_runs = 0
   test_failures = []
   test_errors = []
-  #run base ambari-server tests
+
+  # run base tests
   sys.stderr.write("Running tests\n")
   if custom_tests:
     test_mask = CUSTOM_TEST_MASK
