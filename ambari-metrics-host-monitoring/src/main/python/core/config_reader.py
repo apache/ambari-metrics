@@ -22,9 +22,6 @@ import ConfigParser
 import StringIO
 import json
 import os
-from ambari_commons import OSConst
-from ambari_commons.os_family_impl import OsFamilyImpl
-
 
 #
 # Abstraction for OS-dependent configuration defaults
@@ -39,7 +36,6 @@ class ConfigDefaults(object):
   def get_ca_certs_file_path(self):
     pass
 
-@OsFamilyImpl(os_family=OsFamilyImpl.DEFAULT)
 class ConfigDefaultsLinux(ConfigDefaults):
   def __init__(self):
     self._CONFIG_DIR = "/etc/ambari-metrics-monitor/conf/"
@@ -56,7 +52,7 @@ class ConfigDefaultsLinux(ConfigDefaults):
   def get_ca_certs_file_path(self):
     return self._CA_CERTS_FILE_PATH
 
-configDefaults = ConfigDefaults()
+configDefaults = ConfigDefaultsLinux()
 
 config = ConfigParser.RawConfigParser()
 

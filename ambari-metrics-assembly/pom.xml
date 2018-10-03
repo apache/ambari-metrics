@@ -54,7 +54,6 @@
     <storm.sink.jar>ambari-metrics-storm-sink-with-common-${project.version}.jar</storm.sink.jar>
     <flume.sink.jar>ambari-metrics-flume-sink-with-common-${project.version}.jar</flume.sink.jar>
     <kafka.sink.jar>ambari-metrics-kafka-sink-with-common-${project.version}.jar</kafka.sink.jar>
-    <ambari.commons.location>${monitor.dir}/target/ambari-python/site-packages/ambari_commons</ambari.commons.location>
   </properties>
 
   <build>
@@ -599,14 +598,6 @@
                       </sources>
                     </mapping>
                     <mapping>
-                      <directory>${resmonitor.install.dir}/ambari_commons</directory>
-                      <sources>
-                        <source>
-                          <location>${ambari.commons.location}</location>
-                        </source>
-                      </sources>
-                    </mapping>
-                    <mapping>
                       <directory>/var/lib/ambari-metrics-monitor/lib</directory>
                       <sources>
                         <source>
@@ -743,14 +734,6 @@
                   <mapper>
                     <type>perm</type>
                     <prefix>${resmonitor.install.dir}/psutil</prefix>
-                  </mapper>
-                </data>
-                <data>
-                  <type>directory</type>
-                  <src>${ambari.commons.location}</src>
-                  <mapper>
-                    <type>perm</type>
-                    <prefix>${resmonitor.install.dir}/ambari_commons</prefix>
                   </mapper>
                 </data>
                 <data>
