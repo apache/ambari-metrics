@@ -49,8 +49,19 @@ public class TransientMetricCondition extends DefaultCondition {
 
     appendConjunction = appendHostnameClause(sb, appendConjunction);
 
-    appendConjunction = append(sb, appendConjunction, getAppId(), " APP_ID = ?");
-    appendConjunction = append(sb, appendConjunction, getInstanceId(), " INSTANCE_ID = ?");
+    String appId = getAppId();
+    if (appId.contains("%")) {
+      appendConjunction = append(sb, appendConjunction, getAppId(), " APP_ID LIKE ?");
+    } else {
+      appendConjunction = append(sb, appendConjunction, getAppId(), " APP_ID = ?");
+    }
+
+    String instanceId = getInstanceId();
+    if (instanceId.contains("%")) {
+      appendConjunction = append(sb, appendConjunction, getInstanceId(), " INSTANCE_ID LIKE ?");
+    } else {
+      appendConjunction = append(sb, appendConjunction, getInstanceId(), " INSTANCE_ID = ?");
+    }
     appendConjunction = append(sb, appendConjunction, getStartTime(), " SERVER_TIME >= ?");
     append(sb, appendConjunction, getEndTime(), " SERVER_TIME < ?");
 
