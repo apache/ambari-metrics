@@ -19,15 +19,9 @@ limitations under the License.
 '''
 
 import logging
-import os
 import signal
 import threading
 import traceback
-
-from ambari_commons import OSConst, OSCheck
-from ambari_commons.exceptions import FatalException
-from ambari_commons.os_family_impl import OsFamilyImpl
-
 
 logger = logging.getLogger()
 
@@ -61,7 +55,6 @@ def debug(sig, frame):
   logger.info(message)
 
 
-@OsFamilyImpl(os_family=OsFamilyImpl.DEFAULT)
 class StopHandlerLinux(StopHandler):
   def __init__(self, stopEvent=None):
     # Event used to gracefully stop the process
@@ -86,10 +79,9 @@ class StopHandlerLinux(StopHandler):
 
 
 def bind_signal_handlers(new_handler=None):
-  if OSCheck.get_os_family() != OSConst.WINSRV_FAMILY:
-      signal.signal(signal.SIGINT, signal_handler)
-      signal.signal(signal.SIGTERM, signal_handler)
-      signal.signal(signal.SIGUSR1, debug)
+  signal.signal(signal.SIGINT, signal_handler)
+  signal.signal(signal.SIGTERM, signal_handler)
+  signal.signal(signal.SIGUSR1, debug)
 
   if new_handler is None:
     global _handler

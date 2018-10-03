@@ -36,12 +36,6 @@
     <final.name>${project.artifactId}-${project.version}</final.name>
   </properties>
   <dependencies>
-    <dependency>
-      <groupId>org.apache.ambari</groupId>
-      <artifactId>ambari-python</artifactId>
-      <version>2.7.1.1</version>
-      <type>tar.gz</type>
-    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -124,7 +118,9 @@
             <exclude>conf/unix/metric_groups.conf</exclude>
             <exclude>conf/windows/metric_groups.conf</exclude>
             <exclude>src/main/python/psutil/**</exclude>
-            <exclude>.pydevproject</exclude>
+	    <exclude>.pydevproject</exclude>
+	    <!--Python Mock library (BSD license)-->
+	    <exclude>src/test/python/mock/**</exclude>
           </excludes>
         </configuration>
         <executions>
@@ -180,25 +176,6 @@
       </properties>
       <build>
         <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-dependency-plugin</artifactId>
-            <version>2.5.1</version>
-            <executions>
-              <execution>
-                <id>unpack-ambari-common</id>
-                <phase>generate-resources</phase>
-                <goals>
-                  <goal>unpack-dependencies</goal>
-                </goals>
-                <configuration>
-                  <includeTypes>tar.gz</includeTypes>
-                  <includeArtifactIds>ambari-python</includeArtifactIds>
-                  <outputDirectory>target/ambari-python</outputDirectory>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-antrun-plugin</artifactId>
