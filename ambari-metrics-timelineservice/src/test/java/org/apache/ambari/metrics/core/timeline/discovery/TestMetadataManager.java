@@ -234,6 +234,7 @@ public class TestMetadataManager extends AbstractMiniHBaseClusterTest {
     replay(configuration);
 
     hdb.insertMetricRecordsWithMetadata(metadataManager, timelineMetrics, true);
+    metadataManager.forceMetricsMetadataSync();
 
     List<byte[]> uuids = metadataManager.getUuidsForGetMetricQuery(Collections.singletonList("dummy_m%"),
       Collections.singletonList("dummy_host2"), "dummy_app1", null);
@@ -310,6 +311,7 @@ public class TestMetadataManager extends AbstractMiniHBaseClusterTest {
     replay(configuration);
 
     hdb.insertMetricRecordsWithMetadata(metadataManager, timelineMetrics, true);
+    metadataManager.forceMetricsMetadataSync();
 
     List<byte[]> uuids = metadataManager.getUuidsForGetMetricQuery(Collections.singletonList("dummy_m%"),
       Collections.singletonList("dummy_host%"), "dummy_app%", "dummy_i%");

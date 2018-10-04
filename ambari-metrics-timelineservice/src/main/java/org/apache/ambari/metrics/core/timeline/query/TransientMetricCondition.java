@@ -42,6 +42,16 @@ public class TransientMetricCondition extends DefaultCondition {
     }
   }
 
+  public TransientMetricCondition(List<String> metricNames, List<String> hostnames, String appId,
+                                  String instanceId, Long startTime, Long endTime, Precision precision,
+                                  Integer limit, boolean grouped, List<String> transientMetricNames) {
+    super(metricNames, hostnames, appId, instanceId, startTime, endTime, precision, limit, grouped);
+    this.transientMetricNames = transientMetricNames;
+    if (CollectionUtils.isEmpty(hostnames)) {
+      this.hostnames = Collections.singletonList("%");
+    }
+  }
+
   public StringBuilder getTransientConditionClause() {
     StringBuilder sb = new StringBuilder();
 
@@ -68,7 +78,7 @@ public class TransientMetricCondition extends DefaultCondition {
     return sb;
   }
 
-  private boolean appendMetricNameClause(StringBuilder sb) {
+  protected boolean appendMetricNameClause(StringBuilder sb) {
     boolean appendConjunction = false;
     List<String> metricsLike = new ArrayList<>();
     List<String> metricsIn = new ArrayList<>();
