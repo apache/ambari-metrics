@@ -131,7 +131,7 @@ var AmbariMetricsQueryCtrl = /** @class */ (function (_super) {
                 this.target.seriesAggregator = "none";
             }
         };
-        _this.$watch('target.app', function (newValue) {
+        $scope.$watch('target.app', function (newValue) {
             if (newValue === '') {
                 this.target.metric = '';
                 this.target.hosts = '';
