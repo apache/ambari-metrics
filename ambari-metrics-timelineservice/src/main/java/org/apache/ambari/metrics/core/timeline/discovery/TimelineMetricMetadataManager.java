@@ -635,6 +635,7 @@ public class TimelineMetricMetadataManager {
     for (String metricName : metricNames) {
       if (hasWildCard(metricName)) {
         metricNameHasWildcard = true;
+        break;
       }
     }
 
@@ -643,6 +644,7 @@ public class TimelineMetricMetadataManager {
       for (String hostname : hostnames) {
         if (hasWildCard(hostname)) {
           hostNameHasWildcard = true;
+          break;
         }
       }
     }
@@ -887,7 +889,7 @@ public class TimelineMetricMetadataManager {
   }
 
   private boolean hasWildCard(String key) {
-    return (key != null) && key.contains("%");
+    return StringUtils.isNotEmpty(key) && key.contains("%");
   }
 
 }
