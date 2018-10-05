@@ -28,7 +28,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.metrics2.sink.timeline.Precision;
 import org.apache.ambari.metrics.core.timeline.PhoenixHBaseAccessor;
-import org.apache.ambari.metrics.core.timeline.discovery.TimelineMetricMetadataManager;
 
 public class DefaultCondition implements Condition {
   List<String> metricNames;

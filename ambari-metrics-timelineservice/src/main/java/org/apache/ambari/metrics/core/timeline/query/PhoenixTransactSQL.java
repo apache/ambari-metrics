@@ -377,6 +377,10 @@ public class PhoenixTransactSQL {
   public static final String GET_INSTANCE_HOST_METADATA_SQL = "SELECT " +
     "INSTANCE_ID, HOSTNAME FROM INSTANCE_HOST_METADATA";
 
+  public static final String SCAN_METRIC_METADATA_SQL = "SELECT METRIC_NAME, APP_ID, INSTANCE_ID, UUID FROM %s";
+
+  public static final String SCAN_HOST_METADATA_SQL = "SELECT HOSTNAME, UUID FROM %s";
+
   /**
    * Aggregate host metrics using a GROUP BY clause to take advantage of
    * N - way parallel scan where N = number of regions.
@@ -461,6 +465,12 @@ public class PhoenixTransactSQL {
     "METRIC_AGGREGATE_HOURLY_UUID";
   public static final String METRICS_CLUSTER_AGGREGATE_DAILY_TABLE_NAME =
     "METRIC_AGGREGATE_DAILY_UUID";
+
+  public static final String METRICS_METADATA_TABLE_NAME =
+    "METRICS_METADATA_UUID";
+
+  public static final String HOST_METADATA_TABLE_NAME =
+    "HOSTED_APPS_METADATA_UUID";
 
   public static final Pattern PHOENIX_TABLES_REGEX_PATTERN = Pattern.compile("METRIC_.*");
 
@@ -978,6 +988,46 @@ public class PhoenixTransactSQL {
 
     return stmt;
 
+  }
+
+  public static PreparedStatement prepareScanMetricMetadataSqlStmt(Connection connection, MetadataQueryCondition condition)
+    throws SQLException {
+
+    String stmtStr;
+    if (condition.isMetricMetadataCondition()) {
+      stmtStr = String.format(SCAN_METRIC_METADATA_SQL, METRICS_METADATA_TABLE_NAME);
+    } else {
+      stmtStr = String.format(SCAN_HOST_METADATA_SQL, HOST_METADATA_TABLE_NAME);
+    }
+
+    StringBuilder sb = new StringBuilder(stmtStr);
+
+    sb.append(" WHERE ");
+    sb.append(condition.getConditionClause());
+
+    if (LOG.isDebugEnabled()) {
+      LOG.debug("SQL: " + sb.toString() + ", condition: " + condition);
+    }
+
+    PreparedStatement stmt = null;
+    try {
+      stmt = connection.prepareStatement(sb.toString());
+      int pos = 1;
+      if (condition.isMetricMetadataCondition()) {
+        pos = addMetricNames(condition, pos, stmt);
+        pos = addAppId(condition, pos, stmt);
+        pos = addInstanceId(condition, pos, stmt);
+      } else {
+        pos = addHostNames(condition, pos, stmt);
+      }
+
+    } catch (SQLException e) {
+      if (stmt != null) {
+        stmt.close();
+      }
+      throw e;
+    }
+    return stmt;
   }
 
   public static String getTargetTableUsingPrecision(Precision precision, boolean withHosts) {
