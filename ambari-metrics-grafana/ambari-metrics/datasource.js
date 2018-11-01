@@ -484,10 +484,10 @@ define([
             }).map(function (uName) {
               return uName.value;
             });
-            selectedUsers = templateSrv._values.Users.lastIndexOf('}') > 0 ? templateSrv._values.Users.slice(1, -1) :
-              templateSrv._values.Users;
-            var selectedUser = selectedUsers.split(',');
-            _.forEach(selectedUser, function (processUser) {
+            if (selectedUsers[0] === "") {
+              selectedUsers = "";
+            }
+            _.forEach(selectedUsers, function (processUser) {
               metricsPromises.push(_.map(options.targets, function (target) {
                 target.hbUser = processUser;
                 var metricTransform = !target.transform || target.transform === "none" ? '' : '._' + target.transform;
@@ -499,10 +499,18 @@ define([
           // Templatized Dashboard for per-table metrics in HBase.
           if (templateSrv.variables[0].query === "hbase-tables") {
             var splitTables = [];
-            var allTables = templateSrv._values.Tables.lastIndexOf('}') > 0 ? templateSrv._values.Tables.slice(1, -1) :
-              templateSrv._values.Tables;
-            var allTable = allTables.split(',');
-            while (allTable.length > 0) {
+            let allTables = [];
+            const tables = templateSrv.index.Tables.options;
+            for (let table of tables) {
+              if (table.text.toLowerCase() === "all" && table.selected) {
+                allTables = "";
+                break;
+              } else if (table.selected) {
+                allTables.push(table.value);
+              }
+            }
+
+            while (allTables.length > 0) {
               splitTables.push(allTable.splice(0, 20));
             }
             _.forEach(splitTables, function (table) {
@@ -530,10 +538,10 @@ define([
             }).map(function (topicName) {
               return topicName.value;
             });
-            selectedTopics = templateSrv._values.Topics.lastIndexOf('}') > 0 ? templateSrv._values.Topics.slice(1, -1) :
-              templateSrv._values.Topics;
-            var selectedTopic = selectedTopics.split(',');
-            _.forEach(selectedTopic, function (processTopic) {
+            if (selectedTopics[0] === "") {
+              selectedTopics = "";
+            }
+            _.forEach(selectedTopics, function (processTopic) {
               metricsPromises.push(_.map(options.targets, function (target) {
                 target.kbTopic = processTopic;
                 target.kbMetric = target.metric.replace('*', target.kbTopic);
@@ -546,15 +554,17 @@ define([
             var allCallers = templateSrv.variables.filter(function (variable) {
               return variable.query === "callers";
             });
-            var selectedCallers = (_.isEmpty(allCallers)) ? "" : allCallers[0].options.filter(function (user) {
-              return user.selected;
-            }).map(function (callerName) {
-              return callerName.value;
-            });
-            selectedCallers = templateSrv._values.Callers.lastIndexOf('}') > 0 ? templateSrv._values.Callers.slice(1, -1) :
-              templateSrv._values.Callers;
-            var selectedCaller = selectedCallers.split(',');
-            _.forEach(selectedCaller, function (processCaller) {
+            let selectedCallers = [];
+            const callers = templateSrv.index.Callers.options;
+            for (let caller of callers) {
+              if (caller.text.toLowerCase() === "all" && caller.selected) {
+                selectedCallers = "";
+                break;
+              } else if (caller.selected) {
+                selectedCallers.push(caller.text);
+              }
+            }
+            _.forEach(selectedCallers, function (processCaller) {
               metricsPromises.push(_.map(options.targets, function (target) {
                 target.nnCaller = processCaller;
                 target.nnMetric = target.metric.replace('*', target.nnCaller);
@@ -573,10 +583,10 @@ define([
             }).map(function (coreName) {
               return coreName.value;
             });
-            selectedCores = templateSrv._values.Cores.lastIndexOf('}') > 0 ? templateSrv._values.Cores.slice(1, -1) :
-              templateSrv._values.Cores;
-            var selectedCore = selectedCores.split(',');
-            _.forEach(selectedCore, function (processCore) {
+            if (selectedCores[0] === "") {
+              selectedCores = "";
+            }
+            _.forEach(selectedCores, function (processCore) {
               metricsPromises.push(_.map(options.targets, function (target) {
                 target.sCore = processCore;
                 target.sCoreMetric = target.metric.replace('*', target.sCore);
@@ -595,10 +605,10 @@ define([
             }).map(function (collectionsName) {
               return collectionsName.value;
             });
-            selectedCollections = templateSrv._values.Collections.lastIndexOf('}') > 0 ? templateSrv._values.Collections.slice(1, -1) :
-              templateSrv._values.Collections;
-            var selectedCollection = selectedCollections.split(',');
-            _.forEach(selectedCollection, function (processCollection) {
+            if (selectedCollections [0] === "") {
+              selectedCollections = "";
+            }
+            _.forEach(selectedCollections, function (processCollection) {
               metricsPromises.push(_.map(options.targets, function (target) {
                 target.sCollection = processCollection;
                 target.sCollectionMetric = target.metric.replace('*', target.sCollection);
@@ -617,10 +627,10 @@ define([
             }).map(function (topoName) {
               return topoName.value;
             });
-            selectedTopologies = templateSrv._values.topologies.lastIndexOf('}') > 0 ? templateSrv._values.topologies.slice(1, -1) :
-              templateSrv._values.topologies;
-            var selectedTopology = selectedTopologies.split(',');
-            _.forEach(selectedTopology, function (processTopology) {
+            if (selectedTopologies === "") {
+              selectedTopologies = "";
+            }
+            _.forEach(selectedTopologies, function (processTopology) {
               metricsPromises.push(_.map(options.targets, function (target) {
                 target.sTopology = processTopology;
                 target.sTopoMetric = target.metric.replace('*', target.sTopology);
@@ -667,10 +677,10 @@ define([
             }).map(function (dataSourceName) {
               return dataSourceName.value;
             });
-            selectedDataSources = templateSrv._values.druidDataSources.lastIndexOf('}') > 0 ? templateSrv._values.druidDataSources.slice(1, -1) :
-              templateSrv._values.druidDataSources;
-            var selectedDataSource = selectedDataSources.split(',');
-            _.forEach(selectedDataSource, function (processDataSource) {
+            if (selectedDataSources[0] === "") {
+              selectedDataSources = "";
+            }
+            _.forEach(selectedDataSources, function (processDataSource) {
               metricsPromises.push(_.map(options.targets, function (target) {
                 target.sDataSource = processDataSource;
                 target.sDataSourceMetric = target.metric.replace('*', target.sDataSource);
@@ -681,14 +691,21 @@ define([
           // To speed up querying on templatized dashboards.
           var indexOfHosts = -1;
           for (var i = 0; i < templateSrv.variables.length; i++) {
-            if (templateSrv.variables[i].name == 'hosts') {
+            if (templateSrv.variables[i].name == 'hosts' && templateSrv.index.hosts) {
               indexOfHosts = i;
             }
           }
           if (indexOfHosts >= 0) {
-            var allHosts = templateSrv._values.hosts.lastIndexOf('}') > 0 ? templateSrv._values.hosts.slice(1, -1) :
-              templateSrv._values.hosts;
-            allHosts = templateSrv._texts.hosts === "All" ? '%' : allHosts;
+            let allHosts = [];
+            const hosts = templateSrv.index.hosts.options
+            for (let host of hosts) {
+              if (host.text.toLowerCase() === "all" && host.selected) {
+                allHosts = '%';
+                break;
+              } else if (host.selected) {
+                allHosts.push(host.text);
+              }
+            };
             metricsPromises.push(_.map(options.targets, function (target) {
               target.templatedHost = allHosts ? allHosts : '';
               target.templatedCluster = templatedCluster;
