@@ -41,8 +41,6 @@ export class AmbariMetricsQueryCtrl extends QueryCtrl {
     /** @ngInject **/
     constructor($scope, $injector) {
         super($scope, $injector);
-        var self = this;
-        var lodash = _;
         this.errors = this.validateTarget(this.target);
         this.aggregators = ['none','avg', 'sum', 'min', 'max'];
         this.precisions = ['default','seconds', 'minutes', 'hours', 'days'];
@@ -102,13 +100,13 @@ export class AmbariMetricsQueryCtrl extends QueryCtrl {
 
         this.suggestMetrics = (query, callback) => {
             this.datasource.suggestMetrics(query, this.target.app)
-                .then(self.getTextValues)
+                .then(this.getTextValues)
                 .then(callback);
         };
 
         this.suggestTagKeys = (query, callback) => {
             this.datasource.metricFindQuery('tag_names(' + this.target.metric + ')')
-                .then(self.getTextValues)
+                .then(this.getTextValues)
                 .then(callback);
         };
 
@@ -171,4 +169,5 @@ export class AmbariMetricsQueryCtrl extends QueryCtrl {
         return errs;
     }
 }
+
 

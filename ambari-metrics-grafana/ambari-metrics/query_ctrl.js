@@ -39,8 +39,6 @@ var AmbariMetricsQueryCtrl = /** @class */ (function (_super) {
     /** @ngInject **/
     function AmbariMetricsQueryCtrl($scope, $injector) {
         var _this = _super.call(this, $scope, $injector) || this;
-        var self = _this;
-        var lodash = lodash_1["default"];
         _this.errors = _this.validateTarget(_this.target);
         _this.aggregators = ['none', 'avg', 'sum', 'min', 'max'];
         _this.precisions = ['default', 'seconds', 'minutes', 'hours', 'days'];
@@ -94,12 +92,12 @@ var AmbariMetricsQueryCtrl = /** @class */ (function (_super) {
         };
         _this.suggestMetrics = function (query, callback) {
             _this.datasource.suggestMetrics(query, _this.target.app)
-                .then(self.getTextValues)
+                .then(_this.getTextValues)
                 .then(callback);
         };
         _this.suggestTagKeys = function (query, callback) {
             _this.datasource.metricFindQuery('tag_names(' + _this.target.metric + ')')
-                .then(self.getTextValues)
+                .then(_this.getTextValues)
                 .then(callback);
         };
         _this.suggestTagValues = function (query, callback) {
@@ -109,7 +107,6 @@ var AmbariMetricsQueryCtrl = /** @class */ (function (_super) {
         };
         _this.getTextValues = function (metricFindResult) {
             return metricFindResult.map(function (value) { return value.text; });
-            //return lodash.map(metricFindResult, function(value) { return value.text; });
         };
         return _this;
     }
@@ -117,7 +114,7 @@ var AmbariMetricsQueryCtrl = /** @class */ (function (_super) {
         this.target.errors = this.validateTarget(this.target);
         this.refresh();
     };
-    
+    ;
     AmbariMetricsQueryCtrl.prototype.addTag = function () {
         if (!this.addTagMode) {
             this.addTagMode = true;
