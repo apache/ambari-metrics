@@ -689,14 +689,9 @@ define([
             });
           }
           // To speed up querying on templatized dashboards.
-          var indexOfHosts = -1;
-          for (var i = 0; i < templateSrv.variables.length; i++) {
-            if (templateSrv.variables[i].name == 'hosts' && templateSrv.index.hosts) {
-              indexOfHosts = i;
-            }
-          }
-          if (indexOfHosts >= 0) {
-            let allHosts = [];
+          let allHosts;
+          if (templateSrv.index.hosts) {
+            allHosts = [];
             const hosts = templateSrv.index.hosts.options
             for (let host of hosts) {
               if (host.text.toLowerCase() === "all" && host.selected) {
@@ -705,13 +700,13 @@ define([
               } else if (host.selected) {
                 allHosts.push(host.text);
               }
-            };
-            metricsPromises.push(_.map(options.targets, function (target) {
-              target.templatedHost = allHosts ? allHosts : '';
-              target.templatedCluster = templatedCluster;
-              return getAllHostData(target);
-            }));
+            }
           }
+          metricsPromises.push(_.map(options.targets, function (target) {
+            target.templatedHost = allHosts ? allHosts : '';
+            target.templatedCluster = templatedCluster;
+            return getAllHostData(target);
+          }));
           metricsPromises = _.flatten(metricsPromises);
         } else {
           // Non Templatized Dashboards
