@@ -642,8 +642,8 @@ define([
           //Templatized Dashboards for Storm Components
           if (templateSrv.variables[0].query === "topologies" && templateSrv.variables[1] &&
             templateSrv.variables[1].name === "component") {
-            var selectedTopology = templateSrv._values.topologies;
-            var selectedComponent = templateSrv._values.component;
+            var selectedTopology = templateSrv.index.topologies.options[0].value || "";
+            var selectedComponent = templateSrv.index.component.options[0] ? templateSrv.index.component.options[0].value : "";
             metricsPromises.push(_.map(options.targets, function (target) {
               target.sTopology = selectedTopology;
               target.sComponent = selectedComponent;
@@ -655,8 +655,8 @@ define([
           //Templatized Dashboard for Storm Kafka Offset
           if (templateSrv.variables[0].query === "topologies" && templateSrv.variables[1] &&
             templateSrv.variables[1].name === "topic") {
-            var selectedTopology = templateSrv._values.topologies;
-            var selectedTopic = templateSrv._values.topic;
+            var selectedTopology = templateSrv.index.topologies.options[0].value || "";
+            var selectedTopic = templateSrv.index.topic.options[0] ? templateSrv.index.topic.options[0].value : "";
             metricsPromises.push(_.map(options.targets, function (target) {
               target.sTopology = selectedTopology;
               target.sTopic = selectedTopic;
