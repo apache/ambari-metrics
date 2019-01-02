@@ -389,7 +389,7 @@ public class PhoenixTransactSQL {
     "INTO %s (UUID, SERVER_TIME, METRIC_SUM, METRIC_COUNT, METRIC_MAX, METRIC_MIN) " +
     "SELECT UUID, %s AS SERVER_TIME, " +
     "SUM(METRIC_SUM), SUM(METRIC_COUNT), MAX(METRIC_MAX), MIN(METRIC_MIN) " +
-    "FROM %s WHERE%s SERVER_TIME > %s AND SERVER_TIME <= %s GROUP BY UUID";
+    "FROM %s WHERE%s SERVER_TIME >= %s AND SERVER_TIME < %s GROUP BY UUID";
 
   /**
    * Downsample host metrics.
@@ -407,8 +407,8 @@ public class PhoenixTransactSQL {
    */
   public static final String GET_AGGREGATED_APP_METRIC_GROUPBY_SQL = "UPSERT " +
          "INTO %s (UUID, SERVER_TIME, METRIC_SUM, METRIC_COUNT, METRIC_MAX, METRIC_MIN) SELECT UUID, %s AS SERVER_TIME, " +
-         "ROUND(AVG(METRIC_SUM),2), ROUND(AVG(%s)), MAX(METRIC_MAX), MIN(METRIC_MIN) FROM %s WHERE%s SERVER_TIME > %s AND " +
-         "SERVER_TIME <= %s GROUP BY UUID";
+         "ROUND(AVG(METRIC_SUM),2), ROUND(AVG(%s)), MAX(METRIC_MAX), MIN(METRIC_MIN) FROM %s WHERE%s SERVER_TIME >= %s AND " +
+         "SERVER_TIME < %s GROUP BY UUID";
 
   /**
    * Downsample cluster metrics.

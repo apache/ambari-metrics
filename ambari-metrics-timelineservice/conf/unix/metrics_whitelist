@@ -652,3 +652,4 @@ yarn.TimelineDataManagerMetrics.GetEntitiesTimeAvgTime
 yarn.TimelineDataManagerMetrics.GetEntitiesTotal
 yarn.TimelineDataManagerMetrics.PostEntitiesTimeAvgTime
 yarn.TimelineDataManagerMetrics.PostEntitiesTotal
+._p_*lastKnownAliveTime
