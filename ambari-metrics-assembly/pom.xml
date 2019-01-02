@@ -784,7 +784,33 @@
                     <filemode>755</filemode>
                   </mapper>
                 </data>
-
+                <data>
+                  <src>${monitor.dir}/conf/unix/instance_type_provider_azure</src>
+                  <type>file</type>
+                  <mapper>
+                    <type>perm</type>
+                    <prefix>/etc/ambari-metrics-monitor/conf</prefix>
+                    <filemode>755</filemode>
+                  </mapper>
+                </data>
+                <data>
+                  <src>${monitor.dir}/conf/unix/instance_type_provider_ec2</src>
+                  <type>file</type>
+                  <mapper>
+                    <type>perm</type>
+                    <prefix>/etc/ambari-metrics-monitor/conf</prefix>
+                    <filemode>755</filemode>
+                  </mapper>
+                </data>
+                <data>
+                  <src>${monitor.dir}/conf/unix/instance_type_provider_gce</src>
+                  <type>file</type>
+                  <mapper>
+                    <type>perm</type>
+                    <prefix>/etc/ambari-metrics-monitor/conf</prefix>
+                    <filemode>755</filemode>
+                  </mapper>
+                </data>
                 <!-- Metric collector -->
 
                 <data>

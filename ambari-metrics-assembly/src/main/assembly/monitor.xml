@@ -36,6 +36,9 @@
       <includes>
         <include>metric_groups.conf</include>
         <include>metric_monitor.ini</include>
+        <include>instance_type_provider_azure</include>
+        <include>instance_type_provider_ec2</include>
+        <include>instance_type_provider_gce</include>
       </includes>
     </fileSet>
     <fileSet>

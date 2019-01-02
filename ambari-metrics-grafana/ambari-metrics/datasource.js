@@ -112,21 +112,33 @@ define([
               return $q.when(emptyData(target));
             }
             var series = [];
-            var metricData = res.metrics[0].metrics;
-            // Added hostname to legend for templated dashboards.
-            var hostLegend = res.metrics[0].hostname ? ' on ' + res.metrics[0].hostname : '';
-            var timeSeries = {};
-            timeSeries = {
-              target: alias + hostLegend,
-              datapoints: []
-            };
-            for (var k in metricData) {
-              if (metricData.hasOwnProperty(k)) {
-                timeSeries.datapoints.push([metricData[k], (k - k % 1000)]);
-              }
-            }
-            series.push(timeSeries);
-            return $q.when({data: series});
+            var metricData = res.metrics;
+            _.map(metricData, function (data) {
+              // Added hostname to legend for templated dashboards.
+              var hostLegend = data.hostname ? ' on ' + data.hostname : '';
+              var alias = target.alias ? target.alias : target.metric;
+              if(!_.isEmpty(templateSrv.variables) && templateSrv.variables[0].query === "yarnqueues") {
+                alias = alias + ' on ' + target.qmetric; }
+              if(!_.isEmpty(templateSrv.variables) && templateSrv.variables[0].query === "kafka-topics") {
+                alias = alias + ' on ' + target.kbTopic; }
+              if (!alias.includes("%") || !data.metricname.includes('live_hosts')) {
+                if (!alias || alias.includes("%")) {
+                  alias = data.metricname;
+                }
+              var timeSeries = {};
+              timeSeries = {
+                target: alias + hostLegend,
+                datapoints: []
+                };
+                for (var k in data.metrics) {
+                  if (data.metrics.hasOwnProperty(k)) {
+                    timeSeries.datapoints.push([data.metrics[k], (k - k % 1000)]);
+                  }
+                }
+                series.push(timeSeries);
+                }
+               });
+               return $q.when({data: series});
           };
         };
         // To speed up querying on templatized dashboards.
@@ -200,11 +212,12 @@ define([
                 aliasSuffix = '';
               }
               if (data.appid.indexOf('ambari_server') === 0) {
-                alias = data.metricname;
                 aliasSuffix = '';
               }
+              if (!alias || alias.includes("%")) {
+                alias = data.metricname;
+              }
               timeSeries = {
-                target: alias + aliasSuffix,
                 datapoints: []
               };
               for (var k in data.metrics) {
