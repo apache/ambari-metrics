@@ -331,7 +331,7 @@ public class TestMetadataManager extends AbstractMiniHBaseClusterTest {
 
     uuids = metadataManager.getUuidsForGetMetricQuery(Collections.singletonList("%"),
       Collections.singletonList("%"), "%", "%");
-    Assert.assertTrue(uuids.size() == 6);
+    Assert.assertTrue(uuids.size() == 9);
   }
 
   @Test
