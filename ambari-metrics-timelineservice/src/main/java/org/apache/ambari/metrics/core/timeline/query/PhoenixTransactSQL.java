@@ -831,7 +831,7 @@ public class PhoenixTransactSQL {
     if (orderByClause != null) {
       sb.append(orderByClause);
     } else {
-      sb.append(" ORDER BY UUID DESC, SERVER_TIME DESC  ");
+      sb.append(" ORDER BY UUID, SERVER_TIME DESC  ");
     }
 
     sb.append(" LIMIT ").append(condition.getMetricNames().size());
