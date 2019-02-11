@@ -60,7 +60,7 @@ public class MetadataQueryCondition extends TransientMetricCondition {
     }
 
     String instanceId = getInstanceId();
-    if (StringUtils.isNotEmpty(instanceId)) {
+    if (StringUtils.isNotEmpty(instanceId) && !"%".equals(instanceId)) {
       if (instanceId.contains("%")) {
         appendConjunction = append(sb, appendConjunction, instanceId, " INSTANCE_ID LIKE ?");
       } else {
@@ -69,6 +69,11 @@ public class MetadataQueryCondition extends TransientMetricCondition {
     }
 
     return sb;
+  }
+
+  @Override
+  public String getInstanceId() {
+    return instanceId == null || "%".equals(instanceId) || instanceId.isEmpty() ? null : instanceId;
   }
 
   public boolean isMetricMetadataCondition() {
