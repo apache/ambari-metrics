@@ -649,10 +649,6 @@ public class TimelineMetricMetadataManager {
       }
     }
 
-    if ( StringUtils.isNotEmpty(appId) && !(appId.equals("HOST") || appId.equals("FLUME_HANDLER"))) { //HACK.. Why??
-      appId = appId.toLowerCase();
-    }
-
     if (hasWildCard(instanceId) || hasWildCard(appId) || hostNameHasWildcard || metricNameHasWildcard) {
       try {
         List<TimelineMetricMetadata> metricMetadataFromStore = hBaseAccessor.scanMetricMetadataForWildCardRequest(metricNames,
