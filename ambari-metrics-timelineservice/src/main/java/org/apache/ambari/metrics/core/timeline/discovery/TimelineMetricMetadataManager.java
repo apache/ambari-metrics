@@ -657,6 +657,7 @@ public class TimelineMetricMetadataManager {
       appId = appId.toLowerCase();
     }
     */
+
     if (CollectionUtils.isNotEmpty(sanitizedHostNames)) {
       if (CollectionUtils.isNotEmpty(sanitizedMetricNames)) {
 
