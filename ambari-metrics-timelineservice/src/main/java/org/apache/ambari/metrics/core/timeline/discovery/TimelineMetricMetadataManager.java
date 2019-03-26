@@ -651,10 +651,11 @@ public class TimelineMetricMetadataManager {
     }
 
     Set<String> sanitizedHostNames = getSanitizedHostnames(hostnames);
-
+    //converting to lower case is not needed as Collector inserts Appids even with Upper case.
+    /*
     if ( StringUtils.isNotEmpty(appId) && !(appId.equals("HOST") || appId.equals("FLUME_HANDLER"))) { //HACK.. Why??
       appId = appId.toLowerCase();
-    }
+    }*/
     if (CollectionUtils.isNotEmpty(sanitizedHostNames)) {
       if (CollectionUtils.isNotEmpty(sanitizedMetricNames)) {
 
