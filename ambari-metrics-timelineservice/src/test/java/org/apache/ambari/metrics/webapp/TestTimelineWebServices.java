@@ -26,6 +26,7 @@ import org.apache.hadoop.metrics2.sink.timeline.TimelineMetrics;
 import org.apache.ambari.metrics.core.timeline.TestTimelineMetricStore;
 import org.apache.ambari.metrics.core.timeline.TimelineMetricStore;
 import org.apache.hadoop.yarn.webapp.GenericExceptionHandler;
+import org.apache.hadoop.yarn.webapp.JerseyTestBase;
 import org.apache.hadoop.yarn.webapp.YarnJacksonJaxbJsonProvider;
 import org.junit.Test;
 
@@ -43,7 +44,7 @@ import com.sun.jersey.test.framework.WebAppDescriptor;
 import junit.framework.Assert;
 
 
-public class TestTimelineWebServices extends JerseyTest {
+public class TestTimelineWebServices extends JerseyTestBase {
   private static TimelineMetricStore metricStore;
   private long beforeTime;
 
