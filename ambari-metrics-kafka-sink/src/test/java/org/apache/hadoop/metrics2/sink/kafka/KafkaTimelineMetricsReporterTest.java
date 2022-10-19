@@ -84,7 +84,6 @@ public class KafkaTimelineMetricsReporterTest {
     properties.setProperty("kafka.timeline.metrics.reporter.enabled", "true");
     properties.setProperty("external.kafka.metrics.exclude.prefix", "a.b.c");
     properties.setProperty("external.kafka.metrics.include.prefix", "a.b.c.d");
-    properties.setProperty("external.kafka.metrics.include.regex", "a.b.c.*.f");
     properties.setProperty("kafka.timeline.metrics.instanceId", "cluster");
     properties.setProperty("kafka.timeline.metrics.set.instanceId", "false");
     props = new VerifiableProperties(properties);
@@ -119,7 +118,6 @@ public class KafkaTimelineMetricsReporterTest {
     properties.setProperty("kafka.timeline.metrics.reporter.enabled", "true");
     properties.setProperty("external.kafka.metrics.exclude.prefix", "a.b.c");
     properties.setProperty("external.kafka.metrics.include.prefix", "a.b.c.d");
-    properties.setProperty("external.kafka.metrics.include.regex", "a.b.c.*.f");
     properties.setProperty("kafka.timeline.metrics.protocol", "https");
     properties.setProperty("kafka.timeline.metrics.truststore.path", "");
     properties.setProperty("kafka.timeline.metrics.truststore.type", "");
@@ -145,7 +143,6 @@ public class KafkaTimelineMetricsReporterTest {
     Assert.assertFalse(kafkaTimelineMetricsReporter.isExcludedMetric("a.b"));
     Assert.assertFalse(kafkaTimelineMetricsReporter.isExcludedMetric("a.b.c.d"));
     Assert.assertFalse(kafkaTimelineMetricsReporter.isExcludedMetric("a.b.c.d.e"));
-    Assert.assertFalse(kafkaTimelineMetricsReporter.isExcludedMetric("a.b.c.e.f"));
 
     kafkaTimelineMetricsReporter.stopReporter();
     verifyAll();

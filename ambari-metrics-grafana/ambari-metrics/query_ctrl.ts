@@ -18,10 +18,9 @@
 
 ///<reference path="../../../headers/common.d.ts" />
 
-import 'angular';
+import angular from 'angular';
 import _ from 'lodash';
-import kbn from 'app/core/utils/kbn';
-import {QueryCtrl} from 'app/plugins/sdk';
+import {QueryCtrl} from "app/plugins/sdk";
 
 export class AmbariMetricsQueryCtrl extends QueryCtrl {
 
@@ -65,7 +64,7 @@ export class AmbariMetricsQueryCtrl extends QueryCtrl {
                 this.target.seriesAggregator = "none";
             }
         };
-        $scope.$watch('target.app', function (newValue) {
+        this.$watch('target.app', function (newValue) {
             if (newValue === '') {
                 this.target.metric = '';
                 this.target.hosts = '';
@@ -79,55 +78,59 @@ export class AmbariMetricsQueryCtrl extends QueryCtrl {
         this.datasource.getAggregators().then(function(aggs) {
             this.aggregators = aggs;
         });
-
-        this.suggestApps = (query, callback) => {
-            this.datasource.suggestApps(query)
-                .then(this.getTextValues)
-                .then(callback);
-        };
-
-        this.suggestClusters = (query, callback) => {
-            this.datasource.suggestClusters(this.target.app)
-                .then(this.getTextValues)
-                .then(callback);
-        };
-
-        this.suggestHosts = (query, callback) => {
-            this.datasource.suggestHosts(this.target.app, this.target.cluster)
-                .then(this.getTextValues)
-                .then(callback);
-        };
-
-        this.suggestMetrics = (query, callback) => {
-            this.datasource.suggestMetrics(query, this.target.app)
-                .then(this.getTextValues)
-                .then(callback);
-        };
-
-        this.suggestTagKeys = (query, callback) => {
-            this.datasource.metricFindQuery('tag_names(' + this.target.metric + ')')
-                .then(this.getTextValues)
-                .then(callback);
-        };
-
-        this.suggestTagValues = (query, callback) => {
-            this.datasource.metricFindQuery('tag_values(' + this.target.metric + ',' + this.target.currentTagKey + ')')
-                .then(this.getTextValues)
-                .then(callback);
-        };
-
-        this.getTextValues = (metricFindResult) => {
-            return metricFindResult.map((value) => {return value.text });
-        }
     }
 
-    targetBlur () {
+    targetBlur = function() {
         this.target.errors = this.validateTarget(this.target);
-        this.refresh();
-    };
-    
 
-    addTag () {
+        // this does not work so good
+        if (!_.isEqual(this.oldTarget, this.target) && _.isEmpty(this.target.errors)) {
+            this.oldTarget = angular.copy(this.target);
+            this.get_data();
+        }
+    };
+
+    getTextValues = function(metricFindResult) {
+        return _.map(metricFindResult, function(value) { return value.text; });
+    };
+
+    suggestApps = function(query, callback) {
+        this.datasource.suggestApps(query)
+            .then(this.getTextValues)
+            .then(callback);
+    };
+
+    suggestClusters = function(query, callback) {
+        this.datasource.suggestClusters(this.target.app)
+            .then(this.getTextValues)
+            .then(callback);
+    };
+
+    suggestHosts = function(query, callback) {
+        this.datasource.suggestHosts(this.target.app, this.target.cluster)
+            .then(this.getTextValues)
+            .then(callback);
+    };
+
+    suggestMetrics = function(query, callback) {
+        this.datasource.suggestMetrics(query, this.target.app)
+            .then(this.getTextValues)
+            .then(callback);
+    };
+
+    suggestTagKeys = function(query, callback) {
+        this.datasource.metricFindQuery('tag_names(' + this.target.metric + ')')
+            .then(this.getTextValues)
+            .then(callback);
+    };
+
+    suggestTagValues = function(query, callback) {
+        this.datasource.metricFindQuery('tag_values(' + this.target.metric + ',' + this.target.currentTagKey + ')')
+            .then(this.getTextValues)
+            .then(callback);
+    };
+
+    addTag = function() {
         if (!this.addTagMode) {
             this.addTagMode = true;
             return;
@@ -149,17 +152,12 @@ export class AmbariMetricsQueryCtrl extends QueryCtrl {
         this.addTagMode = false;
     };
 
-    removeTag (key) {
+    removeTag = function(key) {
         delete this.target.tags[key];
         this.targetBlur();
     };
 
-    getCollapsedText () {
-        var text = this.target.metric + ' on ' + this.target.app;
-        return text;
-    };
-
-    validateTarget (target) {
+    validateTarget = function(target) {
         var errs = {};
 
         if (target.tags && _.has(target.tags, target.currentTagKey)) {
@@ -169,5 +167,3 @@ export class AmbariMetricsQueryCtrl extends QueryCtrl {
         return errs;
     }
 }
-
-

@@ -83,7 +83,7 @@ public class TimelineMetricFilteringHostAggregator extends TimelineMetricHostAgg
     condition.setDoUpdate(true);
 
     condition.setStatement(String.format(GET_AGGREGATED_HOST_METRIC_GROUPBY_SQL,
-      outputTableName, endTime - 1000l, tableName,
+      outputTableName, endTime, tableName,
       getDownsampledMetricSkipClause() + getIncludedUuidsClause(uuids), startTime, endTime));
 
     if (LOG.isDebugEnabled()) {

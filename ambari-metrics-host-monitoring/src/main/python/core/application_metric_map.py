@@ -88,7 +88,6 @@ class ApplicationMetricMap:
       pass
   
       for appId, metrics in local_metric_map.iteritems():
-        current_app_id = "HOST" if "HOST" in appId else appId
         for metricId, metricData in dict(metrics).iteritems():
           # Create a timeline metric object
           result_instanceid = ""
@@ -97,7 +96,7 @@ class ApplicationMetricMap:
           timeline_metric = {
             "hostname" : self.hostname,
             "metricname" : metricId,
-            "appid" : current_app_id,
+            "appid" : "HOST",
             "instanceid" : result_instanceid,
             "starttime" : self.get_start_time(appId, metricId),
             "metrics" : self.align_values_by_minute_mark(appId, metricId, metricData) if clear_once_flattened else metricData

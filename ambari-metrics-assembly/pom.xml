@@ -19,7 +19,7 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
     <artifactId>ambari-metrics</artifactId>
     <groupId>org.apache.ambari</groupId>
@@ -264,7 +264,49 @@
                             <exclude>lib/*tests.jar</exclude>
                             <exclude>lib/findbugs*.jar</exclude>
                             <exclude>lib/jdk.tools*.jar</exclude>
+                            <!-- hadoop, guava and commons-beanutils are excluded because they will be replaced with different versions -->
+                            <exclude>lib/hadoop*.jar</exclude>
+                            <exclude>lib/guava-11.0.2.jar</exclude>
+                            <exclude>lib/commons-beanutils-core-1.8.0.jar</exclude>
                           </excludes>
+                        </source>
+                      </sources>
+                    </mapping>
+                    <mapping>
+                      <!--embedded applications-->
+                      <directory>/usr/lib/ams-hbase/lib/</directory>
+                      <directoryIncluded>false</directoryIncluded>
+                      <sources>
+                        <source>
+                          <location>${project.build.directory}/embedded/${hadoop.folder}/share/hadoop/hdfs</location>
+                          <includes>
+                            <include>hadoop-hdfs-${hadoop.version}.jar</include>
+                            <include>hadoop-hdfs-client-${hadoop.version}.jar</include>
+                          </includes>
+                        </source>
+                        <source>
+                          <location>${project.build.directory}/embedded/${hadoop.folder}/share/hadoop/common/lib</location>
+                          <includes>
+                            <include>commons-beanutils-*.jar</include>
+                          </includes>
+                        </source>
+                        <source>
+                          <location>${project.build.directory}/embedded/${hadoop.folder}/share/hadoop/tools/lib</location>
+                          <includes>
+                            <include>hadoop-aws*.jar</include>
+                            <include>hadoop-distcp-*.jar</include>
+                          </includes>
+                        </source>
+                        <source>
+                          <location>${project.build.directory}/embedded/${hadoop.folder}/share/hadoop/mapreduce</location>
+                          <includes>
+                              <include>hadoop-mapreduce-client-app-${hadoop.version}.jar</include>
+                              <include>hadoop-mapreduce-client-common-${hadoop.version}.jar</include>
+                              <include>hadoop-mapreduce-client-core-${hadoop.version}.jar</include>
+                              <include>hadoop-mapreduce-client-hs-${hadoop.version}.jar</include>
+                              <include>hadoop-mapreduce-client-jobclient-${hadoop.version}.jar</include>
+                              <include>hadoop-mapreduce-client-shuffle-${hadoop.version}.jar</include>
+                          </includes>
                         </source>
                       </sources>
                     </mapping>
@@ -285,6 +327,25 @@
                           <includes>
                             <include>phoenix*.jar</include>
                             <include>antlr*.jar</include>
+                            <include>re2j*.jar</include>
+                            <include>failureaccess*.jar</include>
+                            <include>guava-28*.jar</include>
+                            <include>stax2-api*.jar</include>
+                            <include>woodstox-core*.jar</include>
+                            <include>hadoop-annotations-${hadoop.version}.jar</include>
+                            <include>hadoop-auth-${hadoop.version}.jar</include>
+                            <include>hadoop-common-${hadoop.version}.jar</include>
+                            <include>commons-configuration2-*.jar</include>
+                            <include>hadoop-yarn-api-${hadoop.version}.jar</include>
+                            <include>hadoop-yarn-client-${hadoop.version}.jar</include>
+                            <include>hadoop-yarn-common-${hadoop.version}.jar</include>
+                            <include>hadoop-yarn-registry-${hadoop.version}.jar</include>
+                            <include>hadoop-yarn-server-applicationhistoryservice-${hadoop.version}.jar</include>
+                            <include>hadoop-yarn-server-common-${hadoop.version}.jar</include>
+                            <include>hadoop-yarn-server-nodemanager-${hadoop.version}.jar</include>
+                            <include>hadoop-yarn-server-resourcemanager-${hadoop.version}.jar</include>
+                            <include>hadoop-yarn-server-timelineservice-${hadoop.version}.jar</include>
+                            <include>hadoop-yarn-server-web-proxy-${hadoop.version}.jar</include>
                           </includes>
                         </source>
                       </sources>
@@ -598,6 +659,16 @@
                       </sources>
                     </mapping>
                     <mapping>
+                      <directory>${resmonitor.install.dir}/ambari_commons</directory>
+                      <sources>
+                        <source>
+                          <location>
+                            ${project.basedir}/../../ambari-common/src/main/python/ambari_commons
+                          </location>
+                        </source>
+                      </sources>
+                    </mapping>
+                    <mapping>
                       <directory>/var/lib/ambari-metrics-monitor/lib</directory>
                       <sources>
                         <source>
@@ -685,7 +756,6 @@
           <plugin>
             <artifactId>jdeb</artifactId>
             <groupId>org.vafer</groupId>
-            <version>1.0.1</version>
             <executions>
               <execution>
                 <phase>package</phase>
@@ -737,6 +807,14 @@
                   </mapper>
                 </data>
                 <data>
+                  <type>directory</type>
+                  <src>${project.basedir}/../../ambari-common/src/main/python/ambari_commons</src>
+                  <mapper>
+                    <type>perm</type>
+                    <prefix>${resmonitor.install.dir}/ambari_commons</prefix>
+                  </mapper>
+                </data>
+                <data>
                   <type>template</type>
                   <paths>
                     <path>/etc/ambari-metrics-monitor/conf</path>
@@ -750,6 +828,7 @@
                     <path>/var/lib/ambari-metrics-monitor/lib</path>
                     <path>/var/lib/ambari-metrics-grafana</path>
                     <path>/var/lib/ambari-metrics-grafana/plugins</path>
+                    <path>/var/lib/ambari-metrics-grafana/plugins/ambari-metrics</path>
                     <path>/usr/lib/ambari-metrics-hadoop-sink</path>
                     <path>/usr/lib/ambari-metrics-kafka-sink</path>
                     <path>/usr/lib/ambari-metrics-kafka-sink/lib</path>
@@ -784,33 +863,7 @@
                     <filemode>755</filemode>
                   </mapper>
                 </data>
-                <data>
-                  <src>${monitor.dir}/conf/unix/instance_type_provider_azure</src>
-                  <type>file</type>
-                  <mapper>
-                    <type>perm</type>
-                    <prefix>/etc/ambari-metrics-monitor/conf</prefix>
-                    <filemode>755</filemode>
-                  </mapper>
-                </data>
-                <data>
-                  <src>${monitor.dir}/conf/unix/instance_type_provider_ec2</src>
-                  <type>file</type>
-                  <mapper>
-                    <type>perm</type>
-                    <prefix>/etc/ambari-metrics-monitor/conf</prefix>
-                    <filemode>755</filemode>
-                  </mapper>
-                </data>
-                <data>
-                  <src>${monitor.dir}/conf/unix/instance_type_provider_gce</src>
-                  <type>file</type>
-                  <mapper>
-                    <type>perm</type>
-                    <prefix>/etc/ambari-metrics-monitor/conf</prefix>
-                    <filemode>755</filemode>
-                  </mapper>
-                </data>
+
                 <!-- Metric collector -->
 
                 <data>
@@ -835,10 +888,51 @@
                 <data>
                   <src>${collector.dir}/target/embedded/${hbase.folder}</src>
                   <type>directory</type>
-                  <excludes>bin/**,bin/*,lib/*tests.jar</excludes>
+                   <!-- hadoop, guava and commons-beanutils are excluded because they will be replaced with different versions -->
+                  <excludes>bin/**,bin/*,lib/*tests.jar,lib/hadoop*jar,lib/guava-11.0.2.jar,lib/commons-beanutils-core-1.8.0.jar</excludes>
                   <mapper>
                     <type>perm</type>
                     <prefix>/usr/lib/ams-hbase</prefix>
+                    <filemode>644</filemode>
+                  </mapper>
+                </data>
+                <data>
+                  <src>${project.build.directory}/embedded/${hadoop.folder}/share/hadoop/hdfs</src>
+                  <type>directory</type>
+                  <includes>hadoop-hdfs-${hadoop.version}.jar,hadoop-hdfs-client-${hadoop.version}.jar</includes>
+                  <mapper>
+                    <type>perm</type>
+                    <prefix>/usr/lib/ams-hbase/lib</prefix>
+                    <filemode>644</filemode>
+                  </mapper>
+                </data>
+  		          <data>
+                  <src>${project.build.directory}/embedded/${hadoop.folder}/share/hadoop/common/lib</src>
+                  <type>directory</type>
+                  <includes>commons-beanutils-*.jar</includes>
+                  <mapper>
+                    <type>perm</type>
+                    <prefix>/usr/lib/ams-hbase/lib</prefix>
+                    <filemode>644</filemode>
+                  </mapper>
+                </data>
+                <data>
+                  <src>${project.build.directory}/embedded/${hadoop.folder}/share/hadoop/tools/lib</src>
+                  <type>directory</type>
+                  <includes>hadoop-aws*.jar,hadoop-distcp-*.jar</includes>
+                  <mapper>
+                    <type>perm</type>
+                    <prefix>/usr/lib/ams-hbase/lib</prefix>
+                    <filemode>644</filemode>
+                  </mapper>
+                </data>
+                <data>
+                  <src>${project.build.directory}/embedded/${hadoop.folder}/share/hadoop/mapreduce</src>
+                  <type>directory</type>
+                  <includes>hadoop-mapreduce-client-app-${hadoop.version}.jar,hadoop-mapreduce-client-common-${hadoop.version}.jar,hadoop-mapreduce-client-core-${hadoop.version}.jar,hadoop-mapreduce-client-hs-${hadoop.version}.jar,hadoop-mapreduce-client-jobclient-${hadoop.version}.jar,hadoop-mapreduce-client-shuffle-${hadoop.version}.jar</includes>
+                  <mapper>
+                    <type>perm</type>
+                    <prefix>/usr/lib/ams-hbase/lib</prefix>
                     <filemode>644</filemode>
                   </mapper>
                 </data>
@@ -863,7 +957,7 @@
                 <data>
                   <src>${collector.dir}/target/lib</src>
                   <type>directory</type>
-                  <includes>phoenix*.jar,antlr*.jar</includes>
+                  <includes>phoenix*.jar,antlr*.jar,re2j*.jar,failureaccess*.jar,guava-28*.jar,stax2-api*.jar,woodstox-core*.jar,hadoop-annotations*.jar,hadoop-auth*.jar,hadoop-common*.jar,commons-configuration2*.jar,hadoop-yarn-api-*.jar,hadoop-yarn-client-*.jar,hadoop-yarn-common-*.jar,hadoop-yarn-registry-*.jar,hadoop-yarn-server-applicationhistoryservice-*.jar,hadoop-yarn-server-common-*.jar,hadoop-yarn-server-nodemanager-*.jar,hadoop-yarn-server-resourcemanager-*.jar,hadoop-yarn-server-timelineservice-*.jar,hadoop-yarn-server-web-proxy-*.jar</includes>
                   <mapper>
                     <type>perm</type>
                     <filemode>644</filemode>
@@ -991,6 +1085,15 @@
                     <prefix>/etc/ambari-metrics-grafana/conf</prefix>
                   </mapper>
                 </data>
+                <data>
+                  <src>${grafana.dir}/ambari-metrics</src>
+                  <type>directory</type>
+                  <mapper>
+                    <type>perm</type>
+                    <filemode>755</filemode>
+                    <prefix>/var/lib/ambari-metrics-grafana/plugins/ambari-metrics</prefix>
+                  </mapper>
+                </data>
 
                 <!-- hadoop sink -->
 
@@ -1070,7 +1173,7 @@
         <envClassifier>linux</envClassifier>
         <dirsep>/</dirsep>
         <pathsep>:</pathsep>
-        <executable.python>${monitor.dir}/src/main/unix/ambari-python-wrap</executable.python>
+        <executable.python>${project.basedir}/../ambari-common/src/main/unix/ambari-python-wrap</executable.python>
         <executable.shell>sh</executable.shell>
         <fileextension.shell>sh</fileextension.shell>
         <fileextension.dot.shell-default></fileextension.dot.shell-default>
@@ -1122,6 +1225,184 @@
                       />
                     <delete file="${project.build.directory}/embedded/${hadoop.folder}/lib/native/libsnappy.so"/>
                   </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>windows</id>
+      <activation>
+        <os>
+          <family>win</family>
+        </os>
+      </activation>
+      <properties>
+        <envClassifier>win</envClassifier>
+        <dirsep>\</dirsep>
+        <pathsep>;</pathsep>
+        <executable.python>python</executable.python>
+        <executable.shell>cmd</executable.shell>
+        <fileextension.shell>cmd</fileextension.shell>
+        <fileextension.dot.shell-default>.cmd</fileextension.dot.shell-default>
+        <assemblydescriptor.collector>src/main/assembly/collector-windows.xml</assemblydescriptor.collector>
+        <assemblydescriptor.monitor>src/main/assembly/monitor-windows.xml</assemblydescriptor.monitor>
+        <assemblydescriptor.sink>src/main/assembly/sink-windows.xml</assemblydescriptor.sink>
+        <assemblydescriptor.collector.choco>src/main/assembly/collector-windows-choco.xml</assemblydescriptor.collector.choco>
+        <assemblydescriptor.monitor.choco>src/main/assembly/monitor-windows-choco.xml</assemblydescriptor.monitor.choco>
+        <assemblydescriptor.sink.choco>src/main/assembly/sink-windows-choco.xml</assemblydescriptor.sink.choco>
+        <packagingFormat>jar</packagingFormat>
+        <python.build.version>2.7</python.build.version>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.7</version>
+            <executions>
+              <execution>
+                <id>download-hadoop</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target name="Downloading Hadoop">
+                    <mkdir dir="${project.build.directory}/embedded" />
+                    <get
+                      src="${hadoop.winpkg.zip}"
+                      dest="${project.build.directory}/embedded/hadoop.zip"
+                      usetimestamp="true"
+                      />
+                    <unzip
+                      src="${project.build.directory}/embedded/hadoop.zip"
+                      dest="${project.build.directory}/embedded/hadoop.temp"
+                      />
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>choco</id>
+      <activation>
+        <os>
+          <family>Windows</family>
+        </os>
+      </activation>
+      <build>
+        <plugins>
+          <!-- choco package creation -->
+          <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>collector-choco-dir</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+                <configuration>
+                  <attach>false</attach>
+                  <finalName>ambari-metrics-collector-${project.version}-choco</finalName>
+                  <appendAssemblyId>false</appendAssemblyId>
+                  <descriptors>
+                    <descriptor>${assemblydescriptor.collector.choco}</descriptor>
+                  </descriptors>
+                  <tarLongFileMode>gnu</tarLongFileMode>
+                </configuration>
+              </execution>
+              <execution>
+                <id>monitor-choco-dir</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+                <configuration>
+                  <attach>false</attach>
+                  <finalName>ambari-metrics-monitor-${project.version}-choco</finalName>
+                  <appendAssemblyId>false</appendAssemblyId>
+                  <descriptors>
+                    <descriptor>${assemblydescriptor.monitor.choco}</descriptor>
+                  </descriptors>
+                  <tarLongFileMode>gnu</tarLongFileMode>
+                </configuration>
+              </execution>
+              <execution>
+                <id>hadoop-sink-choco-dir</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+                <configuration>
+                  <attach>false</attach>
+                  <finalName>ambari-metrics-hadoop-sink-${project.version}-choco</finalName>
+                  <appendAssemblyId>false</appendAssemblyId>
+                  <descriptors>
+                    <descriptor>${assemblydescriptor.sink.choco}</descriptor>
+                  </descriptors>
+                  <tarLongFileMode>gnu</tarLongFileMode>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.2.1</version>
+            <executions>
+              <execution>
+                <id>collector-choco-package</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>choco.exe</executable>
+                  <arguments>
+                    <argument>pack</argument>
+                    <argument>--version=${project.version}</argument>
+                    <argument>${basedir}/target/ambari-metrics-collector-${project.version}-choco/ambari-metrics-collector.nuspec</argument>
+                  </arguments>
+                  <workingDirectory>target/ambari-metrics-collector-${project.version}-choco</workingDirectory>
+                </configuration>
+              </execution>
+              <execution>
+                <id>monitor-choco-package</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>choco.exe</executable>
+                  <arguments>
+                    <argument>pack</argument>
+                    <argument>--version=${project.version}</argument>
+                    <argument>${basedir}/target/ambari-metrics-monitor-${project.version}-choco/ambari-metrics-monitor.nuspec</argument>
+                  </arguments>
+                  <workingDirectory>target/ambari-metrics-monitor-${project.version}-choco</workingDirectory>
+                </configuration>
+              </execution>
+              <execution>
+                <id>hadoop-sink-choco-package</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>choco.exe</executable>
+                  <arguments>
+                    <argument>pack</argument>
+                    <argument>--version=${project.version}</argument>
+                    <argument>${basedir}/target/ambari-metrics-hadoop-sink-${project.version}-choco/ambari-metrics-hadoop-sink.nuspec</argument>
+                  </arguments>
+                  <workingDirectory>target/ambari-metrics-hadoop-sink-${project.version}-choco</workingDirectory>
                 </configuration>
               </execution>
             </executions>

@@ -17,7 +17,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+                      https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <parent>
     <artifactId>ambari-metrics</artifactId>
@@ -35,8 +35,6 @@
     </resmonitor.install.dir>
     <final.name>${project.artifactId}-${project.version}</final.name>
   </properties>
-  <dependencies>
-  </dependencies>
   <build>
     <plugins>
       <plugin>
@@ -83,7 +81,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.0</version>
+        <version>3.2</version>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -118,9 +116,7 @@
             <exclude>conf/unix/metric_groups.conf</exclude>
             <exclude>conf/windows/metric_groups.conf</exclude>
             <exclude>src/main/python/psutil/**</exclude>
-	    <exclude>.pydevproject</exclude>
-	    <!--Python Mock library (BSD license)-->
-	    <exclude>src/test/python/mock/**</exclude>
+            <exclude>.pydevproject</exclude>
           </excludes>
         </configuration>
         <executions>
@@ -135,7 +131,6 @@
       <plugin>
         <groupId>org.vafer</groupId>
         <artifactId>jdeb</artifactId>
-        <version>1.0.1</version>
         <executions>
           <execution>
             <!--Stub execution on direct plugin call - workaround for ambari deb build process-->
@@ -156,6 +151,55 @@
     </plugins>
   </build>
   <profiles>
+    <profile>
+      <id>windows</id>
+      <activation>
+        <os>
+          <family>win</family>
+        </os>
+      </activation>
+      <properties>
+        <envClassifier>win</envClassifier>
+        <dirsep>\</dirsep>
+        <pathsep>;</pathsep>
+        <executable.python>python</executable.python>
+        <executable.shell>cmd</executable.shell>
+        <fileextension.shell>cmd</fileextension.shell>
+        <fileextension.dot.shell-default>.cmd</fileextension.dot.shell-default>
+        <assemblydescriptor>src/main/assemblies/amhm-windows.xml</assemblydescriptor>
+        <packagingFormat>jar</packagingFormat>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.7</version>
+            <executions>
+              <execution>
+                <id>psutils-compile</id>
+                <phase>process-test-classes</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target name="psutils-compile">
+                    <exec dir="${basedir}/src/main/python/psutil" executable="${executable.python}" failonerror="true">
+                      <arg value="setup.py" />
+                      <arg value="build" />
+                      <arg value="--build-temp" />
+                      <arg value="${basedir}\target\psutil_build_temp" />
+                      <arg value="--build-base" />
+                      <arg value="${basedir}/target/psutil_build" />
+                    </exec>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
     <profile>
       <id>linux</id>
       <activation>
