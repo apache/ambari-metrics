@@ -292,8 +292,8 @@ define([
         var getAllHostData = function (target) {
           var instanceId = typeof target.templatedCluster == 'undefined' ? '' : '&instanceId=' + target.templatedCluster;
           var appId = target.app;
-          if ((appId === 'nifi' || appId === 'druid') && !instanceId) {
-            instanceId = "%"
+          if ((appId === 'nifi' || appId === 'druid') && (!instanceId || instanceId === '&instanceId=')) {
+            instanceId = "&instanceId=%"
           }
           var precision = target.precision === 'default' || typeof target.precision == 'undefined' ? '' : '&precision='
             + target.precision;
