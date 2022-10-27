@@ -459,10 +459,10 @@ define([
             var allQueues = templateSrv.variables.filter(function (variable) {
               return variable.query === "yarnqueues";
             });
-            var selectedQs = (_.isEmpty(allQueues)) ? "" : allQueues[0].options.filter(function (q) {
-              return q.selected;
-            }).map(function (qName) {
-              return qName.value;
+            var selectedQs = (_.isEmpty(allQueues)) ? "" : allQueues[0].options
+                 .filter(getSelectedItems)
+                 .map(function(qName) {
+                   return qName.value;
             });
             // All Queues
             if (!_.isEmpty(_.find(selectedQs, function (wildcard) {
@@ -482,15 +482,16 @@ define([
               });
             } else {
               // All selected queues.
-              _.forEach(selectedQs, function (processQueue) {
-                metricsPromises.push(_.map(options.targets, function (target) {
-                  target.qmetric = processQueue;
-                  target.queue = target.metric.replace('root', target.qmetric);
-                  return getYarnAppIdData(target);
-                }));
-              });
+              _.forEach(selectedQs, function(processQueue) {
+                 metricsPromises.push(_.map(options.targets, function(target) {
+                   target.qmetric = processQueue;
+                   target.queue = target.metric.replace('root', target.qmetric);
+                   return getYarnAppIdData(target);
+                 }));
+               });
             }
           }
+
           // Templatized Dashboard for per-user metrics in HBase.
           if (templateSrv.variables[0].query === "hbase-users") {
             var allUsers = templateSrv.variables.filter(function (variable) {
@@ -652,30 +653,36 @@ define([
 
           //Templatized Dashboards for Storm Components
           if (templateSrv.variables[0].query === "topologies" && templateSrv.variables[1] &&
-            templateSrv.variables[1].name === "component") {
-            var selectedTopology = templateSrv.index.topologies.options[0].value || "";
-            var selectedComponent = templateSrv.index.component.options[0] ? templateSrv.index.component.options[0].value : "";
-            metricsPromises.push(_.map(options.targets, function (target) {
-              target.sTopology = selectedTopology;
-              target.sComponent = selectedComponent;
-              target.sTopoMetric = target.metric.replace('*', target.sTopology).replace('*', target.sComponent);
-              return getStormData(target);
-            }));
+              templateSrv.variables[1].name === "component") {
+            if (templateSrv._values) {
+              var selectedTopology = templateSrv._values.topologies;
+              var selectedComponent = templateSrv._values.component;
+
+              metricsPromises.push(_.map(options.targets, function(target) {
+                target.sTopology = selectedTopology;
+                target.sComponent = selectedComponent;
+                target.sTopoMetric = target.metric.replace('*', target.sTopology).replace('*', target.sComponent);
+                return getStormData(target);
+              }));
+            }
           }
 
           //Templatized Dashboard for Storm Kafka Offset
           if (templateSrv.variables[0].query === "topologies" && templateSrv.variables[1] &&
-            templateSrv.variables[1].name === "topic") {
-            var selectedTopology = templateSrv.index.topologies.options[0].value || "";
-            var selectedTopic = templateSrv.index.topic.options[0] ? templateSrv.index.topic.options[0].value : "";
-            metricsPromises.push(_.map(options.targets, function (target) {
-              target.sTopology = selectedTopology;
-              target.sTopic = selectedTopic;
-              target.sPartition = options.scopedVars.partition.value;
-              target.sTopoMetric = target.metric.replace('*', target.sTopology).replace('*', target.sTopic)
-                .replace('*', target.sPartition);
-              return getStormData(target);
-            }));
+              templateSrv.variables[1].name === "topic") {
+            if (templateSrv._values) {
+              var selectedTopology = templateSrv._values.topologies;
+              var selectedTopic = templateSrv._values.topic;
+
+              metricsPromises.push(_.map(options.targets, function(target) {
+                target.sTopology = selectedTopology;
+                target.sTopic = selectedTopic;
+                target.sPartition = options.scopedVars.partition.value;
+                target.sTopoMetric = target.metric.replace('*', target.sTopology).replace('*', target.sTopic)
+                     .replace('*', target.sPartition);
+                return getStormData(target);
+              }));
+            }
           }
 
           //Templatized Dashboards for Druid
@@ -876,58 +883,67 @@ define([
         var cores = [];
         //Templated Variables for Infra Solr Cores
         if (interpolated === "infra_solr_core") {
-          return this.initMetricAppidMapping()
-            .then(function () {
-              var solrMetrics = allMetrics["ambari-infra-solr"];
-              var extractCores = solrMetrics.filter(/./.test.bind(new
-              RegExp("^infra.solr.core.", 'g')));
-              _.map(extractCores, function (core) {
-                // Core naming convention is infra.solr.core.<collection_name>.<shard>.<replica>.<metric_name>
-                // coreName should be <collection_name>.<shard>.<replica>
-                core = core.split('.');
-                var coreName = core.slice(3, 6).join(".");
-                if (cores.indexOf(coreName) < 0) {
-                  cores.push(coreName);
-                }
-              });
-              return _.map(cores, function (cores) {
-                return {
-                  text: cores
-                };
-              });
-            });
-        }
+           return this.initMetricAppidMapping()
+             .then(function () {
+               var solrMetrics = [];
+               if (allMetrics["ambari-infra-solr"]) {
+                 var solrMetrics = allMetrics["ambari-infra-solr"];
+               }
+               var extractCores = solrMetrics.filter(/./.test.bind(new
+               RegExp("^infra.solr.core.", 'g')));
+               _.map(extractCores, function (core) {
+                 // Core naming convention is infra.solr.core.<collection_name>.<shard>.<replica>.<metric_name>
+                 // coreName should be <collection_name>.<shard>.<replica>
+                 core = core.split('.');
+                 var coreName = core.slice(3,6).join(".");
+                 if (cores.indexOf(coreName) < 0) {
+                   cores.push(coreName);
+                 }
+               });
+               return _.map(cores, function (cores) {
+                       return {
+                         text: cores
+                       };
+                     });
+             });
+         }
 
         var collections = [];
         //Templated Variables for Infra Solr Collections
         if (interpolated === "infra_solr_collection") {
-          return this.initMetricAppidMapping()
-            .then(function () {
-              var solrMetrics = allMetrics["ambari-infra-solr"];
-              var extractCollections = solrMetrics.filter(/./.test.bind(new
-              RegExp("^infra.solr.core.", 'g')));
-              _.map(extractCollections, function (core) {
-                // Core naming convention is infra.solr.core.<collection_name>.<shard>.<replica>.<metric_name>
-                core = core.split('.');
-                var collection = core[3];
-                if (collections.indexOf(collection) < 0) {
-                  collections.push(collection);
-                }
-              });
-              return _.map(collections, function (collections) {
-                return {
-                  text: collections
-                };
-              });
-            });
-        }
+           return this.initMetricAppidMapping()
+             .then(function () {
+               var solrMetrics = [];
+               if (allMetrics["ambari-infra-solr"]) {
+                 var solrMetrics = allMetrics["ambari-infra-solr"];
+               }
+               var extractCollections = solrMetrics.filter(/./.test.bind(new
+               RegExp("^infra.solr.core.", 'g')));
+               _.map(extractCollections, function (core) {
+                 // Core naming convention is infra.solr.core.<collection_name>.<shard>.<replica>.<metric_name>
+                 core = core.split('.');
+                 var collection = core[3];
+                 if (collections.indexOf(collection) < 0) {
+                   collections.push(collection);
+                 }
+               });
+               return _.map(collections, function (collections) {
+                       return {
+                         text: collections
+                       };
+                     });
+             });
+         }
 
         var topologies = {};
         //Templated Variables for Storm Topologies
         if (interpolated === "topologies") {
           return this.initMetricAppidMapping()
             .then(function () {
-              var storm = allMetrics["nimbus"];
+             var storm = [];
+                 if(allMetrics["nimbus"]) {
+                   storm = allMetrics["nimbus"];
+                 }
               var extractTopologies = storm.filter(/./.test.bind(new
               RegExp("^topology.", 'g')));
               _.map(extractTopologies, function (topology) {
@@ -951,7 +967,10 @@ define([
           var componentName = interpolated.substring(0, interpolated.indexOf('.'));
           return this.initMetricAppidMapping()
             .then(function () {
-              var storm = allMetrics["nimbus"];
+             var storm = [];
+                 if(allMetrics["nimbus"]) {
+                   storm = allMetrics["nimbus"];
+                 }
               var extractTopologies = storm.filter(/./.test.bind(new
               RegExp("^topology.", 'g')));
               _.map(extractTopologies, function (topology) {
@@ -980,7 +999,10 @@ define([
         this.getStormEntities = function () {
           return this.initMetricAppidMapping()
             .then(function () {
-              var storm = allMetrics["nimbus"];
+              var storm = [];
+              if(allMetrics["nimbus"]) {
+              storm = allMetrics["nimbus"];
+              }
               var extractTopologies = storm.filter(/./.test.bind(new
               RegExp("partition", 'g')));
               _.map(extractTopologies, function (topology) {
@@ -1052,7 +1074,10 @@ define([
         if (interpolated === "druidServices") {
           return this.initMetricAppidMapping()
             .then(function () {
-              var druidMetrics = allMetrics["druid"];
+              var druidMetrics = [];
+              if(allMetrics["druid"]) {
+                druidMetrics = allMetrics["druid"];
+              }
               // Assumption: each node always emits jvm metrics
               var extractNodeTypes = druidMetrics.filter(/./.test.bind(new RegExp("jvm/gc/time", 'g')));
               var nodeTypes = _.map(extractNodeTypes, function (metricName) {
@@ -1072,7 +1097,10 @@ define([
         if (interpolated === "druidDataSources") {
           return this.initMetricAppidMapping()
             .then(function () {
-              var druidMetrics = allMetrics["druid"];
+              var druidMetrics = [];
+              if(allMetrics["druid"]) {
+                druidMetrics = allMetrics["druid"];
+              }
               // Assumption: query/time is emitted for each datasource
               var extractDataSources = druidMetrics.filter(/./.test.bind(new RegExp("query/time", 'g')));
               var dataSources = _.map(extractDataSources, function (metricName) {
@@ -1092,7 +1120,10 @@ define([
         if (interpolated === "druidQueryTypes") {
           return this.initMetricAppidMapping()
             .then(function () {
-              var druidMetrics = allMetrics["druid"];
+              var druidMetrics = [];
+              if(allMetrics["druid"]) {
+                druidMetrics = allMetrics["druid"];
+              }
               // Assumption: query/time is emitted for each query type.
               var extractQueryTypes = druidMetrics.filter(/./.test.bind(new RegExp("query/time", 'g')));
               var queryTypes = _.map(extractQueryTypes, function (metricName) {
