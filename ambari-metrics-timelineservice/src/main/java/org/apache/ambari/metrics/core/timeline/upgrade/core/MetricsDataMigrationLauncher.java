@@ -312,7 +312,7 @@ public class MetricsDataMigrationLauncher {
         } catch (SQLException e) {
           LOG.error("Exception during metadata saving, exiting...", e);
         }
-       }));
+      }));
 
       dataMigrationLauncher.runMigration(timeoutInMinutes);
     } catch (IOException e) {
