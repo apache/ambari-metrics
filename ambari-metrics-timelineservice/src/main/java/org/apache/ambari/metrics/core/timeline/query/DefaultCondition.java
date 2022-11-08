@@ -79,18 +79,22 @@ public class DefaultCondition implements Condition {
     this.grouped = grouped;
   }
 
+  @Override
   public String getStatement() {
     return statement;
   }
 
+  @Override
   public void setStatement(String statement) {
     this.statement = statement;
   }
 
+  @Override
   public List<String> getMetricNames() {
     return metricNames == null || metricNames.isEmpty() ? null : metricNames;
   }
 
+  @Override
   public StringBuilder getConditionClause() {
     StringBuilder sb = new StringBuilder();
     boolean appendConjunction = appendUuidClause(sb);
@@ -114,18 +118,22 @@ public class DefaultCondition implements Condition {
     return appendConjunction;
   }
 
+  @Override
   public List<String> getHostnames() {
     return hostnames;
   }
 
+  @Override
   public Precision getPrecision() {
     return precision;
   }
 
+  @Override
   public void setPrecision(Precision precision) {
     this.precision = precision;
   }
 
+  @Override
   public String getAppId() {
     if (appId != null && !appId.isEmpty()) {
       if (!(appId.equals("HOST") || appId.equals("FLUME_HANDLER"))) {
@@ -137,6 +145,7 @@ public class DefaultCondition implements Condition {
     return null;
   }
 
+  @Override
   public String getInstanceId() {
     return instanceId == null || instanceId.isEmpty() ? null : instanceId;
   }
@@ -144,6 +153,7 @@ public class DefaultCondition implements Condition {
   /**
    * Convert to millis.
    */
+  @Override
   public Long getStartTime() {
     if (startTime == null) {
       return null;
@@ -154,6 +164,7 @@ public class DefaultCondition implements Condition {
     }
   }
 
+  @Override
   public Long getEndTime() {
     if (endTime == null) {
       return null;
@@ -165,6 +176,7 @@ public class DefaultCondition implements Condition {
     }
   }
 
+  @Override
   public void setNoLimit() {
     this.noLimit = true;
   }
@@ -174,6 +186,7 @@ public class DefaultCondition implements Condition {
     return false;
   }
 
+  @Override
   public Integer getLimit() {
     if (noLimit) {
       return null;
@@ -181,14 +194,17 @@ public class DefaultCondition implements Condition {
     return limit == null ? PhoenixHBaseAccessor.RESULTSET_LIMIT : limit;
   }
 
+  @Override
   public boolean isGrouped() {
     return grouped;
   }
 
+  @Override
   public boolean isPointInTime() {
     return getStartTime() == null && getEndTime() == null;
   }
 
+  @Override
   public boolean isEmpty() {
     return (metricNames == null || metricNames.isEmpty())
       && (hostnames == null || hostnames.isEmpty())
@@ -198,18 +214,22 @@ public class DefaultCondition implements Condition {
       && endTime == null;
   }
 
+  @Override
   public Integer getFetchSize() {
     return fetchSize;
   }
 
+  @Override
   public void setFetchSize(Integer fetchSize) {
     this.fetchSize = fetchSize;
   }
 
+  @Override
   public void addOrderByColumn(String column) {
     orderByColumns.add(column);
   }
 
+  @Override
   public String getOrderByClause(boolean asc) {
     String orderByStr = " ORDER BY ";
     if (!orderByColumns.isEmpty()) {
@@ -295,6 +315,7 @@ public class DefaultCondition implements Condition {
     return false;
   }
 
+  @Override
   public void setMetricNamesNotCondition(boolean metricNamesNotCondition) {
     this.metricNamesNotCondition = metricNamesNotCondition;
   }

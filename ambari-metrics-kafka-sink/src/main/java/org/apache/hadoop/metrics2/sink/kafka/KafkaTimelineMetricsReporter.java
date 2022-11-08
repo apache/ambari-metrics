@@ -238,10 +238,12 @@ public class KafkaTimelineMetricsReporter extends AbstractTimelineMetricsSink
     }
   }
 
+  @Override
   public String getMBeanName() {
     return "kafka:type=org.apache.hadoop.metrics2.sink.kafka.KafkaTimelineMetricsReporter";
   }
 
+  @Override
   public synchronized void startReporter(long period) {
     synchronized (lock) {
       if (initialized && !running) {
@@ -252,6 +254,7 @@ public class KafkaTimelineMetricsReporter extends AbstractTimelineMetricsSink
     }
   }
 
+  @Override
   public synchronized void stopReporter() {
     synchronized (lock) {
       if (initialized && running) {
@@ -321,11 +324,7 @@ public class KafkaTimelineMetricsReporter extends AbstractTimelineMetricsSink
         for (Entry<MetricName, Metric> entry : metrics) {
           final MetricName metricName = entry.getKey();
           final Metric metric = entry.getValue();
-          Context context = new Context() {
-            public List<TimelineMetric> getTimelineMetricList() {
-              return metricsList;
-            }
-          };
+          Context context = () -> metricsList;
           metric.processWith(this, metricName, context);
         }
       } catch (Throwable t) {
