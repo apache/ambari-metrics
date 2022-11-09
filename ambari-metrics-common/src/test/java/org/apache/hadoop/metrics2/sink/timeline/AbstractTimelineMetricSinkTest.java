@@ -296,4 +296,29 @@ public class AbstractTimelineMetricSinkTest {
       return "http";
     }
   }
+
+  private class TestTimelineMetricsThreadingSink extends TestTimelineMetricsSink {
+    private final AtomicInteger counter = new AtomicInteger(0);
+    private final Collection<String> hosts = Collections.singletonList("host1");
+
+    @Override
+    protected Collection<String> findLiveCollectorHostsFromKnownCollector(String host, String port) throws MetricCollectorUnavailableException {
+      failedCollectorConnectionsCounter.set(4);
+      int c = counter.getAndIncrement();
+      if (c % 2 == 0 || c % 3 == 0) {
+        throw new MetricCollectorUnavailableException("MetricCollectorUnavailable");
+      }
+      return hosts;
+    }
+
+    @Override
+    protected Collection<String> getConfiguredCollectorHosts() {
+      return hosts;
+    }
+
+    @Override
+    protected SupplierExpiry getSupplierExpiry() {
+      return new SupplierExpiry(128, TimeUnit.MILLISECONDS);
+    }
+  }
 }
