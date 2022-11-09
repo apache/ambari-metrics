@@ -30,7 +30,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.easymock.EasyMock.anyString;
 import static org.easymock.EasyMock.expect;
@@ -202,6 +208,41 @@ public class AbstractTimelineMetricSinkTest {
     sink.findLiveCollectorHostsFromKnownCollector("host", "1234");
 
     verifyAll();
+  }
+
+  @Test
+  public void testGetCurrentCollectorHostMultiThreaded() {
+    final int threadPoolSize = 32;
+    final int numberOfThreads = threadPoolSize * 8;
+    final AtomicBoolean stop = new AtomicBoolean(false);
+    final TestTimelineMetricsThreadingSink sink = new TestTimelineMetricsThreadingSink();
+    final ExecutorService executorService = Executors.newFixedThreadPool(threadPoolSize);
+    int threadCount = 0;
+
+    try {
+      while (!stop.get() && threadCount < numberOfThreads) {
+        executorService.execute(() -> {
+          try {
+            String host = sink.getCurrentCollectorHost();
+          } catch (Exception e) {
+            e.printStackTrace();
+            stop.set(true);
+            executorService.shutdownNow();
+          }
+        });
+
+        threadCount++;
+      }
+
+      executorService.awaitTermination(30, TimeUnit.SECONDS);
+      if(stop.get()) {
+        Assert.fail("Unexpected exception(s) has been thrown! See the stack traces above!");
+      }
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    } finally {
+      executorService.shutdown();
+    }
   }
 
   private class TestTimelineMetricsSink extends AbstractTimelineMetricsSink {
