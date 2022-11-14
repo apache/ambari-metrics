@@ -80,6 +80,7 @@ public class KafkaTimelineMetricsReporter extends AbstractTimelineMetricsSink
   private static final String TIMELINE_DEFAULT_PROTOCOL = "http";
   private static final String EXCLUDED_METRICS_PROPERTY = "external.kafka.metrics.exclude.prefix";
   private static final String INCLUDED_METRICS_PROPERTY = "external.kafka.metrics.include.prefix";
+  private static final String INCLUDED_METRICS_REGEX_PROPERTY = "external.kafka.metrics.include.regex";
 
   private volatile boolean initialized = false;
   private boolean running = false;
