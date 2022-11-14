@@ -98,6 +98,7 @@ public class KafkaTimelineMetricsReporter extends AbstractTimelineMetricsSink
 
   private String[] excludedMetricsPrefixes;
   private String[] includedMetricsPrefixes;
+  private String[] includedMetricsRegex;
   // Local cache to avoid prefix matching everytime
   private Set<String> excludedMetrics = new HashSet<>();
   private boolean hostInMemoryAggregationEnabled;
@@ -215,6 +216,13 @@ public class KafkaTimelineMetricsReporter extends AbstractTimelineMetricsSink
           includedMetricsPrefixes = includedMetricsStr.trim().split(",");
         }
 
+        // Inclusion override
+        String includedMetricsRegexStr = props.getString(INCLUDED_METRICS_REGEX_PROPERTY, "");
+        if (!StringUtils.isEmpty(includedMetricsRegexStr.trim())) {
+          LOG.info("Including metrics which match the following regex patterns : " + includedMetricsRegexStr);
+          includedMetricsRegex = includedMetricsRegexStr.trim().split(",");
+        }
+
         initializeReporter();
         if (props.getBoolean(TIMELINE_REPORTER_ENABLED_PROPERTY, false)) {
           startReporter(metricsConfig.pollingIntervalSecs());
@@ -274,7 +282,7 @@ public class KafkaTimelineMetricsReporter extends AbstractTimelineMetricsSink
         ", include: " + StringUtils.startsWithAny(metricName, includedMetricsPrefixes));
     }
     if (StringUtils.startsWithAny(metricName, excludedMetricsPrefixes)) {
-      if (!StringUtils.startsWithAny(metricName, includedMetricsPrefixes)) {
+      if (!(StringUtils.startsWithAny(metricName, includedMetricsPrefixes) || Arrays.stream(includedMetricsRegex).anyMatch(metricName::matches))) {
         excludedMetrics.add(metricName);
         return true;
       }
