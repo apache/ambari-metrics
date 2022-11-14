@@ -199,7 +199,7 @@
             <configuration>
               <group>Development</group>
               <needarch>x86_64</needarch>
-              <copyright>2012, Apache Software Foundation</copyright>
+              <license>2012, Apache Software Foundation</license>
               <version>${package-version}</version>
               <release>${package-release}</release>
 
@@ -219,7 +219,7 @@
                 </goals>
                 <configuration>
                   <name>ambari-metrics-collector</name>
-                  <copyright>2012, Apache Software Foundation</copyright>
+                  <license>2012, Apache Software Foundation</license>
                   <group>Development</group>
                   <description>Maven Recipe: RPM Package.</description>
                   <autoRequires>false</autoRequires>
@@ -379,7 +379,7 @@
 
                 <configuration>
                   <name>ambari-metrics-hadoop-sink</name>
-                  <copyright>2012, Apache Software Foundation</copyright>
+                  <license>2012, Apache Software Foundation</license>
                   <group>Development</group>
                   <description>Maven Recipe: RPM Package.</description>
 
@@ -685,7 +685,6 @@
           <plugin>
             <artifactId>jdeb</artifactId>
             <groupId>org.vafer</groupId>
-            <version>1.0.1</version>
             <executions>
               <execution>
                 <phase>package</phase>
