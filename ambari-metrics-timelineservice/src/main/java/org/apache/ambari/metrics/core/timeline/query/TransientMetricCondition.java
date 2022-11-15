@@ -76,6 +76,10 @@ public class TransientMetricCondition extends DefaultCondition {
         appendConjunction = append(sb, appendConjunction, getInstanceId(), " INSTANCE_ID = ?");
       }
     }
+    appendConjunction = append(sb, appendConjunction, getStartTime(), " SERVER_TIME >= ?");
+    append(sb, appendConjunction, getEndTime(), " SERVER_TIME < ?");
+
+    return sb;
   }
 
   protected boolean appendMetricNameClause(StringBuilder sb) {
