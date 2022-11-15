@@ -37,6 +37,7 @@
     <hadoop.version>3.1.0.3.0.0.0-1634</hadoop.version>
     <phoenix.version>5.0.0.3.0.0.0-1634</phoenix.version>
     <hbase.version>2.0.0.3.0.0.0-1634</hbase.version>
+    <slf4j.version>2.0.0</slf4j.version>
   </properties>
 
   <build>
@@ -700,13 +701,13 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.35</version>
+      <version>${slf4j.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-reload4j</artifactId>
-      <version>1.7.35</version>
+      <version>${slf4j.version}</version>
     </dependency>
 
     <dependency>
