@@ -537,7 +537,7 @@ public abstract class AbstractTimelineMetricsSink {
    *
    * @return String Collector hostname
    */
-protected String findPreferredCollectHost() {
+  protected String findPreferredCollectHost() {
     /* Using collectorShardSupplier as sync_object since the Supplier.get() is using the same
        object under the hood to provide thread safety. */
     synchronized (collectorShardSupplier) {
