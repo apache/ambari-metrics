@@ -36,6 +36,7 @@
     <protobuf.version>2.5.0</protobuf.version>
     <phoenix.version>5.0.0-HBase-2.0</phoenix.version>
     <hbase.version>2.0.2</hbase.version>
+    <slf4j.version>2.0.0</slf4j.version>
   </properties>
 
   <build>
@@ -699,13 +700,13 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.35</version>
+      <version>${slf4j.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-reload4j</artifactId>
-      <version>1.7.35</version>
+      <version>${slf4j.version}</version>
     </dependency>
 
     <dependency>
