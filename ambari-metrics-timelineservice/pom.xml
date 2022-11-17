@@ -35,8 +35,8 @@
     <!--<yarn.basedir>${project.parent.parent.basedir}</yarn.basedir>-->
     <protobuf.version>2.5.0</protobuf.version>
     <phoenix.version>5.0.0-HBase-2.0</phoenix.version>
-    <hbase.version>2.0.2</hbase.version>
-    <slf4j.version>2.0.0</slf4j.version>
+    <phoenix.version>5.1.2</phoenix.version>
+    <hbase.version>2.4.2</hbase.version>
   </properties>
 
   <build>
@@ -923,7 +923,7 @@
                         compression="gzip"
                     />
                     <move
-                        file="${project.build.directory}/embedded/${phoenix.folder}/phoenix-${phoenix.version}-server.jar"
+                        file="${project.build.directory}/embedded/${phoenix.folder}/phoenix-server-hbase-2.4-${phoenix.version}.jar"
                         tofile="${project.build.directory}/embedded/${hbase.folder}/lib/phoenix-${phoenix.version}-server.jar"
                     />
                   </target>
