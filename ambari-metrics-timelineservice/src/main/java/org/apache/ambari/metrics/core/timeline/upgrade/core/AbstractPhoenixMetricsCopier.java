@@ -65,7 +65,7 @@ public abstract class AbstractPhoenixMetricsCopier implements Runnable {
       LOG.error(e);
     } finally {
       long timerDelta = System.currentTimeMillis() - timerStart;
-      LOG.debug(String.format("Copying took %s seconds from table %s to table %s for metric names %s", timerDelta/ 1000.0, inputTable,
+      LOG.debug(String.format("Copying took %s seconds from table %s to table %s for metric names %s", timerDelta/ 1000.0, inputTable, outputTable, metricNames));
 
       saveMetricsProgress();
     }
