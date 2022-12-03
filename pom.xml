@@ -71,8 +71,8 @@
   </distributionManagement>
   <repositories>
     <repository>
-      <id>apache-hadoop</id>
-      <name>hdp</name>
+      <id>apache-releases</id>
+      <name>releases</name>
       <url>https://repository.apache.org/content/repositories/releases/</url>
     </repository>
     <repository>
