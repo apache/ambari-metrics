@@ -37,14 +37,14 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <python.ver>python &gt;= 2.6</python.ver>
     <deb.python.ver>python (&gt;= 2.6)</deb.python.ver>
-    <!--TODO change to HDP URL-->
-    <grafana.folder>grafana-5.2.4</grafana.folder>
-    <grafana.tar>https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.2.4.linux-amd64.tar.gz</grafana.tar>
+    <slf4j.version>2.0.0</slf4j.version>
     <hbase.tar>https://archive.apache.org/dist/hbase/2.4.13/hbase-2.4.13-bin.tar.gz</hbase.tar>
     <hbase.folder>hbase-2.4.13</hbase.folder>
     <hadoop.tar>https://archive.apache.org/dist/hadoop/common/hadoop-3.3.4/hadoop-3.3.4.tar.gz</hadoop.tar>
     <hadoop.folder>hadoop-3.3.4</hadoop.folder>
     <hadoop.version>3.3.4</hadoop.version>
+    <grafana.folder>grafana-6.7.4</grafana.folder>
+    <grafana.tar>https://dl.grafana.com/oss/release/grafana-6.7.4.linux-amd64.tar.gz</grafana.tar>
     <phoenix.tar>https://downloads.apache.org/phoenix/phoenix-5.1.2/phoenix-hbase-2.4-5.1.2-bin.tar.gz</phoenix.tar>
     <phoenix.folder>phoenix-hbase-2.4-5.1.2-bin</phoenix.folder>
     <resmonitor.install.dir>/usr/lib/python2.6/site-packages/resource_monitoring</resmonitor.install.dir>
@@ -71,8 +71,8 @@
   </distributionManagement>
   <repositories>
     <repository>
-      <id>apache-hadoop</id>
-      <name>hdp</name>
+      <id>apache-releases</id>
+      <name>releases</name>
       <url>https://repository.apache.org/content/repositories/releases/</url>
     </repository>
     <repository>
@@ -187,7 +187,7 @@
                <name>package-release</name>
                <value>${project.version}</value>
                <regex>
-                 ^([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)(\.|-)((([a-zA-Z]+)?([0-9]+))|(SNAPSHOT)).*
+                 ^([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)((\.|-)(([0-9]+)|(SNAPSHOT)|(techwin)).*)?
                </regex>
                <replacement>$7</replacement>
                <failIfNoMatch>true</failIfNoMatch>

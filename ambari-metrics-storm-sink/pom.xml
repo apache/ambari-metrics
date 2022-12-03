@@ -81,7 +81,7 @@ limitations under the License.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>2.2</version>
+        <version>3.2.1</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -126,6 +126,11 @@ limitations under the License.
             <relocation>
               <pattern>org.apache.commons.codec</pattern>
               <shadedPattern>org.apache.hadoop.metrics2.sink.relocated.commons.codec</shadedPattern>
+            </relocation>
+            <!-- The ambari-metrics-common package already has the org.apache.commons.lang, so just point there -->
+            <relocation>
+              <pattern>org.apache.commons.lang</pattern>
+              <shadedPattern>org.apache.ambari.metrics.relocated.commons.lang</shadedPattern>
             </relocation>
           </relocations>
         </configuration>

@@ -191,7 +191,9 @@
                     <exec dir="${basedir}/src/main/python/psutil" executable="${executable.python}" failonerror="true">
                       <arg value="setup.py" />
                       <arg value="build" />
-                      <arg value="--build-platlib" />
+                      <arg value="--build-temp" />
+                      <arg value="${basedir}\target\psutil_build_temp" />
+                      <arg value="--build-base" />
                       <arg value="${basedir}/target/psutil_build" />
                     </exec>
                   </target>
