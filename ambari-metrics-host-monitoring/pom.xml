@@ -30,9 +30,6 @@
   <artifactId>ambari-metrics-host-monitoring</artifactId>
   <name>Ambari Metrics Monitor</name>
   <properties>
-    <resmonitor.install.dir>
-      /usr/lib/python2.6/site-packages/resource_monitoring
-    </resmonitor.install.dir>
     <final.name>${project.artifactId}-${project.version}</final.name>
   </properties>
   <dependencies>
@@ -192,7 +189,7 @@
                       <arg value="setup.py" />
                       <arg value="build" />
                       <arg value="--build-temp" />
-                      <arg value="${basedir}\target\psutil_build_temp" />
+                      <arg value="${basedir}/target/psutil_build_temp" />
                       <arg value="--build-base" />
                       <arg value="${basedir}/target/psutil_build" />
                     </exec>
