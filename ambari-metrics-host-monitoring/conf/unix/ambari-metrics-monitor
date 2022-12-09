@@ -214,6 +214,8 @@ case "$1" in
           kill -9 "${pid}" >/dev/null 2>&1
         fi
 
+        sleep 2
+
         if ps -p "${pid}" > /dev/null 2>&1; then
           echo "ERROR: Unable to kill ${pid}"
         else
