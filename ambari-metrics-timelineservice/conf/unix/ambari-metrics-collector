@@ -260,8 +260,12 @@ function start()
     # stale pid file, so just remove it and continue on
     rm -f "${PIDFILE}" >/dev/null 2>&1
   fi
-
-  nohup "${JAVA}" "-Xms$AMS_COLLECTOR_HEAPSIZE" "-Xmx$AMS_COLLECTOR_HEAPSIZE" ${AMS_COLLECTOR_OPTS} "-cp" "/usr/lib/ambari-metrics-collector/*:${COLLECTOR_CONF_DIR}:${COLLECTOR_ADDITIONAL_CLASSPATH}" "-Djava.net.preferIPv4Stack=true" "-Dams.log.dir=${AMS_COLLECTOR_LOG_DIR}" "-Dproc_${DAEMON_NAME}" "${CLASS}" "$@" > $OUTFILE 2>&1 &
+  # We should use this command
+  # java "-cp" "${COLLECTOR_CONF_DIR}:/usr/lib/ambari-metrics-collector/*:${COLLECTOR_ADDITIONAL_CLASSPATH}"
+  # replace the following command with
+  # java "-cp" "/usr/lib/ambari-metrics-collector/*:${COLLECTOR_CONF_DIR}:${COLLECTOR_ADDITIONAL_CLASSPATH}"
+  # Because the second command causes problems when using log4j without printing logs.
+  nohup "${JAVA}" "-Xms$AMS_COLLECTOR_HEAPSIZE" "-Xmx$AMS_COLLECTOR_HEAPSIZE" ${AMS_COLLECTOR_OPTS} "-cp" "${COLLECTOR_CONF_DIR}:/usr/lib/ambari-metrics-collector/*:${COLLECTOR_ADDITIONAL_CLASSPATH}" "-Djava.net.preferIPv4Stack=true" "-Dams.log.dir=${AMS_COLLECTOR_LOG_DIR}" "-Dproc_${DAEMON_NAME}" "${CLASS}" "$@" > $OUTFILE 2>&1 &
   PID=$!
   write_pidfile "${PIDFILE}"
   sleep 2
@@ -330,7 +334,7 @@ function start_upgrade()
 
   #get rid of the first command argument and pass the rest to java
   shift
-  nohup "${JAVA}" "-cp" "/usr/lib/ambari-metrics-collector/*:${COLLECTOR_CONF_DIR}:${COLLECTOR_ADDITIONAL_CLASSPATH}" "-Dams.log.dir=${AMS_COLLECTOR_LOG_DIR}" "-Dams.log.file=${UPGRADE_LOGFILE}" "${CLASS}" "${AMS_COLLECTOR_LOG_DIR}/ambari-metrics-migration-state.txt" "$@" > $OUTFILE 2>&1 &
+  nohup "${JAVA}" "-cp" "${COLLECTOR_CONF_DIR}:/usr/lib/ambari-metrics-collector/*:${COLLECTOR_ADDITIONAL_CLASSPATH}" "-Dams.log.dir=${AMS_COLLECTOR_LOG_DIR}" "-Dams.log.file=${UPGRADE_LOGFILE}" "${CLASS}" "${AMS_COLLECTOR_LOG_DIR}/ambari-metrics-migration-state.txt" "$@" > $OUTFILE 2>&1 &
   PID=$!
   write_pidfile "${UPGRADE_PIDFILE}"
   sleep 1

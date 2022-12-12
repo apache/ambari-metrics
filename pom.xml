@@ -38,6 +38,11 @@
     <python.ver>python &gt;= 2.6</python.ver>
     <deb.python.ver>python (&gt;= 2.6)</deb.python.ver>
     <slf4j.version>2.0.0</slf4j.version>
+    <zookeeper.version>3.5.9</zookeeper.version>
+    <kafka.version>2.8.1</kafka.version>
+    <phoenix.version>5.1.2</phoenix.version>
+    <hbase.version>2.4.13</hbase.version>
+    <curator.version>4.2.0</curator.version>
     <hbase.tar>https://archive.apache.org/dist/hbase/2.4.13/hbase-2.4.13-bin.tar.gz</hbase.tar>
     <hbase.folder>hbase-2.4.13</hbase.folder>
     <hadoop.tar>https://archive.apache.org/dist/hadoop/common/hadoop-3.3.4/hadoop-3.3.4.tar.gz</hadoop.tar>

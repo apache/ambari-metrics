@@ -142,8 +142,8 @@ limitations under the License.
     </dependency>
     <dependency>
       <groupId>org.apache.kafka</groupId>
-      <artifactId>kafka_2.10</artifactId>
-      <version>0.10.2.1</version>
+      <artifactId>kafka_2.12</artifactId>
+      <version>${kafka.version}</version>
       <exclusions>
         <exclusion>
           <groupId>com.sun.jdmk</groupId>
@@ -168,9 +168,9 @@ limitations under the License.
       </exclusions>
     </dependency>
     <dependency>
-    <groupId>org.apache.kafka</groupId>
-    <artifactId>kafka-clients</artifactId>
-    <version>0.10.1.0</version>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>kafka-clients</artifactId>
+      <version>${kafka.version}</version>
     </dependency>
     <dependency>
       <groupId>com.yammer.metrics</groupId>
