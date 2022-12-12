@@ -260,11 +260,7 @@ function start()
     # stale pid file, so just remove it and continue on
     rm -f "${PIDFILE}" >/dev/null 2>&1
   fi
-  # We should use this command
-  # java "-cp" "${COLLECTOR_CONF_DIR}:/usr/lib/ambari-metrics-collector/*:${COLLECTOR_ADDITIONAL_CLASSPATH}"
-  # replace the following command with
-  # java "-cp" "/usr/lib/ambari-metrics-collector/*:${COLLECTOR_CONF_DIR}:${COLLECTOR_ADDITIONAL_CLASSPATH}"
-  # Because the second command causes problems when using log4j without printing logs.
+
   nohup "${JAVA}" "-Xms$AMS_COLLECTOR_HEAPSIZE" "-Xmx$AMS_COLLECTOR_HEAPSIZE" ${AMS_COLLECTOR_OPTS} "-cp" "${COLLECTOR_CONF_DIR}:/usr/lib/ambari-metrics-collector/*:${COLLECTOR_ADDITIONAL_CLASSPATH}" "-Djava.net.preferIPv4Stack=true" "-Dams.log.dir=${AMS_COLLECTOR_LOG_DIR}" "-Dproc_${DAEMON_NAME}" "${CLASS}" "$@" > $OUTFILE 2>&1 &
   PID=$!
   write_pidfile "${PIDFILE}"
