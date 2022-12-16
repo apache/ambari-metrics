@@ -207,6 +207,10 @@
               <defaultDirmode>755</defaultDirmode>
               <defaultUsername>root</defaultUsername>
               <defaultGroupname>root</defaultGroupname>
+              <defineStatements>
+                <defineStatement>__arch_install_post %{nil}</defineStatement>
+                <defineStatement>__os_install_post %{nil}</defineStatement>
+              </defineStatements>
             </configuration>
             <executions>
 
@@ -613,7 +617,7 @@
                     <require>${python.devel}</require>
                   </requires>
                   <preremoveScriptlet>
-                    <scriptFile>src/main/package/rpm/preremove.sh</scriptFile>
+                    <scriptFile>${monitor.dir}/src/main/package/rpm/preremove.sh</scriptFile>
                     <fileEncoding>utf-8</fileEncoding>
                   </preremoveScriptlet>
                   <mappings>
