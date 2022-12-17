@@ -97,7 +97,7 @@
               <environmentVariables>
                 <PYTHONPATH>../../main/python:$PYTHONPATH</PYTHONPATH>
               </environmentVariables>
-              <skip>${skipTests}</skip>
+              <skip>${skipPythonTests}</skip>
             </configuration>
             <id>python-test</id>
             <phase>test</phase>
@@ -189,7 +189,7 @@
                       <arg value="setup.py" />
                       <arg value="build" />
                       <arg value="--build-temp" />
-                      <arg value="${basedir}\target\psutil_build_temp" />
+                      <arg value="${basedir}/target/psutil_build_temp" />
                       <arg value="--build-base" />
                       <arg value="${basedir}/target/psutil_build" />
                     </exec>
