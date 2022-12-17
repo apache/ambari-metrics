@@ -626,14 +626,42 @@
                   <mappings>
                     <mapping>
                       <directory>${resmonitor.install.dir}</directory>
-                      <filemode>755</filemode>
                       <username>root</username>
                       <groupname>root</groupname>
                       <sources>
                         <source>
                           <location>
-                            ${monitor.dir}/src/main/python
+                            ${monitor.dir}/src/main/python/__init__.py
                           </location>
+                        </source>
+                        <source>
+                          <location>
+                            ${monitor.dir}/src/main/python/main.py
+                          </location>
+                        </source>
+                      </sources>
+                    </mapping>
+                    <mapping>
+                      <directory>${resmonitor.install.dir}/core</directory>
+                      <sources>
+                        <source>
+                          <location>
+                            ${monitor.dir}/src/main/python/core
+                          </location>
+                        </source>
+                      </sources>
+                    </mapping>
+                    <mapping>
+                      <directory>${resmonitor.install.dir}/psutil</directory>
+                      <sources>
+                        <source>
+                          <location>
+                            ${monitor.dir}/src/main/python/psutil
+                          </location>
+                          <excludes>
+                            <exclude>build/**</exclude>
+                            <exclude>build/*</exclude>
+                          </excludes>
                         </source>
                       </sources>
                     </mapping>

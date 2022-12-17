@@ -18,7 +18,7 @@
 MONITOR_CONF_DIR=/etc/ambari-metrics-monitor/conf/
 METRIC_MONITOR=ambari-metrics-monitor
 
-RESOURCE_MONITORING_DIR=/usr/lib/python2.7/site-packages/resource_monitoring
+RESOURCE_MONITORING_DIR=/usr/lib/python2.6/site-packages/resource_monitoring
 METRIC_MONITOR_PY_SCRIPT=${RESOURCE_MONITORING_DIR}/main.py
 
 PIDFILE=/var/run/ambari-metrics-monitor/ambari-metrics-monitor.pid

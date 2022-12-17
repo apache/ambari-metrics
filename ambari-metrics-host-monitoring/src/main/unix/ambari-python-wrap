@@ -17,7 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-export PYTHONPATH=/usr/lib/python2.7/site-packages:$PYTHONPATH
+export PYTHONPATH=/usr/lib/python2.6/site-packages:$PYTHONPATH
 
 # checking for default Python 2
 if [ -a /usr/bin/python2 ] && [ -z "$PYTHON" ]; then

@@ -52,7 +52,7 @@
     <grafana.tar>https://dl.grafana.com/oss/release/grafana-6.7.4.linux-amd64.tar.gz</grafana.tar>
     <phoenix.tar>https://downloads.apache.org/phoenix/phoenix-5.1.2/phoenix-hbase-2.4-5.1.2-bin.tar.gz</phoenix.tar>
     <phoenix.folder>phoenix-hbase-2.4-5.1.2-bin</phoenix.folder>
-    <resmonitor.install.dir>/usr/lib/python2.7/site-packages/resource_monitoring</resmonitor.install.dir>
+    <resmonitor.install.dir>/usr/lib/python2.6/site-packages/resource_monitoring</resmonitor.install.dir>
     <powermock.version>1.6.2</powermock.version>
     <distMgmtSnapshotsId>apache.snapshots.https</distMgmtSnapshotsId>
     <distMgmtSnapshotsName>Apache Development Snapshot Repository</distMgmtSnapshotsName>
