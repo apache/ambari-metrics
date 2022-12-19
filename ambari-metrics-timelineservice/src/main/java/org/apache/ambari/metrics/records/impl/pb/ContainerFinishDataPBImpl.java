@@ -154,6 +154,11 @@ public class ContainerFinishDataPBImpl extends ContainerFinishData {
     return false;
   }
 
+  @Override
+  public String toString() {
+    return TextFormat.shortDebugString(getProto());
+  }
+
   private void mergeLocalToBuilder() {
     if (this.containerId != null
         && !((ContainerIdPBImpl) this.containerId).getProto().equals(

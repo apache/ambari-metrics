@@ -85,7 +85,7 @@ def bind_signal_handlers(new_handler=None):
 
   if new_handler is None:
     global _handler
-    _handler = StopHandlerLinux()
+    _handler = StopHandler()
   else:
     _handler = new_handler
   return _handler
