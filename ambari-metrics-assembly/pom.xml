@@ -292,6 +292,9 @@
                           <location>${project.build.directory}/embedded/${hadoop.folder}/share/hadoop/common/lib</location>
                           <includes>
                             <include>commons-beanutils-*.jar</include>
+                            <include>hadoop-shaded-*.jar</include>
+                            <include>hadoop-auth-${hadoop.version}.jar</include>
+                            <include>hadoop-annotations-${hadoop.version}.jar</include>
                           </includes>
                         </source>
                         <source>
