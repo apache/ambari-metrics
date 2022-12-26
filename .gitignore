@@ -18,3 +18,4 @@ ambari-metrics-host-monitoring/src/main/python/psutil/build/
 rebel.xml
 rebel-remote.xml
 out
+.vscode
