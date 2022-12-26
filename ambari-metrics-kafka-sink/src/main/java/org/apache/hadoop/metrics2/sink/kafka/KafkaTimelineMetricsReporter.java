@@ -44,6 +44,7 @@ import com.yammer.metrics.core.MetricsRegistry;
 import com.yammer.metrics.core.Summarizable;
 import com.yammer.metrics.core.Timer;
 import com.yammer.metrics.stats.Snapshot;
+import kafka.metrics.KafkaYammerMetrics;
 import kafka.metrics.KafkaMetricsConfig;
 import kafka.metrics.KafkaMetricsReporter;
 import kafka.utils.VerifiableProperties;
@@ -94,7 +95,7 @@ public class KafkaTimelineMetricsReporter extends AbstractTimelineMetricsSink
 
   private String[] excludedMetricsPrefixes;
   private String[] includedMetricsPrefixes;
-  private String[] includedMetricsRegex;
+  private String[] includedMetricsRegex = new String[0];
   // Local cache to avoid prefix matching everytime
   private Set<String> excludedMetrics = new HashSet<>();
   private boolean hostInMemoryAggregationEnabled;
@@ -262,7 +263,7 @@ public class KafkaTimelineMetricsReporter extends AbstractTimelineMetricsSink
   }
 
   private void initializeReporter() {
-    reporter = new TimelineScheduledReporter(Metrics.defaultRegistry(), "timeline-scheduled-reporter",
+    reporter = new TimelineScheduledReporter(KafkaYammerMetrics.defaultRegistry(), "timeline-scheduled-reporter",
         TimeUnit.SECONDS, TimeUnit.MILLISECONDS);
     initialized = true;
   }
