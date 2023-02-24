@@ -100,8 +100,11 @@ def main():
     test_mask = TEST_MASK
 
   tests = get_test_files(pwd, mask=test_mask, recursive=True)
-  shuffle(tests)
   modules = [os.path.basename(s)[:-3] for s in tests]
+  # Workaround for AMBARI-25865. This avoids loading psutil too early.
+  i = modules.index("TestHostInfo")
+  if -1 < i:
+    modules.append(modules.pop(i))
   suites = [unittest.defaultTestLoader.loadTestsFromName(name) for name in
     modules]
   testSuite = unittest.TestSuite(suites)
