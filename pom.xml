@@ -226,7 +226,6 @@
          <version>2.19</version>
          <configuration>
            <skip>${skipSurefireTests}</skip>
-
             <!-- Each profile in the top-level pom.xml defines which test group categories to run. -->
             <groups>${testcase.groups}</groups>
           </configuration>
