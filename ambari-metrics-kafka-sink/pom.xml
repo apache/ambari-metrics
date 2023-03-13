@@ -22,11 +22,11 @@ limitations under the License.
   <parent>
     <artifactId>ambari-metrics</artifactId>
     <groupId>org.apache.ambari</groupId>
-    <version>3.0.0</version>
+    <version>3.0.1-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ambari-metrics-kafka-sink</artifactId>
-  <version>3.0.0</version>
+  <version>3.0.1-SNAPSHOT</version>
   <name>Ambari Metrics Kafka Sink</name>
   <packaging>jar</packaging>
   <build>
