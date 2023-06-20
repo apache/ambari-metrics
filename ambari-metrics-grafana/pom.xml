@@ -75,7 +75,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.7</version>
+        <version>3.1.0</version>
         <executions>
           <execution>
             <phase>generate-resources</phase>
@@ -93,7 +93,7 @@
                 <untar
                   src="${project.build.directory}/grafana/grafana.tgz"
                   dest="${project.build.directory}/grafana"
-                  compression="gzip"
+                  compression="gzip" allowFilesToEscapeDest="false"
                   />
               </target>
             </configuration>
