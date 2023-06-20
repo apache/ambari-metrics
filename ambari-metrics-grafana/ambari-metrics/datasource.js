@@ -32,7 +32,7 @@ define([
     function AmbariMetricsDatasource(instanceSettings, $q, backendSrv, templateSrv) {
       this.type = 'ambari-metrics';
       this.name = instanceSettings.name;
-      this.url = instanceSettings.url;
+      this.url = instanceSettings.url+'/ws/v1/timeline/';
       this.withCredentials = instanceSettings.withCredentials;
       this.basicAuth = instanceSettings.basicAuth;
 
@@ -59,7 +59,7 @@ define([
 
       //We get a list of components and their associated metrics.
       this.initMetricAppidMapping = function () {
-        return this.doAmbariRequest({url: '/metadata'})
+        return this.doAmbariRequest({url: 'metrics/metadata'})
           .then(function (items) {
             items = items.data;
             allMetrics = {};
@@ -240,7 +240,7 @@ define([
           var metricTransform = !target.transform || target.transform === "none" ? '' : '._' + target.transform;
           var seriesAggregator = !target.seriesAggregator || target.seriesAggregator === "none" ? '' : '&seriesAggregateFunction=' + target.seriesAggregator;
           return self.doAmbariRequest({
-            url: '?metricNames=' + target.metric + metricTransform +
+            url: 'metrics?metricNames=' + target.metric + metricTransform +
             metricAggregator + "&hostname=" + target.hosts + '&appId=' + target.app + instanceId + '&startTime=' + from +
             '&endTime=' + to + precision + seriesAggregator
           }).then(
@@ -281,7 +281,7 @@ define([
           var metricTransform = !target.transform || target.transform === "none" ? '' : '._' + target.transform;
           var seriesAggregator = !target.seriesAggregator || target.seriesAggregator === "none" ? '' : '&seriesAggregateFunction=' + target.seriesAggregator;
           return self.doAmbariRequest({
-            url: '?metricNames=' + target.metric + metricTransform
+            url: 'metrics?metricNames=' + target.metric + metricTransform
             + metricAggregator + '&hostname=' + tHost + '&appId=' + target.app + instanceId + '&startTime=' + from +
             '&endTime=' + to + precision + seriesAggregator
           }).then(
@@ -319,7 +319,7 @@ define([
           var seriesAggregator = !target.seriesAggregator || target.seriesAggregator === "none" ? '' : '&seriesAggregateFunction=' + target.seriesAggregator;
           var templatedComponent = (_.isEmpty(tComponent)) ? target.app : tComponent;
           return self.doAmbariRequest({
-            url: '?metricNames=' + target.metric + metricTransform
+            url: 'metrics?metricNames=' + target.metric + metricTransform
             + metricAggregator + '&hostname=' + target.templatedHost + '&appId=' + templatedComponent + instanceId
             + '&startTime=' + from + '&endTime=' + to + precision + topN + seriesAggregator
           }).then(
@@ -334,7 +334,7 @@ define([
           var metricTransform = !target.transform || target.transform === "none" ? '' : '._' + target.transform;
           var seriesAggregator = !target.seriesAggregator || target.seriesAggregator === "none" ? '' : '&seriesAggregateFunction=' + target.seriesAggregator;
           return self.doAmbariRequest({
-            url: '?metricNames=' + encodeURIComponent(target.queue) + metricTransform
+            url: 'metrics?metricNames=' + encodeURIComponent(target.queue) + metricTransform
             + metricAggregator + '&appId=resourcemanager' + instanceId + '&startTime=' + from +
             '&endTime=' + to + precision + seriesAggregator
           }).then(
@@ -347,7 +347,7 @@ define([
             + target.precision;
           var seriesAggregator = !target.seriesAggregator || target.seriesAggregator === "none" ? '' : '&seriesAggregateFunction=' + target.seriesAggregator;
           return self.doAmbariRequest({
-            url: '?metricNames=' + target.hbMetric + instanceId + '&appId=hbase&startTime='
+            url: 'metrics?metricNames=' + target.hbMetric + instanceId + '&appId=hbase&startTime='
             + from + '&endTime=' + to + precision + seriesAggregator
           }).then(
             allHostMetricsData(target)
@@ -362,7 +362,7 @@ define([
           var metricTransform = !target.transform || target.transform === "none" ? '' : '._' + target.transform;
           var seriesAggregator = !target.seriesAggregator || target.seriesAggregator === "none" ? '' : '&seriesAggregateFunction=' + target.seriesAggregator;
           return self.doAmbariRequest({
-            url: '?metricNames=' + target.kbMetric + metricTransform + instanceId
+            url: 'metrics?metricNames=' + target.kbMetric + metricTransform + instanceId
             + metricAggregator + '&appId=kafka_broker&startTime=' + from +
             '&endTime=' + to + precision + seriesAggregator
           }).then(
@@ -378,7 +378,7 @@ define([
           var metricTransform = !target.transform || target.transform === "none" ? '' : '._' + target.transform;
           var seriesAggregator = !target.seriesAggregator || target.seriesAggregator === "none" ? '' : '&seriesAggregateFunction=' + target.seriesAggregator;
           return self.doAmbariRequest({
-            url: '?metricNames=' + target.nnMetric + metricTransform + instanceId
+            url: 'metrics?metricNames=' + target.nnMetric + metricTransform + instanceId
             + metricAggregator + '&appId=namenode&startTime=' + from + '&endTime=' + to + precision + seriesAggregator
           }).then(
             allHostMetricsData(target)
@@ -394,7 +394,7 @@ define([
           var metricTransform = !target.transform || target.transform === "none" ? '' : '._' + target.transform;
           var seriesAggregator = !target.seriesAggregator || target.seriesAggregator === "none" ? '' : '&seriesAggregateFunction=' + target.seriesAggregator;
           return self.doAmbariRequest({
-            url: '?metricNames=' + target.sTopoMetric + metricTransform + instanceId
+            url: 'metrics?metricNames=' + target.sTopoMetric + metricTransform + instanceId
             + metricAggregator + '&appId=nimbus&startTime=' + from + '&endTime=' + to + precision + seriesAggregator
           }).then(
             allHostMetricsData(target)
@@ -410,7 +410,7 @@ define([
           var metricTransform = !target.transform || target.transform === "none" ? '' : '._' + target.transform;
           var seriesAggregator = !target.seriesAggregator || target.seriesAggregator === "none" ? '' : '&seriesAggregateFunction=' + target.seriesAggregator;
           return self.doAmbariRequest({
-            url: '?metricNames=' + target.sCoreMetric + metricTransform + instanceId
+            url: 'metrics?metricNames=' + target.sCoreMetric + metricTransform + instanceId
             + metricAggregator + '&appId=ambari-infra-solr&startTime=' + from + '&endTime=' + to + precision + seriesAggregator
           }).then(
             allHostMetricsData(target)
@@ -425,7 +425,7 @@ define([
           var metricTransform = !target.transform || target.transform === "none" ? '' : '._' + target.transform;
           var seriesAggregator = !target.seriesAggregator || target.seriesAggregator === "none" ? '' : '&seriesAggregateFunction=' + target.seriesAggregator;
           return self.doAmbariRequest({
-            url: '?metricNames=' + target.sCollectionMetric + metricTransform + instanceId
+            url: 'metrics?metricNames=' + target.sCollectionMetric + metricTransform + instanceId
             + metricAggregator + '&appId=ambari-infra-solr&startTime=' + from + '&endTime=' + to + precision + seriesAggregator
           }).then(
             allHostMetricsData(target)
@@ -441,7 +441,7 @@ define([
           var metricTransform = !target.transform || target.transform === "none" ? '' : '._' + target.transform;
           var seriesAggregator = !target.seriesAggregator || target.seriesAggregator === "none" ? '' : '&seriesAggregateFunction=' + target.seriesAggregator;
           return self.doAmbariRequest({
-            url: '?metricNames=' + target.sDataSourceMetric + metricTransform + instanceId
+            url: 'metrics?metricNames=' + target.sDataSourceMetric + metricTransform + instanceId
             + metricAggregator + '&appId=druid&startTime=' + from + '&endTime=' + to + precision + seriesAggregator
           }).then(
             allHostMetricsData(target)
@@ -1173,7 +1173,7 @@ define([
        */
       this.testDatasource = function () {
         return this.doAmbariRequest({
-          url: '/metadata',
+          url: 'metrics/metadata',
           method: 'GET'
         }).then(function (response) {
           console.log(response);
@@ -1223,7 +1223,7 @@ define([
         }
         return this.doAmbariRequest({
           method: 'GET',
-          url: '/instance?' + 'appId=' + app
+          url: 'metrics/instance?' + 'appId=' + app
         }).then(function (response) {
           var clusters = [];
           var data = response.data;
@@ -1250,7 +1250,7 @@ define([
         }
         return this.doAmbariRequest({
           method: 'GET',
-          url: '/instance?' + 'appId=' + app + '&instanceId=' + cluster
+          url: 'metrics/instance?' + 'appId=' + app + '&instanceId=' + cluster
         }).then(function (response) {
           var hosts = [];
           var data = response.data;
