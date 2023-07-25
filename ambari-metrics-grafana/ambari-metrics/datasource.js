@@ -516,7 +516,7 @@ define([
           if (templateSrv.variables[0].query === "hbase-tables") {
             var splitTables = [];
             let allTables = [];
-            const tables = templateSrv.index.Tables.options;
+              const tables = templateSrv.variables[0].options;
             for (let table of tables) {
               if (table.text.toLowerCase() === "all" && table.selected) {
                 allTables = "";
@@ -569,7 +569,7 @@ define([
               return variable.query === "callers";
             });
             let selectedCallers = [];
-            const callers = templateSrv.index.Callers.options;
+            const callers = templateSrv.variables[0].options;
             for (let caller of callers) {
               if (caller.text.toLowerCase() === "all" && caller.selected) {
                 selectedCallers = "";
@@ -719,10 +719,16 @@ define([
             });
           }
           // To speed up querying on templatized dashboards.
+          var indexOfHosts = -1;
+          for (var i = 0; i < templateSrv.variables.length; i++) {
+            if (templateSrv.variables[i].name == 'hosts' && templateSrv.variables[i].options) {
+              indexOfHosts = i;
+            }
+          }
           let allHosts;
-          if (templateSrv.index.hosts) {
+          if (indexOfHosts >= 0) {
             allHosts = [];
-            const hosts = templateSrv.index.hosts.options
+            const hosts = templateSrv.variables[indexOfHosts].options
             for (let host of hosts) {
               if (host.text.toLowerCase() === "all" && host.selected) {
                 allHosts = '%';
@@ -731,28 +737,27 @@ define([
                 allHosts.push(host.text);
               }
             }
-          }
-          /* The Producer & Comsumer Requests graphs on the Kafka Hosts dashboard should display metrics that are
-           * versioned, thus the value of different versions should be aggregated and grouped by hosts.
-           * In order to have a 'grouped by hosts' like view the metric results are queried for each hosts separately.
-           */
-          if (!_.isEmpty(options.targets.filter(function(target) {
-            return target.metric.endsWith(".%.count"); }))) {
-            allHosts = allHosts.split(',');
-            _.forEach(allHosts, function(host) {
+            /* The Producer & Comsumer Requests graphs on the Kafka Hosts dashboard should display metrics that are
+             * versioned, thus the value of different versions should be aggregated and grouped by hosts.
+             * In order to have a 'grouped by hosts' like view the metric results are queried for each hosts separately.
+             */
+            if (!_.isEmpty(options.targets.filter(function(target) {
+              return target.metric.endsWith(".%.count"); }))) {
+              allHosts = allHosts.split(',');
+              _.forEach(allHosts, function(host) {
+                metricsPromises.push(_.map(options.targets, function(target) {
+                  target.templatedHost = host;
+                  target.templatedCluster = templatedCluster;
+                  return getAllHostData(target);
+                }));
+              });
+            } else {
               metricsPromises.push(_.map(options.targets, function(target) {
-                target.templatedHost = host;
+                target.templatedHost = allHosts? allHosts : '';
                 target.templatedCluster = templatedCluster;
                 return getAllHostData(target);
               }));
-            });
-          } else {
-            allHosts = templateSrv._texts.hosts === "All" ? '%' : allHosts;
-            metricsPromises.push(_.map(options.targets, function(target) {
-              target.templatedHost = allHosts? allHosts : '';
-              target.templatedCluster = templatedCluster;
-              return getAllHostData(target);
-            }));
+            }
           }
           metricsPromises = _.flatten(metricsPromises);
         } else {
