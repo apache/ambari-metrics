@@ -11,7 +11,7 @@ Author: Giampaolo Rodola' <g.rodola@gmail.com>
 $ python examples/process_detail.py
 pid               820
 name              python
-exe               /usr/bin/python2.7
+exe               /usr/bin/python3.9
 parent            29613 (bash)
 cmdline           python examples/process_detail.py
 started           2014-41-27 03:41

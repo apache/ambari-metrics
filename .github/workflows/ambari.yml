@@ -34,6 +34,6 @@ jobs:
         distribution: temurin
         cache: maven
     - name: Set up Python 2
-      run: sudo apt-get update && sudo apt-get install -y python2-dev python-is-python2
+      run: sudo apt-get update && sudo apt-get install -y python3-dev python-is-python3
     - name: Build with Maven
       run: mvn -B clean package

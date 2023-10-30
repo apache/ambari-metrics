@@ -244,7 +244,7 @@ Process management
     root           2  0.0  0.0       0       0            Jun17   00:00  kthreadd
     root           3  0.0  0.0       0       0            Jun17   00:05  ksoftirqd/0
     ...
-    giampaolo  31475  0.0  0.0   20760    3024 /dev/pts/0 Jun19   00:00  python2.4
+    giampaolo  31475  0.0  0.0   20760    3024 /dev/pts/0 Jun19   00:00  python3.9
     giampaolo  31721  0.0  2.2  773060  181896            00:04   10:30  chrome
     root       31763  0.0  0.0       0       0            00:05   00:00  kworker/0:1
     >>>
