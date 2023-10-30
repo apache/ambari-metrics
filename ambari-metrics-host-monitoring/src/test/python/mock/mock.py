@@ -86,7 +86,7 @@ try:
     next
 except NameError:
     def next(obj):
-        return obj.next()
+        return obj.__next__()
 
 
 BaseExceptions = (BaseException,)
@@ -616,7 +616,7 @@ class NonCallableMock(Base):
         self.call_args_list = _CallList()
         self.method_calls = _CallList()
 
-        for child in self._mock_children.values():
+        for child in list(self._mock_children.values()):
             if isinstance(child, _SpecState):
                 continue
             child.reset_mock()
@@ -635,7 +635,7 @@ class NonCallableMock(Base):
 
         >>> attrs = {'method.return_value': 3, 'other.side_effect': KeyError}
         >>> mock.configure_mock(**attrs)"""
-        for arg, val in sorted(kwargs.items(),
+        for arg, val in sorted(list(kwargs.items()),
                                # we sort on the number of dots so that
                                # attributes are set before we set attributes on
                                # attributes
@@ -1216,7 +1216,7 @@ class _patch(object):
             # not in Python 3
             patched.compat_co_firstlineno = getattr(
                 func, "compat_co_firstlineno",
-                func.func_code.co_firstlineno
+                func.__code__.co_firstlineno
             )
         return patched
 
@@ -1764,7 +1764,7 @@ _calculate_return_value = {
     '__hash__': lambda self: object.__hash__(self),
     '__str__': lambda self: object.__str__(self),
     '__sizeof__': lambda self: object.__sizeof__(self),
-    '__unicode__': lambda self: unicode(object.__str__(self)),
+    '__unicode__': lambda self: str(object.__str__(self)),
 }
 
 _return_values = {
@@ -1951,7 +1951,7 @@ def _format_call_signature(name, args, kwargs):
     formatted_args = ''
     args_string = ', '.join([repr(arg) for arg in args])
     kwargs_string = ', '.join([
-        '%s=%r' % (key, value) for key, value in kwargs.items()
+        '%s=%r' % (key, value) for key, value in list(kwargs.items())
     ])
     if args_string:
         formatted_args = args_string
