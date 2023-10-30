@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Copyright (c) 2009, Giampaolo Rodola'. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
@@ -6,7 +6,7 @@
 
 """Linux platform implementation."""
 
-from __future__ import division
+
 
 import base64
 import errno
@@ -1061,7 +1061,7 @@ class Process(object):
 
     @wrap_exceptions
     def cpu_affinity_get(self):
-        from_bitmask = lambda x: [i for i in xrange(64) if (1 << i) & x]
+        from_bitmask = lambda x: [i for i in range(64) if (1 << i) & x]
         bitmask = cext.proc_cpu_affinity_get(self.pid)
         return from_bitmask(bitmask)
 

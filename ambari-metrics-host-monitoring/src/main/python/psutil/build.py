@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 '''
 Licensed to the Apache Software Foundation (ASF) under one
@@ -37,7 +37,7 @@ def build():
   cwd = os.getcwd()
   os.chdir(path)
 
-  print 'Executing make at location: %s ' % path
+  print('Executing make at location: %s ' % path)
 
   if sys.platform.startswith("win"):
     # Windows
@@ -50,7 +50,7 @@ def build():
   os.chdir(cwd)
 
   if returncode != 0:
-    print 'psutil build failed. Please find build output at: %s' % build_out_path
+    print('psutil build failed. Please find build output at: %s' % build_out_path)
   pass
 
 if __name__ == '__main__':
