@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 '''
 Licensed to the Apache Software Foundation (ASF) under one
@@ -23,9 +23,14 @@ import logging.handlers
 import os
 import sys
 import signal
-from core.controller import Controller
-from core.config_reader import Configuration, PID_OUT_FILE
-from core.stop_handler import bind_signal_handlers
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
+
+from resource_monitoring.core.config_reader import Configuration, PID_OUT_FILE
+from resource_monitoring.core.stop_handler import bind_signal_handlers
+from resource_monitoring.core.controller import Controller
 
 logger = logging.getLogger()
 
@@ -65,8 +70,8 @@ def server_process_main(stop_handler, scmStatus=None):
   logger.info('Starting Server RPC Thread: %s' % ' '.join(sys.argv))
   controller.start()
 
-  print "Server out at: " + main_config.ams_monitor_out_file()
-  print "Server log at: " + main_config.ams_monitor_log_file()
+  print("Server out at: " + main_config.ams_monitor_out_file())
+  print("Server log at: " + main_config.ams_monitor_log_file())
 
   save_pid(os.getpid(), PID_OUT_FILE)
 

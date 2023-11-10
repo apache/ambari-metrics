@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # Copyright (c) 2009, Giampaolo Rodola'. All rights reserved.
@@ -10,7 +10,7 @@ running processes and system utilization (CPU, memory, disks, network)
 in Python.
 """
 
-from __future__ import division
+
 
 __author__ = "Giampaolo Rodola'"
 __version__ = "2.1.1"
@@ -754,7 +754,7 @@ class Process(object):
                         pass
             else:
                 # Windows only (faster)
-                for pid, ppid in ppid_map.items():
+                for pid, ppid in list(ppid_map.items()):
                     if ppid == self.pid:
                         try:
                             child = Process(pid)
@@ -775,7 +775,7 @@ class Process(object):
                     except NoSuchProcess:
                         pass
             else:
-                for pid, ppid in ppid_map.items():
+                for pid, ppid in list(ppid_map.items()):
                     try:
                         p = Process(pid)
                         table[ppid].append(p)
@@ -925,7 +925,7 @@ class Process(object):
                 path = tupl[2]
                 nums = tupl[3:]
                 try:
-                    d[path] = map(lambda x, y: x + y, d[path], nums)
+                    d[path] = list(map(lambda x, y: x + y, d[path], nums))
                 except KeyError:
                     d[path] = nums
             nt = _psplatform.pmmap_grouped
@@ -1725,11 +1725,11 @@ def disk_io_counters(perdisk=False):
     if not rawdict:
         raise RuntimeError("couldn't find any physical disk")
     if perdisk:
-        for disk, fields in rawdict.items():
+        for disk, fields in list(rawdict.items()):
             rawdict[disk] = _nt_sys_diskio(*fields)
         return rawdict
     else:
-        return _nt_sys_diskio(*[sum(x) for x in zip(*rawdict.values())])
+        return _nt_sys_diskio(*[sum(x) for x in zip(*list(rawdict.values()))])
 
 
 # =====================================================================
@@ -1759,11 +1759,11 @@ def net_io_counters(pernic=False):
     if not rawdict:
         raise RuntimeError("couldn't find any network interface")
     if pernic:
-        for nic, fields in rawdict.items():
+        for nic, fields in list(rawdict.items()):
             rawdict[nic] = _nt_sys_netio(*fields)
         return rawdict
     else:
-        return _nt_sys_netio(*[sum(x) for x in zip(*rawdict.values())])
+        return _nt_sys_netio(*[sum(x) for x in zip(*list(rawdict.values()))])
 
 
 def net_connections(kind='inet'):
@@ -1979,7 +1979,7 @@ def _replace_module():
 
 
 _replace_module()
-del property, memoize, division, _replace_module
+del property, memoize, _replace_module
 if sys.version_info < (3, 0):
     del num
 
