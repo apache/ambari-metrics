@@ -89,7 +89,7 @@ fi
 DAEMON_OPTS="--pidfile=${PID_FILE} --config=${CONF_FILE} cfg:default.paths.data=${DATA_DIR} cfg:default.paths.logs=${LOG_DIR}"
 
 function isRunning() {
-  status -p $PID_FILE $NAME > /dev/null 2>&1
+  test -e "$PID_FILE"
 }
 
 case "$1" in
@@ -149,7 +149,7 @@ case "$1" in
     exit $return
     ;;
   stop)
-    echo -n "Stopping $DESC ..." >> $LOG_FILE
+    echo "Stopping $DESC ..." >> $LOG_FILE
 
     if [ -f "$PID_FILE" ]; then
       pid=$(cat "$PID_FILE")
@@ -169,13 +169,22 @@ case "$1" in
       fi
       echo "OK"
     else
-      echo -n "(not running)" >> $LOG_FILE
+      echo "(not running)" >> $LOG_FILE
     fi
     exit 0
     ;;
   status)
-    status -p $PID_FILE $NAME
-    exit $?
+    if [ -f "$PID_FILE" ]; then
+        pid=$(cat "$PID_FILE")
+        if ps -p "$pid" > /dev/null; then
+            echo "Already running."
+        else
+            echo "Not running."
+        fi
+    else
+        echo "Not running."
+    fi
+    exit 0
     ;;
   restart|force-reload)
     if [ -f "$PID_FILE" ]; then
