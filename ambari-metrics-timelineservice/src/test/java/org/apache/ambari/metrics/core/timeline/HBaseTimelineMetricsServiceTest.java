@@ -133,4 +133,19 @@ public class HBaseTimelineMetricsServiceTest {
     Assert.assertTrue(rates.containsValue(3.0));
     Assert.assertTrue(rates.containsValue(5.0));
   }
+
+  @Test
+  public void testRateCalculationShouldNotReturnInfinite() {
+    Map<Long, Double> metricValues = new TreeMap<>();
+    metricValues.put(1686721209272L, 5538.0);
+    metricValues.put(1686721219241L, 1750.0);
+    metricValues.put(1686721219272L, 5538.0);
+
+    // Calculate rate
+    Map<Long, Double> rates = HBaseTimelineMetricsService.updateValuesAsRate(new TreeMap<>(metricValues), false);
+    for (Map.Entry<Long, Double> entry :
+            rates.entrySet()) {
+      Assert.assertNotSame("rate transformation should not return Infinity", "Infinity", Double.toString(entry.getValue()));
+    }
+  }
 }
