@@ -35,8 +35,8 @@
   </modules>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <python.ver>python &gt;= 2.6</python.ver>
-    <deb.python.ver>python (&gt;= 2.6)</deb.python.ver>
+    <python.ver>python3 &gt;= 3.0</python.ver>
+    <deb.python.ver>python3 (&gt;= 3.0)</deb.python.ver>
     <slf4j.version>2.0.0</slf4j.version>
     <zookeeper.version>3.5.9</zookeeper.version>
     <kafka.version>2.8.1</kafka.version>
@@ -53,7 +53,7 @@
     <grafana.tar>https://dl.grafana.com/oss/release/grafana-9.5.6.linux-amd64.tar.gz</grafana.tar>
     <phoenix.tar>http://repo.bigtop.apache.org.s3.amazonaws.com/bigtop-stack-binary/3.2.0/centos-7/x86_64/phoenix-hbase-2.4-5.1.2-bin.tar.gz</phoenix.tar>
     <phoenix.folder>phoenix-hbase-2.4-5.1.2-bin</phoenix.folder>
-    <resmonitor.install.dir>/usr/lib/python2.6/site-packages/resource_monitoring</resmonitor.install.dir>
+    <resmonitor.install.dir>/usr/lib/python3.9/site-packages/resource_monitoring</resmonitor.install.dir>
     <powermock.version>1.6.2</powermock.version>
     <distMgmtSnapshotsId>apache.snapshots.https</distMgmtSnapshotsId>
     <distMgmtSnapshotsName>Apache Development Snapshot Repository</distMgmtSnapshotsName>
