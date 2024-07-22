@@ -49,8 +49,8 @@
     <hadoop.tar>http://repo.bigtop.apache.org.s3.amazonaws.com/bigtop-stack-binary/3.2.0/centos-7/x86_64/hadoop-3.3.4.tar.gz</hadoop.tar>
     <hadoop.folder>hadoop-3.3.4</hadoop.folder>
     <hadoop.version>3.3.4</hadoop.version>
-    <grafana.folder>grafana-9.5.6</grafana.folder>
-    <grafana.tar>https://dl.grafana.com/oss/release/grafana-9.5.6.linux-amd64.tar.gz</grafana.tar>
+    <grafana.folder>grafana-v11.1.4</grafana.folder>
+    <grafana.tar>https://dl.grafana.com/oss/release/grafana-11.1.4.linux-amd64.tar.gz</grafana.tar>
     <phoenix.tar>http://repo.bigtop.apache.org.s3.amazonaws.com/bigtop-stack-binary/3.2.0/centos-7/x86_64/phoenix-hbase-2.4-5.1.2-bin.tar.gz</phoenix.tar>
     <phoenix.folder>phoenix-hbase-2.4-5.1.2-bin</phoenix.folder>
     <resmonitor.install.dir>/usr/lib/python3.9/site-packages/resource_monitoring</resmonitor.install.dir>
