@@ -220,8 +220,8 @@
                             <exclude>*tests.jar</exclude>
                             <exclude>findbugs*.jar</exclude>
                             <exclude>jdk.tools*.jar</exclude>
-                            <exclude>hadoop*.jar</exclude>
-                            <exclude>hbase*.jar</exclude>
+                            <!--exclude>hadoop*.jar</exclude>
+                            <exclude>hbase*.jar</exclude-->
                           </excludes>
                         </source>
                         <source>
@@ -229,13 +229,13 @@
                             ${collector.dir}/target/ambari-metrics-timelineservice-${project.version}.jar
                           </location>
                         </source>
-                        <source>
+                        <!--source>
                           <location>${collector.dir}/target/embedded/${hbase.folder}/lib</location>
                           <includes>
                             <include>hadoop*.jar</include>
                             <include>hbase*.jar</include>
                           </includes>
-                        </source>
+                        </source-->
                       </sources>
                     </mapping>
                     <mapping>
