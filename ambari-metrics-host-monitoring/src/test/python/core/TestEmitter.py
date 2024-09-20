@@ -21,6 +21,7 @@ limitations under the License.
 import json
 import logging
 import time
+import distro
 
 from unittest import TestCase
 from mock.mock import patch, MagicMock
@@ -30,7 +31,7 @@ from spnego_kerberos_auth import SPNEGOKerberosAuth
 
 os_distro_value = ('Suse','11','Final')
 
-with patch("platform.linux_distribution", return_value = os_distro_value):
+with patch("distro.linux_distribution", return_value=os_distro_value):
   from application_metric_map import ApplicationMetricMap
   from config_reader import Configuration
   from emitter import Emitter

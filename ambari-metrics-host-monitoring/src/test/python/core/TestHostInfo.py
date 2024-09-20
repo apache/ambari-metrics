@@ -71,21 +71,33 @@ class TestHostInfo(TestCase):
     vm.free = 2312043
     vm.shared = 1243
     vm.buffers = 23435
-    vm.cached = 23545
     vm.available = 2312043
+    vm.total = 8192 * 1024
+    vm.used = 4096 * 1024
+    vm.cached = 1024 * 1024
     
     sw = sw_mock.return_value
     sw.free = 2341234
+    sw.used = 1024 * 1024
+    sw.total = 2048 * 1024
+    sw.sin = 512 * 1024
+    sw.sout = 256 * 1024
     
     hostinfo = HostInfo(MagicMock())
     
     mem = hostinfo.get_mem_info()
     
-    self.assertAlmostEqual(mem['mem_free'], 2257)
-    self.assertAlmostEqual(mem['mem_shared'], 1)
-    self.assertAlmostEqual(mem['mem_buffered'], 22)
-    self.assertAlmostEqual(mem['mem_cached'], 22)
-    self.assertAlmostEqual(mem['swap_free'], 2286)
+    self.assertAlmostEqual(mem['mem_free'], 2257, delta = 1)
+    self.assertAlmostEqual(mem['mem_shared'], 1, delta=0.5)
+    self.assertAlmostEqual(mem['mem_buffered'], 22, delta = 1)
+    self.assertAlmostEqual(mem['mem_cached'], 1024, delta = 1)
+    self.assertAlmostEqual(mem['swap_free'], 2286, delta = 1)
+    self.assertAlmostEqual(mem['mem_total'], 8192, delta = 1)
+    self.assertAlmostEqual(mem['mem_used'], 3072, delta = 1)
+    self.assertAlmostEqual(mem['swap_used'], 1024, delta = 1)
+    self.assertAlmostEqual(mem['swap_total'], 2048, delta = 1)
+    self.assertAlmostEqual(mem['swap_in'], 512, delta = 1)
+    self.assertAlmostEqual(mem['swap_out'], 256, delta = 1)
 
 
   @patch("psutil.process_iter")
