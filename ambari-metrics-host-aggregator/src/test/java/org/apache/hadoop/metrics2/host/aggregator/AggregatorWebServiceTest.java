@@ -31,16 +31,14 @@ import org.apache.hadoop.metrics2.sink.timeline.TimelineMetrics;
 import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
 import org.junit.Test;
 
-
 import javax.ws.rs.core.MediaType;
 
 import java.util.Collection;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-
 
 public class AggregatorWebServiceTest extends JerseyTest {
+
     public AggregatorWebServiceTest() {
         super(new WebAppDescriptor.Builder(
                 "org.apache.hadoop.metrics2.host.aggregator")
@@ -74,11 +72,9 @@ public class AggregatorWebServiceTest extends JerseyTest {
         assertEquals(404, response.getStatus());
     }
 
-
     @Test
     public void testMetricsPost() {
         TimelineMetricsHolder timelineMetricsHolder = TimelineMetricsHolder.getInstance();
-
         timelineMetricsHolder.extractMetricsForAggregationPublishing();
         timelineMetricsHolder.extractMetricsForRawPublishing();
 

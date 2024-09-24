@@ -25,8 +25,10 @@ import javax.ws.rs.core.MediaType;
 import org.apache.hadoop.metrics2.sink.timeline.TimelineMetrics;
 import org.apache.ambari.metrics.core.timeline.TestTimelineMetricStore;
 import org.apache.ambari.metrics.core.timeline.TimelineMetricStore;
+import org.apache.hadoop.metrics2.sink.timeline.TimelineMetrics;
 import org.apache.hadoop.yarn.webapp.GenericExceptionHandler;
 import org.apache.hadoop.yarn.webapp.YarnJacksonJaxbJsonProvider;
+
 import org.junit.Test;
 
 import com.google.inject.Guice;
@@ -75,24 +77,24 @@ public class TestTimelineWebServices extends JerseyTest {
 
   public TestTimelineWebServices() {
     super(new WebAppDescriptor.Builder(
-      "org.apache.ambari.metrics.webapp")
-      .contextListenerClass(GuiceServletConfig.class)
-      .filterClass(com.google.inject.servlet.GuiceFilter.class)
-      .contextPath("jersey-guice-filter")
-      .servletPath("/")
-      .clientConfig(new DefaultClientConfig(YarnJacksonJaxbJsonProvider.class))
-      .build());
+            "org.apache.ambari.metrics.webapp")
+            .contextListenerClass(GuiceServletConfig.class)
+            .filterClass(com.google.inject.servlet.GuiceFilter.class)
+            .contextPath("jersey-guice-filter")
+            .servletPath("/")
+            .clientConfig(new DefaultClientConfig(YarnJacksonJaxbJsonProvider.class))
+            .build());
   }
 
   @Test
   public void testAbout() throws Exception {
     WebResource r = resource();
     ClientResponse response = r.path("ws").path("v1").path("timeline")
-      .accept(MediaType.APPLICATION_JSON)
-      .get(ClientResponse.class);
+            .accept(MediaType.APPLICATION_JSON)
+            .get(ClientResponse.class);
     assertEquals(MediaType.APPLICATION_JSON_TYPE, response.getType());
     TimelineWebServices.AboutInfo about =
-      response.getEntity(TimelineWebServices.AboutInfo.class);
+            response.getEntity(TimelineWebServices.AboutInfo.class);
     Assert.assertNotNull(about);
     Assert.assertEquals("AMS API", about.getAbout());
   }
@@ -109,9 +111,9 @@ public class TestTimelineWebServices extends JerseyTest {
   public void testGetMetrics() throws Exception {
     WebResource r = resource();
     ClientResponse response = r.path("ws").path("v1").path("timeline")
-      .path("metrics").queryParam("metricNames", "cpu_user").queryParam("precision", "seconds")
-      .accept(MediaType.APPLICATION_JSON)
-      .get(ClientResponse.class);
+            .path("metrics").queryParam("metricNames", "cpu_user").queryParam("precision", "seconds")
+            .accept(MediaType.APPLICATION_JSON)
+            .get(ClientResponse.class);
     assertEquals(MediaType.APPLICATION_JSON_TYPE, response.getType());
     verifyMetrics(response.getEntity(TimelineMetrics.class));
   }
