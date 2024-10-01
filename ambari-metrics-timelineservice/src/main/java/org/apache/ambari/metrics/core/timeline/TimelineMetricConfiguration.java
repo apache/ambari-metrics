@@ -317,8 +317,7 @@ public class TimelineMetricConfiguration {
 
   public static final String TIMELINE_METRICS_COLLECTOR_IGNITE_BACKUPS = "timeline.metrics.collector.ignite.nodes.backups";
 
-  public static final String INTERNAL_CACHE_HEAP_PERCENT =
-    "timeline.metrics.internal.cache.%s.heap.percent";
+  public static final String INTERNAL_CACHE_ENTRY_COUNT = "timeline.metrics.internal.cache.%s.entry.count";
 
   public static final String EXTERNAL_SINK_INTERVAL =
     "timeline.metrics.external.sink.%s.%s.interval";
@@ -628,12 +627,12 @@ public class TimelineMetricConfiguration {
     return providerList;
   }
 
-  public String getInternalCacheHeapPercent(String instanceName) {
-    String heapPercent = metricsConf.get(String.format(INTERNAL_CACHE_HEAP_PERCENT, instanceName));
-    if (StringUtils.isEmpty(heapPercent)) {
-      return "5%";
+  public Integer getInternalCacheSize(String instanceName) {
+    String cacheEntryCount = metricsConf.get(String.format(INTERNAL_CACHE_ENTRY_COUNT, instanceName));
+    if(StringUtils.isEmpty(cacheEntryCount)) {
+      return 500;
     } else {
-      return heapPercent.endsWith("%") ? heapPercent : heapPercent + "%";
+      return Integer.parseInt(cacheEntryCount);
     }
   }
 
