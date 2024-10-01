@@ -31,6 +31,8 @@ __version__ = '1.0.1'
 
 import pprint
 import sys
+import distro
+os_distro_value = distro.linux_distribution(full_distribution_name=False)
 
 try:
     import inspect
