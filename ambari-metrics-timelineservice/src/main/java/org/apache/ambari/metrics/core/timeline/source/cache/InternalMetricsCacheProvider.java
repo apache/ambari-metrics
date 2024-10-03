@@ -39,7 +39,7 @@ public class InternalMetricsCacheProvider {
     } else {
       TimelineMetricConfiguration conf = TimelineMetricConfiguration.getInstance();
       InternalMetricsCache cache = new InternalMetricsCache(instanceName,
-        conf.getInternalCacheHeapPercent(instanceName));
+        conf.getInternalCacheSize(instanceName));
 
       metricsCacheMap.put(instanceName, cache);
       return cache;
