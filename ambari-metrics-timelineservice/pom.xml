@@ -57,7 +57,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.2</version>
+        <version>3.5</version>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -216,7 +216,6 @@
         <configuration>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
           <forkMode>always</forkMode>
-          <argLine>-XX:-UseSplitVerifier</argLine>
           <!-- Each profile in the top-level pom.xml defines which test group categories to run. -->
           <groups>${testcase.groups}</groups>
         </configuration>
@@ -524,7 +523,7 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>28.0-jre</version>
+      <version>32.1.3-jre</version>
     </dependency>
     <dependency>
       <groupId>commons-logging</groupId>
@@ -662,6 +661,12 @@
           <artifactId>jackson-databind</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-yarn-server-applicationhistoryservice</artifactId>
+      <version>${hadoop.version}</version>
     </dependency>
 
     <!-- 'mvn dependency:analyze' fails to detect use of this dependency -->

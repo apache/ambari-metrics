@@ -964,7 +964,7 @@
                 <data>
                   <src>${collector.dir}/target/lib</src>
                   <type>directory</type>
-                  <includes>phoenix*.jar,antlr*.jar,re2j*.jar,failureaccess*.jar,guava-28*.jar,stax2-api*.jar,woodstox-core*.jar,hadoop-annotations*.jar,hadoop-auth*.jar,hadoop-common*.jar,commons-configuration2*.jar,hadoop-yarn-api-*.jar,hadoop-yarn-client-*.jar,hadoop-yarn-common-*.jar,hadoop-yarn-registry-*.jar,hadoop-yarn-server-applicationhistoryservice-*.jar,hadoop-yarn-server-common-*.jar,hadoop-yarn-server-nodemanager-*.jar,hadoop-yarn-server-resourcemanager-*.jar,hadoop-yarn-server-timelineservice-*.jar,hadoop-yarn-server-web-proxy-*.jar</includes>
+                  <includes>phoenix*.jar,antlr*.jar,re2j*.jar,failureaccess*.jar,guava-32*.jar,stax2-api*.jar,woodstox-core*.jar,hadoop-annotations*.jar,hadoop-auth*.jar,hadoop-common*.jar,commons-configuration2*.jar,hadoop-yarn-api-*.jar,hadoop-yarn-client-*.jar,hadoop-yarn-common-*.jar,hadoop-yarn-registry-*.jar,hadoop-yarn-server-applicationhistoryservice-*.jar,hadoop-yarn-server-common-*.jar,hadoop-yarn-server-nodemanager-*.jar,hadoop-yarn-server-resourcemanager-*.jar,hadoop-yarn-server-timelineservice-*.jar,hadoop-yarn-server-web-proxy-*.jar</includes>
                   <mapper>
                     <type>perm</type>
                     <filemode>644</filemode>
