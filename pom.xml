@@ -80,14 +80,12 @@
   </distributionManagement>
   <repositories>
     <repository>
-      <id>apache-releases</id>
-      <name>releases</name>
-      <url>https://repository.apache.org/content/repositories/releases/</url>
-    </repository>
-    <repository>
       <id>apache-snapshots</id>
       <name>snapshots</name>
       <url>https://repository.apache.org/content/repositories/snapshots</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
     </repository>
   </repositories>
   <dependencyManagement>
