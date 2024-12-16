@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.ambari.metrics.core.timeline.availability.MetricCollectorHAController;
 import org.apache.ambari.metrics.core.timeline.query.EmptyCondition;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.ambari.metrics.core.timeline.PhoenixHBaseAccessor;
 import org.apache.ambari.metrics.core.timeline.availability.AggregationTaskRunner;
