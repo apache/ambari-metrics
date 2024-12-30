@@ -19,6 +19,8 @@
 package org.apache.hadoop.metrics2.host.aggregator;
 
 
+import static org.junit.Assert.assertEquals;
+
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
