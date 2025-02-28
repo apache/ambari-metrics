@@ -21,8 +21,8 @@ dfs.FSNamesystem.UnderReplicatedBlocks
 ||
 rpc.rpc.NumOpenConnections
 rpc.rpc.RpcQueueTimeAvgTime
-jvm.JvmMetrics.GcTimeMillisConcurrentMarkSweep
-jvm.JvmMetrics.GcCountConcurrentMarkSweep
+jvm.JvmMetrics.GcTimeMillisG1 Old Generation
+jvm.JvmMetrics.GcCountG1 Old Generation
 jvm.JvmMetrics.MemHeapCommittedM
 rpc.rpc.RpcProcessingTimeAvgTime
 jvm.JvmMetrics.MemHeapUsedM

@@ -26,11 +26,11 @@ ipc.IPC.queueSize
 ipc.IPC.receivedBytes 
 ipc.IPC.sentBytes 
 jvm.RegionServer.JvmMetrics.GcCount
-jvm.RegionServer.JvmMetrics.GcCountConcurrentMarkSweep
-jvm.RegionServer.JvmMetrics.GcCountParNew
+jvm.RegionServer.JvmMetrics.GcCountG1 Old Generation
+jvm.RegionServer.JvmMetrics.GcCountG1 Young Generation
 jvm.RegionServer.JvmMetrics.GcTimeMillis
-jvm.RegionServer.JvmMetrics.GcTimeMillisConcurrentMarkSweep
-jvm.RegionServer.JvmMetrics.GcTimeMillisParNew
+jvm.RegionServer.JvmMetrics.GcTimeMillisG1 Old Generation
+jvm.RegionServer.JvmMetrics.GcTimeMillisG1 Young Generation
 jvm.RegionServer.JvmMetrics.LogError
 jvm.RegionServer.JvmMetrics.LogFatal
 jvm.RegionServer.JvmMetrics.LogInfo

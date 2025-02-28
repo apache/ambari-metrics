@@ -60,8 +60,8 @@ regionserver.WAL.SyncTime_num_ops
 regionserver.WAL.appendCount
 regionserver.WAL.slowAppendCount
 jvm.JvmMetrics.GcTimeMillis
-jvm.JvmMetrics.GcTimeMillisConcurrentMarkSweep
-jvm.JvmMetrics.GcTimeMillisParNew
+jvm.JvmMetrics.GcTimeMillisG1 Old Generation
+jvm.JvmMetrics.GcTimeMillisG1 Young Generation
 ugi.UgiMetrics.GetGroupsAvgTime
 ugi.UgiMetrics.GetGroupsNumOps
 ugi.UgiMetrics.LoginFailureNumOps
@@ -253,7 +253,7 @@ regionserver.Server.checkMutateFailedCount
 regionserver.Server.checkMutatePassedCount
 regionserver.Server.compactionQueueLength
 regionserver.Server.flushQueueLength
-jvm.JvmMetrics.GcCountConcurrentMarkSweep
+jvm.JvmMetrics.GcCountG1 Old Generation
 regionserver.Server.hlogFileCount
 regionserver.Server.hlogFileSize
 regionserver.Server.memStoreSize
@@ -284,7 +284,7 @@ regionserver.WAL.AppendSize_max
 regionserver.WAL.AppendSize_mean
 regionserver.WAL.AppendSize_median
 regionserver.WAL.SyncTime_median
-jvm.JvmMetrics.GcCountParNew
+jvm.JvmMetrics.GcCountG1 Young Generation
 regionserver.WAL.AppendSize_min
 regionserver.WAL.AppendSize_num_ops
 regionserver.WAL.SyncTime_max
@@ -322,8 +322,8 @@ regionserver.WAL.SyncTime_num_ops
 regionserver.WAL.appendCount
 regionserver.WAL.slowAppendCount
 jvm.JvmMetrics.GcTimeMillis
-jvm.JvmMetrics.GcTimeMillisConcurrentMarkSweep
-jvm.JvmMetrics.GcTimeMillisParNew
+jvm.JvmMetrics.GcTimeMillisG1 Old Generation
+jvm.JvmMetrics.GcTimeMillisG1 Young Generation
 ugi.UgiMetrics.GetGroupsAvgTime
 ugi.UgiMetrics.GetGroupsNumOps
 ugi.UgiMetrics.LoginFailureNumOps
@@ -515,7 +515,7 @@ regionserver.Server.checkMutateFailedCount
 regionserver.Server.checkMutatePassedCount
 regionserver.Server.compactionQueueLength
 regionserver.Server.flushQueueLength
-jvm.JvmMetrics.GcCountConcurrentMarkSweep
+jvm.JvmMetrics.GcCountG1 Old Generation
 regionserver.Server.hlogFileCount
 regionserver.Server.hlogFileSize
 regionserver.Server.memStoreSize
@@ -546,7 +546,7 @@ regionserver.WAL.AppendSize_max
 regionserver.WAL.AppendSize_mean
 regionserver.WAL.AppendSize_median
 regionserver.WAL.SyncTime_median
-jvm.JvmMetrics.GcCountParNew
+jvm.JvmMetrics.GcCountG1 Young Generation
 regionserver.WAL.AppendSize_min
 regionserver.WAL.AppendSize_num_ops
 regionserver.WAL.SyncTime_max
@@ -585,7 +585,7 @@ regionserver.WAL.SyncTime_mean
 regionserver.WAL.AppendSize_99th_percentile
 jvm.JvmMetrics.GcTimeMillis
 regionserver.WAL.AppendSize_75th_percentile
-jvm.JvmMetrics.GcTimeMillisConcurrentMarkSweep
+jvm.JvmMetrics.GcTimeMillisG1 Old Generation
 regionserver.WAL.SyncTime_max
 regionserver.Server.Increment_median
 regionserver.Server.updatesBlockedTime
@@ -595,7 +595,7 @@ regionserver.WAL.lowReplicaRollRequest
 ugi.UgiMetrics.GetGroupsNumOps
 regionserver.Server.storeFileSize
 regionserver.Server.Increment_95th_percentile
-jvm.JvmMetrics.GcTimeMillisParNew
+jvm.JvmMetrics.GcTimeMillisG1 Young Generation
 ugi.UgiMetrics.LoginFailureAvgTime
 ugi.UgiMetrics.LoginFailureNumOps
 regionserver.Server.storeFileCount
@@ -885,7 +885,7 @@ regionserver.Server.compactionQueueLength
 regionserver.Server.flushedCellsSize
 regionserver.Server.memStoreSize
 regionserver.Server.mutationsWithoutWALSize
-jvm.JvmMetrics.GcCountConcurrentMarkSweep
+jvm.JvmMetrics.GcCountG1 Old Generation
 regionserver.Server.regionServerStartTime
 regionserver.Server.slowDeleteCount
 regionserver.Server.slowIncrementCount
@@ -903,7 +903,7 @@ regionserver.Server.Replay_95th_percentile
 regionserver.WAL.AppendTime_95th_percentile
 regionserver.WAL.AppendTime_median
 regionserver.WAL.AppendTime_max
-jvm.JvmMetrics.GcCountParNew
+jvm.JvmMetrics.GcCountG1 Young Generation
 regionserver.WAL.AppendTime_mean
 FSDatasetState.org.apache.hadoop.hdfs.server.datanode.fsdataset.impl.FsDatasetImpl.CacheCapacity
 FSDatasetState.org.apache.hadoop.hdfs.server.datanode.fsdataset.impl.FsDatasetImpl.CacheUsed
@@ -1100,13 +1100,13 @@ dfs.namenode.TransactionsAvgTime
 dfs.namenode.TransactionsBatchedInSync
 dfs.namenode.TransactionsNumOps
 jvm.JvmMetrics.GcCount
-jvm.JvmMetrics.GcCountConcurrentMarkSweep
-jvm.JvmMetrics.GcCountParNew
+jvm.JvmMetrics.GcCountG1 Old Generation
+jvm.JvmMetrics.GcCountG1 Young Generation
 jvm.JvmMetrics.GcNumInfoThresholdExceeded
 jvm.JvmMetrics.GcNumWarnThresholdExceeded
 jvm.JvmMetrics.GcTimeMillis
-jvm.JvmMetrics.GcTimeMillisConcurrentMarkSweep
-jvm.JvmMetrics.GcTimeMillisParNew
+jvm.JvmMetrics.GcTimeMillisG1 Old Generation
+jvm.JvmMetrics.GcTimeMillisG1 Young Generation
 jvm.JvmMetrics.GcTotalExtraSleepTime
 jvm.JvmMetrics.LogError
 jvm.JvmMetrics.LogFatal

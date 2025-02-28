@@ -5,10 +5,10 @@ jvm.buffers.mapped.capacity
 jvm.buffers.mapped.count
 jvm.buffers.mapped.used
 jvm.file.open.descriptor.ratio
-jvm.gc.ConcurrentMarkSweep.count
-jvm.gc.ConcurrentMarkSweep.time
-jvm.gc.ParNew.count
-jvm.gc.ParNew.time
+jvm.gc.G1 Old Generation.count
+jvm.gc.G1 Old Generation.time
+jvm.gc.G1 Young Generation.count
+jvm.gc.G1 Young Generation.time
 jvm.memory.heap.committed
 jvm.memory.heap.init
 jvm.memory.heap.max

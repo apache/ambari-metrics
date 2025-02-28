@@ -95,13 +95,13 @@ dfs.datanode.WriteBlockOpNumOps
 dfs.datanode.WritesFromLocalClient
 dfs.datanode.WritesFromRemoteClient
 jvm.JvmMetrics.GcCount
-jvm.JvmMetrics.GcCountConcurrentMarkSweep
-jvm.JvmMetrics.GcCountParNew
+jvm.JvmMetrics.GcCountG1 Old Generation
+jvm.JvmMetrics.GcCountG1 Young Generation
 jvm.JvmMetrics.GcNumInfoThresholdExceeded
 jvm.JvmMetrics.GcNumWarnThresholdExceeded
 jvm.JvmMetrics.GcTimeMillis
-jvm.JvmMetrics.GcTimeMillisConcurrentMarkSweep
-jvm.JvmMetrics.GcTimeMillisParNew
+jvm.JvmMetrics.GcTimeMillisG1 Old Generation
+jvm.JvmMetrics.GcTimeMillisG1 Young Generation
 jvm.JvmMetrics.GcTotalExtraSleepTime
 jvm.JvmMetrics.LogError
 jvm.JvmMetrics.LogFatal
