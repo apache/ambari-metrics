@@ -26,11 +26,11 @@ ipc.IPC.queueSize
 ipc.IPC.receivedBytes 
 ipc.IPC.sentBytes 
 jvm.Master.JvmMetrics.GcCount
-jvm.Master.JvmMetrics.GcCountConcurrentMarkSweep
-jvm.Master.JvmMetrics.GcCountParNew
+jvm.Master.JvmMetrics.GcCountG1 Old Generation
+jvm.Master.JvmMetrics.GcCountG1 Young Generation
 jvm.Master.JvmMetrics.GcTimeMillis
-jvm.Master.JvmMetrics.GcTimeMillisConcurrentMarkSweep
-jvm.Master.JvmMetrics.GcTimeMillisParNew
+jvm.Master.JvmMetrics.GcTimeMillisG1 Old Generation
+jvm.Master.JvmMetrics.GcTimeMillisG1 Young Generation
 jvm.Master.JvmMetrics.LogError
 jvm.Master.JvmMetrics.LogFatal
 jvm.Master.JvmMetrics.LogInfo

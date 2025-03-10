@@ -202,12 +202,12 @@ io.IOMetrics.PercentileDecodingTime_30s99thPercentileLatency
 ipc.client.org.apache.hadoop.ipc.DecayRpcScheduler.Caller(*).Priority
 ipc.client.org.apache.hadoop.ipc.DecayRpcScheduler.Caller(*).Volume
 jvm.JvmMetrics.GcCount
-jvm.JvmMetrics.GcCountConcurrentMarkSweep
-jvm.JvmMetrics.GcCountParNew
+jvm.JvmMetrics.GcCountG1 Old Generation
+jvm.JvmMetrics.GcCountG1 Young Generation
 jvm.JvmMetrics.GcNumWarnThresholdExceeded
 jvm.JvmMetrics.GcTimeMillis
-jvm.JvmMetrics.GcTimeMillisConcurrentMarkSweep
-jvm.JvmMetrics.GcTimeMillisParNew
+jvm.JvmMetrics.GcTimeMillisG1 Old Generation
+jvm.JvmMetrics.GcTimeMillisG1 Young Generation
 jvm.JvmMetrics.GcTotalExtraSleepTime
 jvm.JvmMetrics.LogError
 jvm.JvmMetrics.LogFatal
@@ -234,11 +234,11 @@ jvm.Master.JvmMetrics.ThreadsTerminated
 jvm.Master.JvmMetrics.ThreadsTimedWaiting
 jvm.Master.JvmMetrics.ThreadsWaiting
 jvm.RegionServer.JvmMetrics.GcCount
-jvm.RegionServer.JvmMetrics.GcCountConcurrentMarkSweep
-jvm.RegionServer.JvmMetrics.GcCountParNew
+jvm.RegionServer.JvmMetrics.GcCountG1 Old Generation
+jvm.RegionServer.JvmMetrics.GcCountG1 Young Generation
 jvm.RegionServer.JvmMetrics.GcTimeMillis
-jvm.RegionServer.JvmMetrics.GcTimeMillisConcurrentMarkSweep
-jvm.RegionServer.JvmMetrics.GcTimeMillisParNew
+jvm.RegionServer.JvmMetrics.GcTimeMillisG1 Old Generation
+jvm.RegionServer.JvmMetrics.GcTimeMillisG1 Young Generation
 jvm.RegionServer.JvmMetrics.MemHeapCommittedM
 jvm.RegionServer.JvmMetrics.MemHeapMaxM
 jvm.RegionServer.JvmMetrics.MemHeapUsedM
@@ -253,10 +253,10 @@ jvm.RegionServer.JvmMetrics.ThreadsTimedWaiting
 jvm.RegionServer.JvmMetrics.ThreadsWaiting
 jvm.daemon_thread_count
 jvm.file_descriptor_usage
-jvm.gc.ConcurrentMarkSweep.count
-jvm.gc.ConcurrentMarkSweep.time
-jvm.gc.ParNew.count
-jvm.gc.ParNew.time
+jvm.gc.G1 Old Generation.count
+jvm.gc.G1 Old Generation.time
+jvm.gc.G1 Young Generation.count
+jvm.gc.G1 Young Generation.time
 jvm.heap_usage
 jvm.memory.heap.committed
 jvm.memory.heap.max
