@@ -21,10 +21,10 @@ limitations under the License.
 import logging
 import threading
 
-from security import CachedHTTPSConnection, CachedHTTPConnection
-from blacklisted_set import BlacklistedSet
-from config_reader import ROUND_ROBIN_FAILOVER_STRATEGY
-from spnego_kerberos_auth import SPNEGOKerberosAuth
+from resource_monitoring.core.security import CachedHTTPSConnection, CachedHTTPConnection
+from resource_monitoring.core.blacklisted_set import BlacklistedSet
+from resource_monitoring.core.config_reader import ROUND_ROBIN_FAILOVER_STRATEGY
+from resource_monitoring.core.spnego_kerberos_auth import SPNEGOKerberosAuth
 
 logger = logging.getLogger()
 
