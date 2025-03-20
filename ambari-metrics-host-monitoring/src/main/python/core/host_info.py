@@ -120,6 +120,7 @@ class HostInfo():
     swap_total = self.__host_static_info.get('swap_total')
 
     bytes2kilobytes = lambda x: x / 1024
+    mem_total = psutil.virtual_memory().total
 
     return {
       'mem_total': bytes2kilobytes(mem_total) if mem_total else 0,
