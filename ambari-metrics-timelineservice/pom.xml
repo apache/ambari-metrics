@@ -779,6 +779,10 @@
       <optional>true</optional>
       <exclusions>
         <exclusion>
+          <groupId>javax.servlet</groupId>
+          <artifactId>servlet-api</artifactId>
+        </exclusion>
+        <exclusion>
           <groupId>org.jruby</groupId>
           <artifactId>jruby-complete</artifactId>
         </exclusion>
