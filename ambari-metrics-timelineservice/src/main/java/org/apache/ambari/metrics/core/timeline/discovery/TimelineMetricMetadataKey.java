@@ -57,14 +57,14 @@ public class TimelineMetricMetadataKey {
     TimelineMetricMetadataKey that = (TimelineMetricMetadataKey) o;
 
     if (!metricName.equals(that.metricName)) return false;
-    if (!appId.equals(that.appId)) return false;
+    if (!appId.toLowerCase().equals(that.appId.toLowerCase())) return false;
     return (StringUtils.isNotEmpty(instanceId) ? instanceId.equals(that.instanceId) : StringUtils.isEmpty(that.instanceId));
   }
 
   @Override
   public int hashCode() {
     int result = metricName.hashCode();
-    result = 31 * result + (appId != null ? appId.hashCode() : 0);
+    result = 31 * result + (appId != null ? appId.toLowerCase().hashCode() : 0);
     result = 31 * result + (instanceId != null ? instanceId.hashCode() : 0);
     return result;
   }
