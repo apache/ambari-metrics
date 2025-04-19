@@ -41,4 +41,4 @@ jobs:
       run: mvn -B clean package
     - name: Show RAT report
       if: ${{ always() }}
-      run: cat ambari-metrics/ambari-metrics-timelineservice/target/rat.txt
+      run: cat ambari-metrics-timelineservice/target/rat.txt
