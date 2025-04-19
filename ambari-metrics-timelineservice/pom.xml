@@ -228,6 +228,7 @@
           <excludes>
             <exclude>conf/unix/metrics_whitelist</exclude>
             <exclude>conf/unix/amshbase_metrics_whitelist</exclude>
+            <exclude>ignite/work/**</exclude>
           </excludes>
         </configuration>
         <executions>
