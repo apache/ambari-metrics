@@ -50,6 +50,7 @@
     <deb.python.ver>python3 (&gt;= 3.0)</deb.python.ver>
     <deb.architecture>amd64</deb.architecture>
     <deb.dependency.list>${deb.python.ver},python-dev,gcc</deb.dependency.list>
+    <rpm.arch>x86_64</rpm.arch>
     <hadoop.sink.jar>ambari-metrics-hadoop-sink-with-common-${project.version}.jar</hadoop.sink.jar>
     <storm.sink.jar>ambari-metrics-storm-sink-with-common-${project.version}.jar</storm.sink.jar>
     <flume.sink.jar>ambari-metrics-flume-sink-with-common-${project.version}.jar</flume.sink.jar>
@@ -171,7 +172,7 @@
             <version>2.1.4</version>
             <configuration>
               <group>Development</group>
-              <needarch>x86_64</needarch>
+              <needarch>${rpm.arch}</needarch>
               <license>2012, Apache Software Foundation</license>
               <version>${project.version}</version>
               <release>${release.version}</release>
@@ -513,7 +514,7 @@
                 <configuration>
                   <name>ambari-metrics-grafana</name>
                   <group>Development</group>
-                  <needarch>x86_64</needarch>
+                  <needarch>${rpm.arch}</needarch>
                   <autoRequires>false</autoRequires>
                   <mappings>
                     <mapping>
@@ -605,7 +606,7 @@
                 <configuration>
                   <name>ambari-metrics-monitor</name>
                   <group>Development</group>
-                  <needarch>x86_64</needarch>
+                  <needarch>${rpm.arch}</needarch>
                   <autoRequires>false</autoRequires>
                   <requires>
                     <require>${python.ver}</require>
