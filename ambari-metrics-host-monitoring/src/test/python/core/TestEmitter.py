@@ -25,9 +25,9 @@ import distro
 
 from unittest import TestCase
 from mock.mock import patch, MagicMock
-from security import CachedHTTPConnection
-from blacklisted_set import BlacklistedSet
-from spnego_kerberos_auth import SPNEGOKerberosAuth
+from core.security import CachedHTTPConnection
+from core.blacklisted_set import BlacklistedSet
+from core.spnego_kerberos_auth import SPNEGOKerberosAuth
 
 os_distro_value = ('Suse','11','Final')
 
