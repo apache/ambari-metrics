@@ -21,7 +21,7 @@ limitations under the License.
 import collections
 import logging
 import platform
-from host_info import HostInfo
+from core.host_info import HostInfo
 from mock.mock import patch, MagicMock
 from unittest import TestCase
 
