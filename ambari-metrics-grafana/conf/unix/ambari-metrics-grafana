@@ -89,7 +89,22 @@ fi
 DAEMON_OPTS="--pidfile=${PID_FILE} --config=${CONF_FILE} cfg:default.paths.data=${DATA_DIR} cfg:default.paths.logs=${LOG_DIR}"
 
 function isRunning() {
-  test -e "$PID_FILE"
+  if [ -f ${PID_FILE} ]; then
+    PID=`cat ${PID_FILE}`
+    if [ -z "`ps ax -o pid | grep -w ${PID}`" ]; then
+      echo "${PID_FILE} found with no process. Removing ${PID}..."
+      rm -f ${PID_FILE}
+      return 1
+    else
+      tput bold
+      echo "WARN: Grafana already running with PID: ${PID}"
+      tput sgr0
+      echo "Exiting."
+      return 0
+    fi
+  else
+    return 1
+  fi
 }
 
 case "$1" in
