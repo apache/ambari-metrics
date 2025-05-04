@@ -39,7 +39,6 @@
     <grafana.dir>${project.basedir}/../ambari-metrics-grafana</grafana.dir>
     <hadoop-sink.dir>${project.basedir}/../ambari-metrics-hadoop-sink</hadoop-sink.dir>
     <storm-sink.dir>${project.basedir}/../ambari-metrics-storm-sink</storm-sink.dir>
-    <flume-sink.dir>${project.basedir}/../ambari-metrics-flume-sink</flume-sink.dir>
     <kafka-sink.dir>${project.basedir}/../ambari-metrics-kafka-sink</kafka-sink.dir>
     <python.ver>python3 &gt;= 3.0</python.ver>
     <python.devel>python3-devel</python.devel>
@@ -53,7 +52,6 @@
     <rpm.arch>x86_64</rpm.arch>
     <hadoop.sink.jar>ambari-metrics-hadoop-sink-with-common-${project.version}.jar</hadoop.sink.jar>
     <storm.sink.jar>ambari-metrics-storm-sink-with-common-${project.version}.jar</storm.sink.jar>
-    <flume.sink.jar>ambari-metrics-flume-sink-with-common-${project.version}.jar</flume.sink.jar>
     <kafka.sink.jar>ambari-metrics-kafka-sink-with-common-${project.version}.jar</kafka.sink.jar>
   </properties>
 
@@ -468,14 +466,6 @@
                       </sources>
                     </mapping>
                     <mapping>
-                      <directory>/usr/lib/flume/lib</directory>
-                      <sources>
-                        <source>
-                          <location>${flume-sink.dir}/target/ambari-metrics-flume-sink-with-common-${project.version}.jar</location>
-                        </source>
-                      </sources>
-                    </mapping>
-                    <mapping>
                       <directory>/usr/lib/storm/lib</directory>
                       <sources>
                         <source>
@@ -815,7 +805,6 @@
                     <path>/usr/lib/ambari-metrics-hadoop-sink</path>
                     <path>/usr/lib/ambari-metrics-kafka-sink</path>
                     <path>/usr/lib/ambari-metrics-kafka-sink/lib</path>
-                    <path>/usr/lib/flume/lib</path>
                     <path>/usr/lib/storm/lib</path>
                   </paths>
                 </data>
@@ -1116,19 +1105,6 @@
                   </mapper>
                 </data>
 
-                <!-- flume sink -->
-
-                <data>
-                  <src>${flume-sink.dir}/target/${flume.sink.jar}</src>
-                  <type>file</type>
-                  <mapper>
-                    <type>perm</type>
-                    <filemode>644</filemode>
-                    <dirmode>755</dirmode>
-                    <prefix>/usr/lib/flume/lib</prefix>
-                  </mapper>
-                </data>
-
                 <!-- storm sinks -->
 
                 <data>
@@ -1257,11 +1233,6 @@
     <dependency>
       <groupId>org.apache.ambari</groupId>
       <artifactId>ambari-metrics-hadoop-sink</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.ambari</groupId>
-      <artifactId>ambari-metrics-flume-sink</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
