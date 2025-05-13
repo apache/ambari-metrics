@@ -60,7 +60,8 @@
     <distMgmtStagingId>apache.staging.https</distMgmtStagingId>
     <distMgmtStagingName>Apache Release Distribution Repository</distMgmtStagingName>
     <distMgmtStagingUrl>https://repository.apache.org/service/local/staging/deploy/maven2</distMgmtStagingUrl>
-    <fasterxml.jackson.version>2.10.0</fasterxml.jackson.version>
+    <fasterxml.jackson.version>2.12.7</fasterxml.jackson.version>
+    <fasterxml.jackson-databind.version>2.12.7.1</fasterxml.jackson-databind.version>
     <skipPythonTests>false</skipPythonTests>
     <release.version>1</release.version>
   </properties>
@@ -101,7 +102,7 @@
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-databind</artifactId>
-        <version>${fasterxml.jackson.version}</version>
+        <version>${fasterxml.jackson-databind.version}</version>
       </dependency>
       <dependency>
         <groupId>org.mockito</groupId>
