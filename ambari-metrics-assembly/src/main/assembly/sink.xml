@@ -31,10 +31,6 @@
       <outputDirectory>hadoop-sink/conf</outputDirectory>
     </fileSet>
     <fileSet>
-      <directory>${flume-sink.dir}/src/main/conf</directory>
-      <outputDirectory>hadoop-sink/conf</outputDirectory>
-    </fileSet>
-    <fileSet>
       <directory>${storm-sink.dir}/src/main/conf</directory>
       <outputDirectory>hadoop-sink/conf</outputDirectory>
     </fileSet>
@@ -48,11 +44,6 @@
     <file>
       <fileMode>644</fileMode>
       <source>${hadoop-sink.dir}/target/ambari-metrics-hadoop-sink-with-common-${project.version}.jar</source>
-      <outputDirectory>hadoop-sink</outputDirectory>
-    </file>
-    <file>
-      <fileMode>644</fileMode>
-      <source>${flume-sink.dir}/target/ambari-metrics-flume-sink-with-common-${project.version}.jar</source>
       <outputDirectory>hadoop-sink</outputDirectory>
     </file>
     <file>

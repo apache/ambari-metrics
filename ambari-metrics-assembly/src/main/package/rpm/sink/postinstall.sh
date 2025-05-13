@@ -17,9 +17,6 @@
 HADOOP_LINK_NAME="/usr/lib/ambari-metrics-hadoop-sink/ambari-metrics-hadoop-sink.jar"
 HADOOP_SINK_JAR="/usr/lib/ambari-metrics-hadoop-sink/${hadoop.sink.jar}"
 
-FLUME_LINK_NAME="/usr/lib/flume/lib/ambari-metrics-flume-sink.jar"
-FLUME_SINK_JAR="/usr/lib/flume/lib/${flume.sink.jar}"
-
 KAFKA_LINK_NAME="/usr/lib/ambari-metrics-kafka-sink/ambari-metrics-kafka-sink.jar"
 KAFKA_SINK_JAR="/usr/lib/ambari-metrics-kafka-sink/${kafka.sink.jar}"
 
@@ -27,8 +24,8 @@ KAFKA_SINK_JAR="/usr/lib/ambari-metrics-kafka-sink/${kafka.sink.jar}"
 #STORM_SINK_JAR="/usr/lib/storm/lib/${storm.sink.jar}"
 #STORM_LINK_NAME="/usr/lib/storm/lib/ambari-metrics-storm-sink.jar"
 
-JARS=(${HADOOP_SINK_JAR} ${FLUME_SINK_JAR} ${KAFKA_SINK_JAR})
-LINKS=(${HADOOP_LINK_NAME} ${FLUME_LINK_NAME} ${KAFKA_LINK_NAME})
+JARS=(${HADOOP_SINK_JAR} ${KAFKA_SINK_JAR})
+LINKS=(${HADOOP_LINK_NAME} ${KAFKA_LINK_NAME})
 
 for index in ${!LINKS[*]}
 do
