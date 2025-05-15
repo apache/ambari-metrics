@@ -18,7 +18,7 @@
 
 package org.apache.ambari.metrics.core.timeline.query;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.hadoop.metrics2.sink.timeline.Precision;
 
 import java.util.ArrayList;
