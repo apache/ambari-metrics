@@ -33,6 +33,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.ambari.metrics.core.timeline.availability.MetricCollectorHAController;
 import org.apache.ambari.metrics.core.timeline.query.Condition;
@@ -215,7 +216,7 @@ public abstract class AbstractTimelineAggregator implements TimelineMetricAggreg
     try {
       File checkpoint = new File(getCheckpointLocation());
       if (checkpoint.exists()) {
-        String contents = FileUtils.readFileToString(checkpoint);
+        String contents = FileUtils.readFileToString(checkpoint, StandardCharsets.UTF_8);
         if (contents != null && !contents.isEmpty()) {
           return Long.parseLong(contents);
         }
@@ -242,7 +243,7 @@ public abstract class AbstractTimelineAggregator implements TimelineMetricAggreg
             getCheckpointLocation());
         }
       }
-      FileUtils.writeStringToFile(checkpoint, String.valueOf(checkpointTime));
+      FileUtils.writeStringToFile(checkpoint, String.valueOf(checkpointTime), StandardCharsets.UTF_8);
     }
   }
 
