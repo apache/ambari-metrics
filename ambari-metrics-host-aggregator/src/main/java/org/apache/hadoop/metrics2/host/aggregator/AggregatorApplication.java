@@ -190,9 +190,10 @@ public class AggregatorApplication {
 
   private void startRawPublisherThread() {
     LOG.info("Starting raw metrics publisher.");
-    AbstractMetricPublisher metricPublisher = new RawMetricsPublisher(timelineMetricsHolder, configuration, rawPublishingInterval);
-    rawPublisherThread = aggregatePublisherThread = new Thread(metricPublisher);
-    aggregatePublisherThread.start();
+    AbstractMetricPublisher metricPublisher = new RawMetricsPublisher(timelineMetricsHolder,
+        configuration, rawPublishingInterval);
+    rawPublisherThread = new Thread(metricPublisher);
+    rawPublisherThread.start();
   }
 
 
