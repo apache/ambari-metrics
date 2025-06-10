@@ -43,6 +43,7 @@
     <hbase.version>2.4.13</hbase.version>
     <curator.version>4.2.0</curator.version>
     <commons-lang3.version>3.12.0</commons-lang3.version>
+    <commons-io.version>2.14.0</commons-io.version>
     <hbase.tar>http://repo.bigtop.apache.org.s3.amazonaws.com/bigtop-stack-binary/3.2.0/centos-7/x86_64/hbase-2.4.13-bin.tar.gz</hbase.tar>
     <hbase.folder>hbase-2.4.13</hbase.folder>
     <hadoop.tar>http://repo.bigtop.apache.org.s3.amazonaws.com/bigtop-stack-binary/3.2.0/centos-7/x86_64/hadoop-3.3.4.tar.gz</hadoop.tar>
