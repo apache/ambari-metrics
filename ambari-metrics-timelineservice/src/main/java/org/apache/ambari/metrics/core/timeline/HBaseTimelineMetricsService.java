@@ -363,7 +363,8 @@ public class HBaseTimelineMetricsService extends AbstractService implements Time
         if (diff < 0) {
           it.remove(); //Discard calculating rate when the metric counter has been reset.
         } else {
-          Double rate = isDiff ? diff : (diff / TimeUnit.MILLISECONDS.toSeconds(step));
+          double seconds = step / 1000.0;
+          Double rate = isDiff ? diff : (diff / seconds);
           timeValueEntry.setValue(rate);
         }
       } else {
