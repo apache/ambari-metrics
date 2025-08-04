@@ -47,6 +47,7 @@ import org.apache.ignite.ssl.SslContextFactory;
 import javax.cache.Cache;
 import javax.cache.expiry.CreatedExpiryPolicy;
 import javax.cache.expiry.Duration;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -98,9 +99,9 @@ public class TimelineMetricsIgniteCache implements TimelineMetricDistributedCach
     if (metricConf.get(TIMELINE_SERVICE_HTTP_POLICY) != null && metricConf.get(TIMELINE_SERVICE_HTTP_POLICY).equalsIgnoreCase("HTTPS_ONLY")) {
       SslContextFactory sslContextFactory = new SslContextFactory();
       String keyStorePath = sslConf.get("ssl.server.keystore.location");
-      String keyStorePassword = sslConf.get("ssl.server.keystore.password");
+      String keyStorePassword = getPasswordFromConf(sslConf,"ssl.server.keystore.password", sslConf.get("ssl.server.keystore.password"));
       String trustStorePath = sslConf.get("ssl.server.truststore.location");
-      String trustStorePassword = sslConf.get("ssl.server.truststore.password");
+      String trustStorePassword = getPasswordFromConf(sslConf,"ssl.server.truststore.password", sslConf.get("ssl.server.truststore.password"));
 
       sslContextFactory.setKeyStoreFilePath(keyStorePath);
       sslContextFactory.setKeyStorePassword(keyStorePassword.toCharArray());
@@ -170,6 +171,16 @@ public class TimelineMetricsIgniteCache implements TimelineMetricDistributedCach
 
     Ignite igniteNode = Ignition.start(igniteConfiguration);
     igniteCache = igniteNode.getOrCreateCache(cacheConfiguration);
+  }
+
+  public String getPasswordFromConf(Configuration conf, String key, String defaultValue){
+    try {
+      char[] pass = conf.getPassword(key);
+      return pass == null ? defaultValue : new String(pass);
+    } catch (IOException e) {
+      LOG.error("Could not load password from file", e);
+    }
+    return defaultValue;
   }
 
   /**
