@@ -24,6 +24,7 @@ import com.sun.net.httpserver.HttpServer;
 
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.core.UriBuilder;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URI;
 import java.net.URL;
@@ -155,10 +156,10 @@ public class AggregatorApplication {
       HttpsServer httpsServer = (HttpsServer) server;
       SslContextFactory sslContextFactory = new SslContextFactory();
       String keyStorePath = configuration.get("ssl.server.keystore.location");
-      String keyStorePassword = configuration.get("ssl.server.keystore.password");
-      String keyManagerPassword = configuration.get("ssl.server.keystore.keypassword");
+      String keyStorePassword = getPasswordFromConf(configuration,"ssl.server.keystore.password", configuration.get("ssl.server.keystore.password"));
+      String keyManagerPassword = getPasswordFromConf(configuration,"ssl.server.keystore.keypassword", configuration.get("ssl.server.keystore.keypassword"));
       String trustStorePath = configuration.get("ssl.server.truststore.location");
-      String trustStorePassword = configuration.get("ssl.server.truststore.password");
+      String trustStorePassword = getPasswordFromConf(configuration,"ssl.server.truststore.password", configuration.get("ssl.server.truststore.password"));
 
       sslContextFactory.setKeyStorePath(keyStorePath);
       sslContextFactory.setKeyStorePassword(keyStorePassword);
@@ -174,6 +175,16 @@ public class AggregatorApplication {
       server = httpsServer;
     }
     return server;
+  }
+
+  protected String getPasswordFromConf(Configuration conf, String key, String defaultValue){
+    try {
+      char[] pass = conf.getPassword(key);
+      return pass == null ? defaultValue : new String(pass);
+    } catch (IOException e) {
+      LOG.error("Could not load password from file", e);
+    }
+    return defaultValue;
   }
 
   private void startWebServer() {

@@ -22,6 +22,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.metrics2.host.aggregator.TimelineMetricsHolder;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 
@@ -70,10 +71,20 @@ public abstract class AbstractMetricPublisher extends AbstractTimelineMetricsSin
             if (collectorProtocol.contains("https")) {
                 String trustStorePath = configuration.get(AMS_SITE_SSL_TRUSTSTORE_PATH_PROPERTY).trim();
                 String trustStoreType = configuration.get(AMS_SITE_SSL_TRUSTSTORE_TYPE_PROPERTY).trim();
-                String trustStorePwd = configuration.get(AMS_SITE_SSL_TRUSTSTORE_PASSWORD_PROPERTY).trim();
+                String trustStorePwd = getPasswordFromConf(configuration, AMS_SITE_SSL_TRUSTSTORE_PASSWORD_PROPERTY, configuration.get(AMS_SITE_SSL_TRUSTSTORE_PASSWORD_PROPERTY));
                 loadTruststore(trustStorePath, trustStoreType, trustStorePwd);
             }
         }
+    }
+
+    public String getPasswordFromConf(Configuration conf, String key, String defaultValue){
+        try {
+            char[] pass = conf.getPassword(key);
+            return pass == null ? defaultValue : new String(pass);
+        } catch (IOException e) {
+            LOG.error("Could not load password from file", e);
+        }
+        return defaultValue;
     }
 
     /**
