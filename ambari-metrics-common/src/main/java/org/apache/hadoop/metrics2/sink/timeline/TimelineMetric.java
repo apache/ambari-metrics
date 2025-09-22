@@ -29,7 +29,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
-import org.codehaus.jackson.map.annotate.JsonDeserialize;
 
 @XmlRootElement(name = "metric")
 @XmlAccessorType(XmlAccessType.NONE)

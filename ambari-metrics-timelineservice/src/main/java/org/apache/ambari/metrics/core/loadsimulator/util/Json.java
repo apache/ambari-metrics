@@ -19,10 +19,10 @@ package org.apache.ambari.metrics.core.loadsimulator.util;
 
 import java.io.IOException;
 
-import org.codehaus.jackson.annotate.JsonAutoDetect;
-import org.codehaus.jackson.annotate.JsonMethod;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 /**
  * Small wrapper that configures the ObjectMapper with some defaults.
@@ -45,9 +45,9 @@ public class Json {
    */
   public Json(boolean pretty) {
     myObjectMapper = new ObjectMapper();
-    myObjectMapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
+    myObjectMapper.setVisibility(PropertyAccessor.FIELD,JsonAutoDetect.Visibility.ANY);
     if (pretty) {
-      myObjectMapper.configure(SerializationConfig.Feature.INDENT_OUTPUT, true);
+      myObjectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
     }
   }
 

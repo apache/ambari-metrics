@@ -30,7 +30,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.I0Itec.zkclient.exception.ZkNoNodeException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -49,6 +48,7 @@ import org.apache.helix.model.ExternalView;
 import org.apache.helix.model.InstanceConfig;
 import org.apache.helix.model.LiveInstance;
 import org.apache.helix.model.OnlineOfflineSMD;
+import org.apache.helix.zookeeper.zkclient.exception.ZkNoNodeException;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Joiner;

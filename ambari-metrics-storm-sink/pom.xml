@@ -70,9 +70,9 @@ limitations under the License.
           <artifactSet>
             <includes>
               <include>org.apache.ambari:ambari-metrics-common</include>
-              <include>org.codehaus.jackson:jackson-mapper-asl</include>
-              <include>org.codehaus.jackson:jackson-core-asl</include>
-              <include>org.codehaus.jackson:jackson-xc</include>
+              <include>com.fasterxml.jackson.core:jackson-databind</include>
+              <include>com.fasterxml.jackson.core:jackson-core</include>
+              <include>com.fasterxml.jackson.core:jackson-annotations</include>
               <include>org.apache.hadoop:hadoop-annotations</include>
               <include>commons-logging:commons-logging</include>
               <include>org.apache.commons:commons-lang3</include>
@@ -88,9 +88,13 @@ limitations under the License.
               <pattern>org.apache.hadoop.classification</pattern>
               <shadedPattern>org.apache.hadoop.metrics2.sink.relocated.hadoop.classification</shadedPattern>
             </relocation>
-            <relocation>
+            <!--<relocation>
               <pattern>org.codehaus.jackson</pattern>
               <shadedPattern>org.apache.hadoop.metrics2.sink.relocated.jackson</shadedPattern>
+            </relocation>-->
+            <relocation>
+              <pattern>com.fasterxml.jackson</pattern>
+              <shadedPattern>org.apache.ambari.metrics.sink.relocated.jackson</shadedPattern>
             </relocation>
             <relocation>
               <pattern>org.apache.commons.lang3</pattern>
@@ -153,9 +157,9 @@ limitations under the License.
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.codehaus.jackson</groupId>
-      <artifactId>jackson-mapper-asl</artifactId>
-      <version>1.9.13</version>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${fasterxml.jackson.databind.version}</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

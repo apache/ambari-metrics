@@ -43,7 +43,7 @@ limitations under the License.
               <goal>copy-dependencies</goal>
             </goals>
             <configuration>
-              <includeArtifactIds>commons-codec,commons-collections,commons-lang,commons-logging,jackson-core-asl,jackson-mapper-asl,jackson-xc</includeArtifactIds>
+              <includeArtifactIds>commons-codec,commons-collections,commons-lang,commons-logging,jackson-core,jackson-databind,jackson-xc</includeArtifactIds>
               <outputDirectory>${project.build.directory}/lib</outputDirectory>
             </configuration>
           </execution>
@@ -156,9 +156,9 @@ limitations under the License.
       <version>2.6</version>
     </dependency>
     <dependency>
-      <groupId>org.codehaus.jackson</groupId>
-      <artifactId>jackson-mapper-asl</artifactId>
-      <version>1.9.13</version>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${fasterxml.jackson.databind.version}</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

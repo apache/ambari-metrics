@@ -18,8 +18,8 @@
 package org.apache.hadoop.metrics2.sink.timeline;
 
 
-import org.codehaus.jackson.annotate.JsonCreator;
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Represents a collection of minute based aggregation of values for
