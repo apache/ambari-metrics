@@ -17,7 +17,7 @@
  */
 package org.apache.ambari.metrics.core.timeline.availability;
 
-import org.I0Itec.zkclient.DataUpdater;
+import org.apache.helix.zookeeper.zkclient.DataUpdater;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.helix.AccessOption;
