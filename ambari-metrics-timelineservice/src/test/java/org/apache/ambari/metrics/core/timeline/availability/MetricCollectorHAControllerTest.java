@@ -53,6 +53,9 @@ public class MetricCollectorHAControllerTest extends AbstractMiniHBaseClusterTes
     expect(configuration.getClusterZKClientPort()).andReturn(port);
     expect(configuration.getClusterZKQuorum()).andReturn(quorum);
     expect(configuration.getZkConnectionUrl(port, quorum)).andReturn(quorum + ":" + port);
+    expect(configuration.getZkSessionTimeoutMillis()).andReturn(30000).anyTimes();
+    expect(configuration.getZkConnectionTimeoutMillis()).andReturn(30000).anyTimes();
+    expect(configuration.isSecurityEnabled()).andReturn(false).anyTimes();
 
     replay(configuration);
   }
@@ -77,7 +80,8 @@ public class MetricCollectorHAControllerTest extends AbstractMiniHBaseClusterTes
       InstanceType.PARTICIPANT, haController.zkConnectUrl);
     manager2.getStateMachineEngine().registerStateModelFactory(DEFAULT_STATE_MODEL,
       new OnlineOfflineStateModelFactory(instanceConfig2.getInstanceName(),
-        new AggregationTaskRunner(instanceConfig2.getInstanceName(), "", CLUSTER_NAME)));
+        new AggregationTaskRunner(instanceConfig2.getInstanceName(), "", CLUSTER_NAME,
+          HelixManagerPropertyBuilder.build(configuration)))));
     manager2.connect();
     haController.admin.rebalance(CLUSTER_NAME, METRIC_AGGREGATORS, 1);
 

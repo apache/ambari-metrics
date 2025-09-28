@@ -35,6 +35,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.helix.HelixManager;
 import org.apache.helix.HelixManagerFactory;
 import org.apache.helix.InstanceType;
+import org.apache.helix.manager.zk.HelixManagerProperty;
 import org.apache.helix.participant.StateMachineEngine;
 
 public class AggregationTaskRunner {
@@ -42,6 +43,7 @@ public class AggregationTaskRunner {
   private final String zkAddress;
   private final String clusterName;
   private HelixManager manager;
+  private final HelixManagerProperty helixManagerProperty;
   private static final Log LOG = LogFactory.getLog(AggregationTaskRunner.class);
   private CheckpointManager checkpointManager;
   // Map partition name to an aggregator dimension
@@ -76,15 +78,17 @@ public class AggregationTaskRunner {
     PARTITION_AGGREGATION_TYPES.put(MetricCollectorHAController.METRIC_AGGREGATORS + "_1", TimelineMetricAggregator.AGGREGATOR_TYPE.HOST);
   }
 
-  public AggregationTaskRunner(String instanceName, String zkAddress, String clusterName) {
+  public AggregationTaskRunner(String instanceName, String zkAddress, String clusterName,
+                               HelixManagerProperty helixManagerProperty) {
     this.instanceName = instanceName;
     this.zkAddress = zkAddress;
     this.clusterName = clusterName;
+    this.helixManagerProperty = helixManagerProperty;
   }
 
   public void initialize() throws Exception {
     manager = HelixManagerFactory.getZKHelixManager(clusterName, instanceName,
-      InstanceType.PARTICIPANT, zkAddress);
+      InstanceType.PARTICIPANT, zkAddress, helixManagerProperty);
 
     OnlineOfflineStateModelFactory stateModelFactory =
       new OnlineOfflineStateModelFactory(instanceName, this);

@@ -44,6 +44,7 @@ import org.apache.helix.InstanceType;
 import org.apache.helix.LiveInstanceChangeListener;
 import org.apache.helix.NotificationContext;
 import org.apache.helix.PropertyKey;
+import org.apache.helix.manager.zk.HelixManagerProperty;
 import org.apache.helix.manager.zk.ZKHelixAdmin;
 import org.apache.helix.model.ExternalView;
 import org.apache.helix.model.InstanceConfig;
@@ -71,6 +72,7 @@ public class MetricCollectorHAController {
   private final String instanceHostname;
   private final InstanceConfig instanceConfig;
   private final AggregationTaskRunner aggregationTaskRunner;
+  private final HelixManagerProperty helixManagerProperty;
 
   // Cache list of known live instances
   private final List<String> liveInstanceNames = new ArrayList<>(2);
@@ -112,7 +114,9 @@ public class MetricCollectorHAController {
     instanceConfig.setHostName(instanceHostname);
     instanceConfig.setPort(instancePort);
     instanceConfig.setInstanceEnabled(true);
-    aggregationTaskRunner = new AggregationTaskRunner(instanceConfig.getInstanceName(), zkConnectUrl, CLUSTER_NAME);
+    helixManagerProperty = HelixManagerPropertyBuilder.build(configuration);
+    aggregationTaskRunner = new AggregationTaskRunner(instanceConfig.getInstanceName(), zkConnectUrl, CLUSTER_NAME,
+      helixManagerProperty);
   }
 
   /**
@@ -208,7 +212,8 @@ public class MetricCollectorHAController {
   }
 
   private void startController() throws Exception {
-    manager = HelixManagerFactory.getZKHelixManager(CLUSTER_NAME, instanceHostname, InstanceType.CONTROLLER, zkConnectUrl);
+    manager = HelixManagerFactory.getZKHelixManager(CLUSTER_NAME, instanceHostname,
+      InstanceType.CONTROLLER, zkConnectUrl, helixManagerProperty);
 
     manager.connect();
     manager.addLiveInstanceChangeListener(liveInstanceTracker);

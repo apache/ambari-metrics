@@ -88,6 +88,18 @@ public class TimelineMetricConfiguration {
   public static final String TIMELINE_METRICS_CACHE_ENABLED =
     "timeline.metrics.cache.enabled";
 
+  public static final String TIMELINE_METRICS_ZK_SESSION_TIMEOUT =
+    "timeline.metrics.service.zk.session.timeout.millis";
+
+  public static final String TIMELINE_METRICS_ZK_CONNECTION_TIMEOUT =
+    "timeline.metrics.service.zk.connection.timeout.millis";
+
+  public static final String TIMELINE_METRICS_COLLECTOR_KERBEROS_PRINCIPAL =
+    "timeline.metrics.service.kerberos.principal";
+
+  public static final String TIMELINE_METRICS_COLLECTOR_KERBEROS_KEYTAB =
+    "timeline.metrics.service.kerberos.keytab";
+
   public static final String DEFAULT_CHECKPOINT_LOCATION =
     System.getProperty("java.io.tmpdir");
 
@@ -549,6 +561,34 @@ public class TimelineMetricConfiguration {
 
   public boolean isSecurityEnabled() {
     return hbaseConf.get("hbase.security.authentication", "").equals("kerberos");
+  }
+
+  public int getZkSessionTimeoutMillis() {
+    if (metricsConf != null) {
+      return metricsConf.getInt(TIMELINE_METRICS_ZK_SESSION_TIMEOUT, 30000);
+    }
+    return 30000;
+  }
+
+  public int getZkConnectionTimeoutMillis() {
+    if (metricsConf != null) {
+      return metricsConf.getInt(TIMELINE_METRICS_ZK_CONNECTION_TIMEOUT, 30000);
+    }
+    return 30000;
+  }
+
+  public String getTimelineMetricsCollectorKerberosPrincipal() {
+    if (metricsConf != null) {
+      return metricsConf.getTrimmed(TIMELINE_METRICS_COLLECTOR_KERBEROS_PRINCIPAL);
+    }
+    return null;
+  }
+
+  public String getTimelineMetricsCollectorKerberosKeytab() {
+    if (metricsConf != null) {
+      return metricsConf.getTrimmed(TIMELINE_METRICS_COLLECTOR_KERBEROS_KEYTAB);
+    }
+    return null;
   }
 
   public Set<String> getAmshbaseWhitelist() {
