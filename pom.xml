@@ -37,6 +37,7 @@
     <python.ver>python3 &gt;= 3.0</python.ver>
     <deb.python.ver>python3 (&gt;= 3.0)</deb.python.ver>
     <slf4j.version>2.0.0</slf4j.version>
+    <helix.version>0.6.6</helix.version>
     <zookeeper.version>3.5.9</zookeeper.version>
     <kafka.version>2.8.1</kafka.version>
     <phoenix.version>5.1.2</phoenix.version>
@@ -88,6 +89,16 @@
   </repositories>
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.apache.helix</groupId>
+        <artifactId>helix-core</artifactId>
+        <version>${helix.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.helix</groupId>
+        <artifactId>helix-zk-client</artifactId>
+        <version>${helix.version}</version>
+      </dependency>
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-annotations</artifactId>

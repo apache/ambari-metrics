@@ -269,17 +269,8 @@
     <dependency>
       <groupId>org.apache.helix</groupId>
       <artifactId>helix-core</artifactId>
-      <version>0.6.6</version>
+      <version>${helix.version}</version>
       <exclusions>
-        <!-- zkclient is helix-core dependency but it need to be 0.9 in order for AMS HA to work on secure cluster-->
-        <exclusion>
-          <artifactId>zkclient</artifactId>
-          <groupId>com.101tec</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>zookeeper</artifactId>
-          <groupId>org.apache.zookeeper</groupId>
-        </exclusion>
         <exclusion>
           <groupId>log4j</groupId>
           <artifactId>log4j</artifactId>
@@ -289,12 +280,6 @@
           <artifactId>snakeyaml</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
-    <!-- zkclient is helix-core dependency but it need to be 0.9 in order for AMS HA to work on secure cluster-->
-    <dependency>
-      <groupId>com.101tec</groupId>
-      <artifactId>zkclient</artifactId>
-      <version>0.9</version>
     </dependency>
     <dependency>
       <groupId>org.apache.zookeeper</groupId>
