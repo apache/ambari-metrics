@@ -24,6 +24,7 @@
   <modules>
     <module>ambari-metrics-common</module>
     <module>ambari-metrics-hadoop-sink</module>
+    <module>ambari-metrics-zookeeper-sink</module>
     <module>ambari-metrics-kafka-sink</module>
     <module>ambari-metrics-storm-sink</module>
     <module>ambari-metrics-timelineservice</module>
