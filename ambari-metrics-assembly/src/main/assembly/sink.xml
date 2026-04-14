@@ -31,6 +31,10 @@
       <outputDirectory>hadoop-sink/conf</outputDirectory>
     </fileSet>
     <fileSet>
+      <directory>${zookeeper-sink.dir}/src/main/conf</directory>
+      <outputDirectory>hadoop-sink/conf</outputDirectory>
+    </fileSet>
+    <fileSet>
       <directory>${storm-sink.dir}/src/main/conf</directory>
       <outputDirectory>hadoop-sink/conf</outputDirectory>
     </fileSet>
